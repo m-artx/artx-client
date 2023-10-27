@@ -1,3 +1,11 @@
+import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import MainPage from './pages/MainPage';
+import DownloadPage from './pages/DownloadPage';
+import ArtPage from './pages/ArtPage';
+import LadingMobile from './pages/LandingMobilePage';
+import ArtxPage from './pages/ArtxPage';
+
 function App() {
   return (
     <div>
