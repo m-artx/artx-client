@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function ArtxPage() {
-  return <div></div>;
+  return <div>ArtxPage</div>;
 }

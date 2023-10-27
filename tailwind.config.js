@@ -4,14 +4,9 @@ module.exports = {
   theme: {
     extend: {},
     screens: {
-      'sm': '640px',
-      // => @media (min-width: 640px) { ... }
+      sm: '599px',
 
-      'md': '1024px',
-      // => @media (min-width: 1024px) { ... }
-
-      'lg': '1280px',
-      // => @media (min-width: 1280px) { ... }
+      ml: { min: '600px', max: '1024px' },
     },
   },
   plugins: [],
