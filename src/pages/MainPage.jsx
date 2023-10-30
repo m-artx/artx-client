@@ -2,7 +2,7 @@ import React from 'react';
 
 function MainPage() {
   return (
-    <div>
+    <div className="">
       MainPage
     </div>
     

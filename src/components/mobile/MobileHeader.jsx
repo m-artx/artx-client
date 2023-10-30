@@ -8,9 +8,9 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 function MobileHeader() {
   return (
-    <div className="flex justify-between border-orange-500">
-      <Link to="/">ARTX</Link>
-      <FontAwesomeIcon icon={faBars} />
+    <div className="flex items-center justify-between w-screen ">
+      <Link to="/" className="px-10">ARTX</Link>
+      <FontAwesomeIcon icon={faBars} className="px-10"/>
     </div>
   );
 }
