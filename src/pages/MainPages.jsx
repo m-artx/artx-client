@@ -1,5 +1,5 @@
 import React from 'react';
-import MobileMain from './mobile/MobilMain';
+import MobileMain from '../components/mobile/MobilMain';
 
 function Main() {
   return (
@@ -11,9 +11,7 @@ function Main() {
         </div>
 
         {/* 웹 반응형 600px ~ 1079px) */}
-        <div className="hidden md:flex ">
-          웹메인
-        </div>
+        <div className="hidden md:flex ">웹메인</div>
 
         {/* 웹 반응형 1080px ~ 1920px) */}
         <div className="hidden lg:flex  "></div>

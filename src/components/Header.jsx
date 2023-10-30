@@ -17,7 +17,7 @@ function Header() {
   return (
     <div className="flex items-center ">
       {/* 모바일 화면에서만 보임 */}
-      <div className="md:hidden flex items-center lg:hidden text-2xl h-14 border">
+      <div className="md:hidden flex items-center lg:hidden text-2xl h-[60px] border">
         <MobileHeader />
       </div>
 
