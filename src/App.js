@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
-import MainPage from './pages/MainPage';
-import DownloadPage from './pages/DownloadPage';
-import ArtPage from './pages/ArtPage';
-import ArtxPage from './pages/ArtxPage';
+import Main from './components/Main';
+import DownloadPage from './components/DownloadPage';
+import ArtPage from './components/ArtPage';
+import ArtxPage from './components/ArtxPage';
 import Layout from './components/shared/Layout';
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           {/* 메인으로 받아오는 페이지는 메인페이지 */}
-          <Route index element={<MainPage />} />
+          <Route index element={<Main />} />
           <Route path="/download" element={<DownloadPage />} />
           <Route path="/art" element={<ArtPage />} />
           <Route path="/artx" element={<ArtxPage />} />

@@ -8,9 +8,14 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 function MobileHeader() {
   return (
-    <div className="flex items-center justify-between w-screen ">
-      <Link to="/" className="px-10">ARTX</Link>
-      <FontAwesomeIcon icon={faBars} className="px-10"/>
+    <div className="flex items-center w-screen justify-between ">
+      <Link to="/" className="px-10">
+        ARTX
+      </Link>
+      <div className="flex items-center">
+        <Link to="download" className="bg-gray-200 border text-black text-sm p-2 rounded decoration-auto " >DOWNLOAD</Link>
+        <FontAwesomeIcon icon={faBars} className="px-10" />
+      </div>
     </div>
   );
 }
