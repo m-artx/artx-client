@@ -1,5 +1,6 @@
 import React from 'react';
 import MobileMain from '../components/mobile/MobilMain';
+import Anycom from "../components/Anycom";
 
 function Main() {
   return (
@@ -12,6 +13,8 @@ function Main() {
 
         {/* 웹 반응형 600px ~ 1079px) */}
         <div className="hidden md:flex ">웹메인</div>
+
+          <Anycom />
 
         {/* 웹 반응형 1080px ~ 1920px) */}
         <div className="hidden lg:flex  "></div>
