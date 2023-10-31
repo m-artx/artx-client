@@ -20,7 +20,7 @@ import React from "react";
 function dummy() {
   async function getData() {
     const url = "https://pixabay.com/api/";
-    const ceramic_key = "?key=13113157-b5ac5e3c3e3d3a0bc3c018098&q=yellow+flowers&image_type=photo";
+    const ceramic_key = `?${process.env.REACT_APP_KEY}&q=yellow+flowers&image_type=photo`;
 
     try {
       const response = await axios.get(`${url}${ceramic_key}`, {
