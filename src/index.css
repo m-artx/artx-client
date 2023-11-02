@@ -9,6 +9,10 @@
 
 
 
+
+*{
+  background-color:black;
+}
 /* 
 
 
@@ -93,12 +97,10 @@
   padding: 5rem;
   width: 100%;
   margin: auto;
-  
-  
 }
 
 .slides {
-
+  
 }
 
 .box {

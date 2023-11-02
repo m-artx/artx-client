@@ -6,11 +6,10 @@ function ApiLoader() {
 
   useEffect(() => {
     const apiUrl = `${process.env.REACT_APP_artx_base_url}${process.env.REACT_APP_artx_base_main}`;
-    const request = { userId: '35a69652-6a41-4372-9f1b-0b32215e8af7' };
     console.log(apiUrl);
 
     axios
-      .post(apiUrl, request)
+      .get(apiUrl)
       .then((response) => {
         // API로부터 데이터를 성공적으로 받았을 때 처리할 내용
         setData(response.data);

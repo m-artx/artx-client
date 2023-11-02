@@ -6,7 +6,7 @@ import Footer from '../Footer';
 export default function Layout() {
   return (
     <div
-      className="flex flex-col items-center h-screen w-screen bg-black text-white overflow-hidden border box-border font-sans">
+      className="flex flex-col items-center h-screen w-screen bg-black text-white  border box-border font-sans">
       <div className="flex justify-center max-w-[1500px]">
         <Header />
       </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import Dummy2 from '../instance/dummy2';
 import Slider from 'react-slick';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
+
 // import ApiLoader from "../instance/ApiLoader";
 // import { ApiLoader } from '../instance/ApiLoader'
 // import { ProcessData} from '../instance/ProcessData'

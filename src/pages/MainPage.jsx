@@ -1,11 +1,11 @@
 import React from 'react';
-import Anycom from '../instance/Anycom';
 import ImageSlide from '../components/ImageSlide';
-import SlideforMain from '../components/SlideforMain';
-import SlideMain from "../components/SlideMain";
-
+import SlideMain from '../components/SlideMain';
+import ApiLoader from '../instance/ApiLoader';
 
 function MainPage() {
+  const data = ApiLoader(); // return 값이 data이다
+
   return (
     <div className="flex flex-col items-center max-w-[1500px]">
       <input
@@ -15,11 +15,10 @@ function MainPage() {
       ></input>
 
       <div className="border border-red-800 w-screen grid grid-rows-2 h-full ">
-       {/* 첫번째 이미지칸 */}
-       <div className="flex flex-col items-center py-2 border border-purple-800 overflow-hidden">
+        {/* 첫번째 이미지칸 */}
+        <div className="flex flex-col items-center py-2 border border-purple-800 overflow-hidden">
           <p className="p-4">신작:新作</p>
           <div className="w-screen border flex-grow">
-            {/* <SlideforMain /> */}
             <SlideMain />
           </div>
         </div>
@@ -28,16 +27,10 @@ function MainPage() {
         <div className="flex flex-col items-center py-2 border border-purple-800">
           <p className="p-4 ">최근 판매된 작품</p>
           <div className="flex border w-screen">
-            <ImageSlide />            
-            </div>
+            <ImageSlide className="text-white" />
+          </div>
         </div>
-  
-        <Anycom />
-        
-
       </div>
-
-
     </div>
   );
 }
