@@ -1,5 +1,5 @@
 import React from 'react';
-import Anycom from '../components/Anycom';
+import Anycom from '../instance/Anycom';
 import ImageSlide from '../components/ImageSlide';
 import SlideforMain from '../components/SlideforMain';
 import SlideMain from "../components/SlideMain";
@@ -33,6 +33,7 @@ function MainPage() {
         </div>
   
         <Anycom />
+        
 
       </div>
 

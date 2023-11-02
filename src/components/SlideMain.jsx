@@ -2,16 +2,21 @@ import React from 'react';
 import Dummy2 from '../instance/dummy2';
 import Slider from 'react-slick';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
+// import ApiLoader from "../instance/ApiLoader";
+// import { ApiLoader } from '../instance/ApiLoader'
+// import { ProcessData} from '../instance/ProcessData'
 
+// const aoidata = ApiLoader();
+// console.log(ApiLoader)
 const dummy = Dummy2();
 
-
+// const apiData = ApiLoader(); // API 데이터 받아오기
+// const processedData = ProcessData(apiData); // API 데이터 처리
 
 const PrevArrow = ({ onClick }) => {
   return (
     <div className="arrow left" onClick={onClick}>
       <BsChevronCompactLeft />
-      
     </div>
   );
 };
@@ -45,7 +50,7 @@ const settings = {
   infinite: true,
   speed: 500,
   slidesToShow: 6, // 한 화면에 보여질 슬라이드 수 (1로 설정)
-  slidesToScroll: 2, // 한번에 스크롤할 슬라이드 수 (1로 설정)
+  slidesToScroll: 1, // 한번에 스크롤할 슬라이드 수 (1로 설정)
   nextArrow: <NextArrow />,
   prevArrow: <PrevArrow />,
   dots: false,
@@ -68,7 +73,7 @@ function SlideMain() {
             }`}
             key={idx}
           >
-            <img className="box" src={image.url} alt={`이미지 ${idx}`} />
+            <img className="box" src={image.productImageUrl} alt={`이미지 ${idx}`} />
           </div>
         ))}
       </Slider>
