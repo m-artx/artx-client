@@ -3,6 +3,7 @@ import Slider from 'react-slick';
 import { useState } from 'react';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 
+
 const images = [
   {
     url: 'http://dafenart.co.kr/mall/shop_image/201702/20%2811%29.jpg',
@@ -52,7 +53,7 @@ function SliderFirst() {
   console.log('test slider');
 
   return (
-    <div className="flex w-full h-full py-10 px-4 bg-white ">
+    <div className="flex w-full h-[300px] py-10 px-4 bg-white ">
       <Slider className=""  {...settings}>
         {images.map((img, idx) => (
           <div className="flex "  key={idx}>

@@ -6,11 +6,12 @@ function Anycom() {
 
   useEffect(() => {
     // API 엔드포인트 URL을 여기에 넣어주세요.
-    const apiUrl = 'http://64.110.89.251/v1/feeds?size=45&page=0&type=DOMESTIC/api/products';
-    const request = { userId: 'e4fe031c-eb66-4c62-a75b-9ab1ca95b60c' };
+    const apiUrl = 'http://123.108.166.72:8080/api/products';
+    const request = { userId: '35a69652-6a41-4372-9f1b-0b32215e8af7' };
 
     axios
-      .get(apiUrl)
+    //재영님 400에러난다했는데 아래 get을 post로 하니까 됨!
+      .post(apiUrl, request)
       .then((response) => {
         // API로부터 데이터를 성공적으로 받았을 때 처리할 내용
         setData(response.data);
