@@ -4,6 +4,9 @@ import DownloadPage from './pages/DownloadPage';
 import ArtPage from './pages/ArtPage';
 import ArtxPage from './pages/ArtxPage';
 import Layout from './components/shared/Layout';
+import SignUpPage from './pages/SignUpPage';
+import LoginPage from './pages/LoginPage';
+import Product from './pages/Product';
 
 function App() {
   return (
@@ -15,6 +18,9 @@ function App() {
           <Route path="/download" element={<DownloadPage />} />
           <Route path="/art" element={<ArtPage />} />
           <Route path="/artx" element={<ArtxPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/product" element={<Product />} />
         </Route>
       </Routes>
     </div>
