@@ -21,7 +21,6 @@ function Header() {
 
   return (
     <div className="flex items-center h-[140px] border w-screen">
-      {/* 웹 반응형 600px ~ 1079px) */}
       <div className="flex-1 text-lg border">
         <div className="ml-20">artx*</div>
       </div>

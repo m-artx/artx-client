@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function ApiLoader() {
+function ApiLoader(url) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const apiUrl = `${process.env.REACT_APP_artx_base_url}${process.env.REACT_APP_artx_base_main}`;
+    
+    const apiUrl = `${process.env.REACT_APP_artx_base_url}${url}`;
     console.log(apiUrl);
 
     axios
