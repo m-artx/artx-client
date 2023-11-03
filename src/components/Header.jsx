@@ -29,8 +29,12 @@ function Header() {
       <div className="flex-1 flex justify-center items-center h-20 text-sm border">{links()}</div>
       <div className="flex-1 text-xl border">
         <div className="flex justify-end mr-20">
-          <div className="ml-5">회원가입</div>
-          <div className="ml-5">로그인</div>
+          <Link to="signup">
+            <div className="ml-5">회원가입</div>
+          </Link>
+          <Link to="login">
+            <div className="ml-5">로그인</div>
+          </Link>
         </div>
       </div>
     </div>

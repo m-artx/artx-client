@@ -7,6 +7,8 @@ import Layout from './components/shared/Layout';
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
 import Product from './pages/Product';
+import ShoppingCart from './pages/ShoppingCart';
+import OrderHistory from './pages/OrderHistory';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/product" element={<Product />} />
+          <Route path="/cart" element={<ShoppingCart />} />
+          <Route path="/orderhistory" element={<OrderHistory />} />
         </Route>
       </Routes>
     </div>

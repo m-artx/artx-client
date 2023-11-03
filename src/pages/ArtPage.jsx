@@ -1,12 +1,11 @@
-import React from 'react';
-import Header from '../components/Header';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
 
 function ArtPage() {
-  const imageList = [
+  const productList = [
+    // imageList를 productList로 변경
     {
       url: 'https://dummyimage.com/720x400',
       title: 'Title 1',
@@ -96,7 +95,7 @@ function ArtPage() {
   const itemsPerPage = 8; // 한 페이지당 보여줄 항목 수
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
 
-  const totalPages = Math.ceil(imageList.length / itemsPerPage);
+  const totalPages = Math.ceil(productList.length / itemsPerPage);
 
   // 다음 페이지로 이동하는 함수
   const nextPage = () => {
@@ -121,7 +120,7 @@ function ArtPage() {
   // 현재 페이지에 표시할 이미지 목록을 계산
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentImageList = imageList.slice(startIndex, endIndex);
+  const currentImageList = productList.slice(startIndex, endIndex);
 
   const imageComponents = currentImageList.map((image, index) => (
     <div className="xl:w-1/4 md:w-1/2 sm:w-1/2 p-4 mb-8 mx-auto relative group" key={index}>
