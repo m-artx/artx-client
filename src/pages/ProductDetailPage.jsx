@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import Dummy3 from '../instance/dummy3';
 import Slider from 'react-slick';
+import UnivSlider from "../components/UnivSlider";
 
 /* 임시로이미지를넣어보자! */
 
@@ -10,8 +11,18 @@ function ProductDetailPage() {
   // let productId = 6;
   const data = Dummy3();
   console.log('히히' + data[0].productImageUrl);
+
   //data의 배열 내 객체 중 productId와 일치할때 해당하는 imgaArr를 가져오자.
-  let imgArr = data.find((product) => product.productId === parseInt(productId));
+  let idData = data.find((product) => product.productId === parseInt(productId));
+
+  const univSlider = <UnivSlider slides={idData.productImageUrl} />
+
+  console.log('idData' + idData)
+  console.log('univSlider' +univSlider)
+
+
+
+
 
   // 슬라이더 설정
   const settings = {
@@ -25,17 +36,21 @@ function ProductDetailPage() {
   return (
     <div className="flex w-screen max-w-[1500px]">
       <div className="flex border w-full h-full">
-        <div className="p-20 pl-[200px]">
-          {imgArr && (
+        <div className="p-20 pl-[200px] border">
+          {/* idData 가 트루라면 랜더링 falsy라면 랜더링안함 */}
+          {idData && (
             <Slider className="max-w-[600px] max-h-[600px] p-auto " {...settings}>
-              {imgArr.productImageUrl.map((url, index) => (
+              {idData.productImageUrl.map((url, index) => (
                 <div key={index}>
                   <img className="max-w-[600px] max-h-[600px]" src={url} alt={`Slide ${index}`} />
                 </div>
               ))}
+              
             </Slider>
+           
           )}
         </div>
+        
         <div className="flex-1 flex justify-center items-center pb-20 border border-red-800 text-gray-400">
           <div className="flex flex-col">
             <div className="flex text-center">

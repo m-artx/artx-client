@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
+import Slider from 'react-slick';
+
 
 
 //슬라이드는 배열 url이다 //이거비효율적
 //이미지클릭안됨(링크없음)
-function Slider({ slides }) {
+function UnivSlider({ slides }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 
@@ -27,7 +29,9 @@ function Slider({ slides }) {
  
 
   return (
+    
     <div className="max-w-[500px] h-[200px] w-full m-auto py-4 px-4 relative">
+      <Slider>
       {data.map((image, index) => (
         <div
           key={index}
@@ -45,8 +49,10 @@ function Slider({ slides }) {
         onClick={nextSlide}
         size={30}
       />
+      </Slider>
+      
     </div>
   );
 }
 
-export default Slider;
+export default UnivSlider;

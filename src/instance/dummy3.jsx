@@ -1,5 +1,7 @@
 import React from 'react';
 
+//최근 10개 제품, 배열 내 객체 내 이미지배열
+
 function dummy3() {
   const slides = [
     {

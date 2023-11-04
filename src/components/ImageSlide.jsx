@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import ApiLoader from '../instance/ApiLoader';
 import { useNavigate } from 'react-router-dom';
+import dummy3 from "../instance/dummy3";
+import dummy2 from "../instance/dummy2";
+
 
 function ImageSlide() {
-  const data = ApiLoader(process.env.REACT_APP_artx_prud_new_ten); // return 값이 배열 data이다
+  // const data = ApiLoader(process.env.REACT_APP_artx_prud_new_ten); // return 값이 배열 data이다
+  const data = dummy3();
   console.log(data);
   console.log('WTF');
   const navigate = useNavigate();

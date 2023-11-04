@@ -8,12 +8,18 @@
 @import "~slick-carousel/slick/slick-theme.css";
 
 
-
-
-*{
-  background-color:black;
+.slick-slide > div {
+  display: grid;
+  /* padding: 0px; */
 }
-/* 
+
+.slick-slide > div:nth-child(1) {
+  /* margin-left: 0; */
+}
+
+.slick-list {
+  /* margin-right: -30px; */
+}
 
 
 
@@ -93,7 +99,7 @@
 
 /*  드루와 */
 
-.carousel {
+/* .carousel {
   padding: 5rem;
   width: 100%;
   margin: auto;
@@ -120,7 +126,7 @@
 /* .slick-slider {
 } */
 
-.slick-tracl {
+/* .slick-tracl {
   
 }
 
@@ -145,17 +151,18 @@
   height:auto;
   display:flex;
 
-}
+} */
 
 
 /* 중간 크기 슬라이드 스타일 */
 .medium-slide {
-  width: 200px; /* 원하는 중간 크기 설정 */
-  height: 200px; /* 원하는 중간 크기 설정 */
+  /* width: 200px; 원하는 중간 크기 설정 */
+  /* height: 200px; 원하는 중간 크기 설정 */
 }
 
 /* 작은 크기 슬라이드 스타일 */
 .small-slide {
-  width: 100px; /* 원하는 작은 크기 설정 */
-  height: 100px; /* 원하는 작은 크기 설정 */
-}
+  /* width: 100px; 원하는 작은 크기 설정 */
+  /* height: 100px; 원하는 작은 크기 설정 */
+} 
+
