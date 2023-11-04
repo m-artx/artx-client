@@ -14,11 +14,13 @@ function ProductDetailPage() {
 
   //data의 배열 내 객체 중 productId와 일치할때 해당하는 imgaArr를 가져오자.
   let idData = data.find((product) => product.productId === parseInt(productId));
-
-  const univSlider = <UnivSlider slides={idData.productImageUrl} />
+  const idDataImg = idData.productImageUrl;
+  const univSlider = <UnivSlider slides={idData} />
 
   console.log('idData' + idData)
+  console.log('idDataImg' +idDataImg)
   console.log('univSlider' +univSlider)
+
 
 
 
@@ -40,9 +42,9 @@ function ProductDetailPage() {
           {/* idData 가 트루라면 랜더링 falsy라면 랜더링안함 */}
           {idData && (
             <Slider className="max-w-[600px] max-h-[600px] p-auto " {...settings}>
-              {idData.productImageUrl.map((url, index) => (
+              {idDataImg.map((url, index) => (
                 <div key={index}>
-                  <img className="max-w-[600px] max-h-[600px]" src={url} alt={`Slide ${index}`} />
+                  <img className="max-w-[600px] max-h-[600px]" src={url} alt="image" />
                 </div>
               ))}
               

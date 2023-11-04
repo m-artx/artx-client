@@ -12,17 +12,19 @@ function Header() {
         <Link to="/art" className="px-9">
           작품관
         </Link>
-        <Link to="/art" className="pl-9">
-          FAQ
+        <Link to="/test" className="pl-9">
+          FAQ[test]
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="flex items-center h-[140px] border w-screen">
+    <div className="flex items-center  w-screen max-w-[1300px]">
       <div className="flex-1 text-lg border">
-        <div className="ml-20">artx*</div>
+        <Link to="/">
+          <div className="ml-20">artx*</div>
+        </Link>
       </div>
       <div className="flex-1 flex justify-center items-center h-20 text-sm border">{links()}</div>
       <div className="flex-1 text-sm border">

@@ -11,6 +11,7 @@ import ShoppingCart from './pages/ShoppingCart';
 import OrderHistory from './pages/OrderHistory';
 import ProductPage from './pages/ProductPage';
 import ProductDetailPage from './pages/ProductDetailPage';
+import Test from "./pages/Test";
 
 function App() {
   return (
@@ -18,12 +19,17 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           {/* 메인으로 받아오는 페이지는 메인페이지 */}
-          <Route index element={<MainPage />} />
-          <Route path="/download" element={<DownloadPage />} />
-          <Route path="/art" element={<ArtPage />} />
-          <Route path="/artx" element={<ArtxPage />} />
+          <Route index element={<MainPage />} /> { /*메인페이지 */}
+          <Route path="/art" element={<ArtPage />} /> { /* 작품관 */}
+
+          <Route path="/test" element={<Test />} /> { /* 슬라이드 테스트. 임시. */}
+
+
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/artx" element={<ArtxPage />} />
+
+          <Route path="/download" element={<DownloadPage />} />
           <Route path="/product" element={<Product />} />
           <Route path="/cart" element={<ShoppingCart />} />
           <Route path="/orderhistory" element={<OrderHistory />} />

@@ -19,7 +19,10 @@ module.exports = {
     extend: {
       fontFamily: {
         arapey: ['Arapey', 'serif'], // 'arapey'는 클래스 이름으로 사용됩니다.
-      }
+      },
+      height: {
+        'screen-minus-140': 'calc(100vh - 140px)',
+      },
     },
     screens: {
       sm: { max: '599px' },

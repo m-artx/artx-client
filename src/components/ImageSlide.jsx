@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
-import ApiLoader from '../instance/ApiLoader';
+// import ApiLoader from '../instance/ApiLoader';
 import { useNavigate } from 'react-router-dom';
-import dummy3 from "../instance/dummy3";
-import dummy2 from "../instance/dummy2";
-
+import dummy3 from '../instance/dummy3';
 
 function ImageSlide() {
   // const data = ApiLoader(process.env.REACT_APP_artx_prud_new_ten); // return 값이 배열 data이다
@@ -16,6 +14,12 @@ function ImageSlide() {
   const goToProductDetail = (id) => {
     navigate(`/productdetail/${id}`);
   };
+
+  // 이미 배열이라면 그대로 반환하고, 아니면 배열로 만들어서 반환하는 함수
+  function ensureArray(item) {
+    console.log('엔슈얼어레이펑션실행');
+    return Array.isArray(item) ? item : [item];
+  }
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -35,13 +39,13 @@ function ImageSlide() {
     <div className="max-w-[500px] h-[200px] w-full m-auto py-4 px-4 relative">
       {data.length > 0 && currentIndex >= 0 && currentIndex < data.length && (
         <div
-          style={{ backgroundImage: `url(${data[currentIndex].productImageUrl[0]})` }}
+          style={{ backgroundImage: `url(${ensureArray(data[currentIndex].productImageUrl)[0]})` }}
           className="w-full h-full bg-center bg-cover duration-500 rounded-2xl"
           onClick={() => goToProductDetail(data[currentIndex].productId)}
         ></div>
       )}
       <div
-        className="absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded=full p-2 bg-black/20 text-white cursor-pointer"
+        className="absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer"
         onClick={prevSlide}
       >
         <BsChevronCompactLeft size={30} />

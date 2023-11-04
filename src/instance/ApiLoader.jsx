@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+//연동원하는 urㅣ을 넣는다. Url 주소는 env.local 참고
+
 function ApiLoader(url) {
   const [data, setData] = useState([]);
 

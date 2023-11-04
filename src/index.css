@@ -4,12 +4,20 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "~slick-carousel/slick/slick.css";
-@import "~slick-carousel/slick/slick-theme.css";
+@import '~slick-carousel/slick/slick.css';
+@import '~slick-carousel/slick/slick-theme.css';
 
+* {
+  min-height: 0;
+  min-width: 0;
+  background: black;
+
+}
 
 .slick-slide > div {
-  display: grid;
+  /* display: grid; */
+
+  /* height:100px; */
   /* padding: 0px; */
 }
 
@@ -20,9 +28,6 @@
 .slick-list {
   /* margin-right: -30px; */
 }
-
-
-
 
 /* SlideforMain.jsx */
 /* 슬라이드박스 조절 위한 css처리 */
@@ -92,11 +97,6 @@
   background: red;
 } */
 
-
-
-
-
-
 /*  드루와 */
 
 /* .carousel {
@@ -153,7 +153,6 @@
 
 } */
 
-
 /* 중간 크기 슬라이드 스타일 */
 .medium-slide {
   /* width: 200px; 원하는 중간 크기 설정 */
@@ -164,5 +163,4 @@
 .small-slide {
   /* width: 100px; 원하는 작은 크기 설정 */
   /* height: 100px; 원하는 작은 크기 설정 */
-} 
-
+}
