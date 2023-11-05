@@ -17,6 +17,7 @@ function ProductList() {
   const data = Dummy4();
   console.log(data);
 
+  
   return (
     <div>
       <div>도자기</div>
