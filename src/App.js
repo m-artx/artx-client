@@ -21,6 +21,9 @@ function App() {
         <Route path="/" element={<Layout />}>
           {/* 메인으로 받아오는 페이지는 메인페이지 */}
           <Route index element={<MainPage />} /> { /*메인페이지 */}
+
+
+          
           <Route path="/art" element={<ArtPage />} /> { /* 작품관 */}
 
           {/*작품관 하부 페이지 도자기, 그림, 기타로 연결*/}

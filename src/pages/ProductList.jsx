@@ -8,16 +8,16 @@ import Dummy4 from '../instance/dummy4';
 function ProductList() {
 
   let { categoryName } = useParams();
-  const apidata = ApiLoader();
+  const apidata = ApiLoader(process.env.REACT_APP_artx_prod_new_ten);
 
-  // let categoryData = data.find((product) => product.categoryName === parseInt(categoryName));
+  let categoryData = data.find((product) => product.categoryName === parseInt(categoryName));
 
   //dummy3 데이터 임시로 가져옴. [{price, productId, productImageUrl[]}
 
   const data = Dummy4();
   console.log(data);
 
-  
+
   return (
     <div>
       <div>도자기</div>
