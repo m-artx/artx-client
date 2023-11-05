@@ -12,6 +12,7 @@ import OrderHistory from './pages/OrderHistory';
 import ProductPage from './pages/ProductPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import Test from "./pages/Test";
+import ProductList from "./pages/ProductList";
 
 function App() {
   return (
@@ -22,7 +23,9 @@ function App() {
           <Route index element={<MainPage />} /> { /*메인페이지 */}
           <Route path="/art" element={<ArtPage />} /> { /* 작품관 */}
 
-          <Route path="/test" element={<Test />} /> { /* 슬라이드 테스트. 임시. */}
+          {/*작품관 하부 페이지 도자기, 그림, 기타로 연결*/}
+          <Route path="/productlist" element={<ProductList />} /> 
+          {/* <Route path="/productlist/:categoryName" element={<ProductList />} />  */}
 
 
           <Route path="/signup" element={<SignUpPage />} />
@@ -36,6 +39,10 @@ function App() {
           <Route path="/productpage" element={<ProductPage />} />
           <Route path="/productdetail" element={<ProductDetailPage />} />
           <Route path="/productdetail/:productId" element={<ProductDetailPage />} />
+
+
+          <Route path="/test" element={<Test />} /> { /* 슬라이드 테스트. 임시. */}
+
         </Route>
       </Routes>
     </div>

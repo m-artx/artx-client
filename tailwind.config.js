@@ -21,7 +21,7 @@ module.exports = {
         arapey: ['Arapey', 'serif'], // 'arapey'는 클래스 이름으로 사용됩니다.
       },
       height: {
-        'screen-minus-140': 'calc(100vh - 140px)',
+        'h-100p-140': 'calc(100vh - 140px)',
       },
     },
     screens: {

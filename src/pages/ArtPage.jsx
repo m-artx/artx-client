@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faSearch } from '@fortawesome/free-solid-svg-icons';
+import ArtSearch from '../components/shared/ArtSearch';
 
 function ArtPage() {
   const productList = [
@@ -134,28 +135,22 @@ function ArtPage() {
   ));
 
   return (
-    <div>
+    <div className="border">
       <section className="text-gray-600 body-font mx-auto">
         <div className="container px-5 mx-auto">
-          <div className="flex flex-wrap w-full mb-10 sm:mb-20">
-            <div className="w-1/2 mx-auto mb-6 lg:mb-0 text-center">
-              <h1 className="text-8xl sm:text-8xl font-medium title-font mb-2 text-white">WORK</h1>
-              <div className="flex items-center border-solid border-2 border-neutral-950 p-3 rounded-full w-800 bg-white">
-                <FontAwesomeIcon icon={faSearch} className="mr-2" />
-                <input className="w-full bg-transparent outline-none" type="text" placeholder="검색어를 입력하세요" />
-              </div>
+          <ArtSearch />
+          <div>
+            <div className="flex justify-between items-center">
+              <button className="mr-10 transform hover:scale-110" onClick={prevPage}>
+                <FontAwesomeIcon icon={faArrowLeft} size="2xl" style={{ color: '#c7c7c7' }} />
+              </button>
+              <Link to="product">
+                <div className="flex flex-wrap -m-4 justify-center">{imageComponents}</div>
+              </Link>
+              <button className="ml-10 transform hover:scale-110" onClick={nextPage}>
+                <FontAwesomeIcon icon={faArrowRight} size="2xl" style={{ color: '#c7c7c7' }} />
+              </button>
             </div>
-          </div>
-          <div className="flex justify-between items-center">
-            <button className="mr-10 transform hover:scale-110" onClick={prevPage}>
-              <FontAwesomeIcon icon={faArrowLeft} size="2xl" style={{ color: '#c7c7c7' }} />
-            </button>
-            <Link to="product">
-              <div className="flex flex-wrap -m-4 justify-center">{imageComponents}</div>
-            </Link>
-            <button className="ml-10 transform hover:scale-110" onClick={nextPage}>
-              <FontAwesomeIcon icon={faArrowRight} size="2xl" style={{ color: '#c7c7c7' }} />
-            </button>
           </div>
         </div>
       </section>

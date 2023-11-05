@@ -39,7 +39,7 @@ const SlideSecond = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
-    initialSlide: 2,
+    initialSlide: 1,
     beforeChange: (current, next) => setCurrentIndex1(next),
   };
 
@@ -49,10 +49,10 @@ const SlideSecond = () => {
   };
 
   return (
-    <div>
+    <div className="">
       이미지가 뜨지 않네. 테일윈드 css처리가 필요할듯.
       {/* 첫 번째 슬라이더 */}
-      <Slider ref={sliderRef1} {...settings1}>
+      <Slider ref={sliderRef1} {...settings1} className="h-[100px]">
         {firstHalf.map((image, index) => (
           <div
             key={index}
@@ -71,12 +71,13 @@ const SlideSecond = () => {
       </div>
 
       {/* 두 번째 슬라이더 */}
-      <Slider ref={sliderRef2} {...settings2}>
+      <Slider ref={sliderRef2} {...settings2} className="h-[100px]">
         
         {secondHalf.map((image, index) => (
           <div
             key={index}
-            className={index === currentIndex2 ? 'slide active' : 'slide'}
+            className={`w-24 h-24 bg-cover bg-no-repeat bg-center rounded-md ${index === currentIndex1 ? 'ring-2 ring-blue-500' : ''}`}
+
             style={{ backgroundImage: `url(${image})` }}
           />
         ))}

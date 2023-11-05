@@ -50,7 +50,7 @@ function SlideMain() {
   // 인라인 스타일을 반환하는 함수
 
   return (
-    <div className="border border-yellow-200 text-white">
+    <div className="border border-yellow-200 text-white h-50%">
       {/* 맵을 돌면서 배열의 productImageUrl반환하는 div 만들면..
         인덱스를 이미지 교환에 사용하므로 쓸수가 없으니까
         인덱스를 쓰지말고 스케일처리된 디브를 준 다음 디브의 배경을 바꾸자! 
@@ -75,9 +75,9 @@ function SlideMain() {
         이미지가 반응형으로 줄어드는 편이다
         */}
         {dummy.map((image, idx) => (
-          <div key={idx}>
+          <div key={idx} className="h-[250px]">
             <div
-              className="flex-1 w-[80%] h-[100px]  border border-red-500 rounded-3xl"
+              className="flex-1 w-[80%] h-[30%]  border border-red-500 rounded-3xl"
               style={{
                 backgroundImage: `url(${image.productImageUrl})`,
                 backgroundSize: 'cover',

@@ -11,7 +11,21 @@
   min-height: 0;
   min-width: 0;
   background: black;
+}
 
+body {
+  display:flex;
+  justify-content: center;
+}
+
+.slick-slider {
+  height:auto;
+}
+
+
+/* 헤더 버튼용 css */
+.nav-link {
+  @apply text-sm text-center ;
 }
 
 .slick-slide > div {
