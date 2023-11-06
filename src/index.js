@@ -9,10 +9,8 @@ import store from './store/store'; // 여기서 store를 import 해야 함
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-    <React.StrictMode>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
   </BrowserRouter>
 );

@@ -11,6 +11,8 @@ import ShoppingCart from './pages/ShoppingCart';
 import OrderHistory from './pages/OrderHistory';
 import ProductPage from './pages/ProductPage';
 import ProductDetailPage from './pages/ProductDetailPage';
+import MyPage from './pages/Mypage';
+import MemberInfoPage from './pages/MemberInfoPage';
 
 function App() {
   return (
@@ -25,11 +27,13 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/product" element={<Product />} />
-          <Route path="/cart" element={<ShoppingCart />} />
+          <Route path="/carts/:cartId" element={<ShoppingCart />} />
           <Route path="/orderhistory" element={<OrderHistory />} />
           <Route path="/productpage" element={<ProductPage />} />
           <Route path="/productdetail" element={<ProductDetailPage />} />
           <Route path="/productdetail/:productId" element={<ProductDetailPage />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/member" element={<MemberInfoPage />} />
         </Route>
       </Routes>
     </div>

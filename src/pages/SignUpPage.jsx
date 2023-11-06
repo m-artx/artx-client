@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../store/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignUpPage() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     userId: '',
     password: '',
@@ -45,19 +47,19 @@ export default function SignUpPage() {
     const isConfirmed = window.confirm('가입을 취소하시겠습니까?');
     if (isConfirmed) {
       // 사용자가 확인을 눌렀을 때 실행할 코드를 여기에 추가
-      // 예를 들어, 취소 액션을 수행하거나 이동할 수 있습니다.
+      navigate('/');
     }
   };
 
   return (
-    <div className="bg-black text-black flex justify-center items-center">
+    <div className="bg-white  text-white flex justify-center items-center">
       <form className="w-64 p-4 bg-white shadow-md" onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="userId" className="text-xs">
+        <div className="mb-4 bg bg-white">
+          <label htmlFor="userId" className="text-xs bg-white text-black">
             아이디
           </label>
           <input
-            className="w-full p-2 border border-black shadow-md"
+            className="w-full p-2 border  border-black shadow-md bg-white"
             type="text"
             id="userId"
             name="userId"
@@ -66,12 +68,12 @@ export default function SignUpPage() {
             required
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="password" className="text-xs">
+        <div className="mb-4 bg-white">
+          <label htmlFor="password" className="text-xs bg-white text-black">
             비밀번호
           </label>
           <input
-            className="w-full p-2 border border-black shadow-md"
+            className="w-full p-2 border border-black shadow-md bg-white"
             type="password"
             id="password"
             name="password"
@@ -80,12 +82,12 @@ export default function SignUpPage() {
             required
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="confirmPassword" className="text-xs">
+        <div className="mb-4 bg-white">
+          <label htmlFor="confirmPassword" className="text-xs bg-white text-black">
             비밀번호 확인
           </label>
           <input
-            className="w-full p-2 border border-black shadow-md"
+            className="w-full p-2 border border-black shadow-md bg-white"
             type="password"
             id="confirmPassword"
             name="confirmPassword"
@@ -94,12 +96,12 @@ export default function SignUpPage() {
             required
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="name" className="text-xs">
+        <div className="mb-4 bg-white ">
+          <label htmlFor="name" className="text-xs bg-white text-black">
             이름
           </label>
           <input
-            className="w-full p-2 border border-black shadow-md"
+            className="w-full p-2 border border-black shadow-md bg-white"
             type="text"
             id="name"
             name="name"
@@ -108,12 +110,12 @@ export default function SignUpPage() {
             required
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="email" className="text-xs">
+        <div className="mb-4 bg-white">
+          <label htmlFor="email" className="text-xs bg-white text-black">
             이메일
           </label>
           <input
-            className="w-full p-2 border border-black shadow-md"
+            className="w-full p-2 border border-black shadow-md bg-white"
             type="email"
             id="email"
             name="email"
@@ -122,12 +124,12 @@ export default function SignUpPage() {
             required
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="address" className="text-xs">
+        <div className="mb-4 bg-white">
+          <label htmlFor="address" className="text-xs bg-white text-black">
             주소
           </label>
           <input
-            className="w-full p-2 border border-black shadow-md"
+            className="w-full p-2 border border-black shadow-md bg-white"
             type="text"
             id="address"
             name="address"
@@ -135,12 +137,12 @@ export default function SignUpPage() {
             onChange={handleChange}
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="phoneNumber" className="text-xs">
+        <div className="mb-4 bg-white">
+          <label htmlFor="phoneNumber" className="text-xs bg-white text-black">
             번호
           </label>
           <input
-            className="w-full p-2 border border-black shadow-md"
+            className="w-full p-2 border border-black shadow-md bg-white"
             type="text"
             id="phoneNumber"
             name="phoneNumber"
