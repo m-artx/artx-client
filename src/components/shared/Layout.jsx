@@ -4,7 +4,7 @@ import Header from '../Header';
 
 export default function Layout() {
   return (
-    <div className="flex flex-col h-screen  bg-black text-white  border-box font-sans border-blue-500 max-w-[1300px] border">
+    <div className="flex flex-col h-screen    border-box font-sans border-blue-500 max-w-[1300px] border">
       <div className="flex justify-center h-[140px] border">
         <Header />
       </div>

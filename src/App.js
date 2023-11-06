@@ -13,6 +13,8 @@ import ProductPage from './pages/ProductPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import Test from "./pages/Test";
 import ProductList from "./pages/ProductList";
+import MyPage from './pages/Mypage';
+import MemberInfoPage from './pages/MemberInfoPage';
 
 function App() {
   return (
@@ -37,7 +39,7 @@ function App() {
 
           <Route path="/download" element={<DownloadPage />} />
           <Route path="/product" element={<Product />} />
-          <Route path="/cart" element={<ShoppingCart />} />
+          <Route path="/carts/:cartId" element={<ShoppingCart />} />
           <Route path="/orderhistory" element={<OrderHistory />} />
           <Route path="/productpage" element={<ProductPage />} />
           <Route path="/productdetail" element={<ProductDetailPage />} />
@@ -46,6 +48,8 @@ function App() {
 
           <Route path="/test" element={<Test />} /> { /* 슬라이드 테스트. 임시. */}
 
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/member" element={<MemberInfoPage />} />
         </Route>
       </Routes>
     </div>
