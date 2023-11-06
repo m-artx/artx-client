@@ -5,14 +5,24 @@ import axios from 'axios'; // axios 라이브러리를 임포트
 function ShoppingCart() {
   // 초기 장바구니 상태
 
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState([
+    {
+      cartId: 1,
+      productId: 1,
+      productRepresentativeImage:
+        'http://127.0.0.1:8080/api/images/1f66d818-4ff2-4a14-9c0c-d77dc30c0639_Rectangle_635.png',
+      productName: '검은 장미',
+      productTitle: '목탄으로 표현한 어둠 속에 피어난 장미',
+
+      productPrice: 100000,
+    },
+  ]);
   const cartId = 1; // 가져오려는 장바구니 ID
-  const productId = 1;
+
+  const productId = 7;
 
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
-
-  // 상품 수량 증가 함수
 
   useEffect(() => {
     // 장바구니 데이터를 가져오는 부분
@@ -30,69 +40,72 @@ function ShoppingCart() {
       });
   }, []);
 
-  const increaseQuantity = (cartId, productId) => {
+  const increaseQuantity = (productId) => {
     // API 요청을 보내어 서버에서 수량을 증가시킴
-
     axios
-      .post(`/api/carts/${cartId}/products/${productId}/increase`)
-      .then((response) => {
-        // 서버로부터 성공적인 응답을 받으면 클라이언트의 상태를 업데이트
-        // 여기에서 상태 업데이트를 수행하실 수 있습니다.
-        // 예를 들어, 서버로부터 업데이트된 장바구니 항목을 받아와서 상태를 업데이트할 수 있습니다.
-      })
-      .catch((error) => {
-        alert('수량 증가 중 오류가 발생했습니다.');
-      });
-  };
-
-  const decreaseQuantity = (productId) => {
-    // API 요청을 보내어 서버에서 수량을 감소시킴
-    axios
-      .post('API_엔드포인트_URL', {
-        productId: productId,
-        action: 'decrease',
-      })
+      .patch(`http://64.110.89.251:8081/api/carts/${cartId}/products/11/increase`)
       .then((response) => {
         // 서버로부터 성공적인 응답을 받으면 클라이언트의 상태를 업데이트
         const updatedCart = cartItems.map((item) => {
           if (item.id === productId && item.quantity > 1) {
-            return { ...item, quantity: item.quantity - 1 };
+            return { ...item, quantity: item.quantity + 1 };
           }
           return item;
         });
         setCartItems(updatedCart);
       })
       .catch((error) => {
-        alert('수량 감소 중 오류가 발생했습니다.');
+        alert('수량 증가 중 오류가 발생했습니다.');
       });
   };
 
-  // 주문하기 함수
-  const placeOrder = () => {
-    if (selectedItems.length === 0) {
-      alert('주문할 상품을 선택해주세요.');
-    } else {
-      // 사용자 데이터 생성
-      const orderData = {
-        productId: 6,
-        productRepresentativeImage:
-          'http://123.108.166.72:8080/api/images/1f66d818-4ff2-4a14-9c0c-d77dc30c0639_Rectangle_635.png',
-        productTitle: '개화',
-        quantity: 0, // 이 부분은 선택에 따라 업데이트
-        price: 100000,
-      };
+  // const decreaseQuantity = (productId) => {
+  //   // API 요청을 보내어 서버에서 수량을 감소시킴
+  //   axios
+  //     .patch(`http://64.110.89.251:8081/api/carts/${cartId}/products/${productId}/decrease`, {
+  //       productId: productId,
+  //     })
+  //     .then((response) => {
+  //       // 서버로부터 성공적인 응답을 받으면 클라이언트의 상태를 업데이트
+  //       const updatedCart = cartItems.map((item) => {
+  //         if (item.id === productId && item.quantity > 1) {
+  //           return { ...item, quantity: item.quantity - 1 };
+  //         }
+  //         return item;
+  //       });
+  //       setCartItems(updatedCart);
+  //     })
+  //     .catch((error) => {
+  //       alert('수량 감소 중 오류가 발생했습니다.');
+  //     });
+  // };
 
-      // API 요청 보내기
-      axios
-        .post('여기에 API 엔드포인트 URL', orderData)
-        .then((response) => {
-          alert(`주문이 완료되었습니다. 총 가격: ${selectedItemsTotalPrice}원`);
-        })
-        .catch((error) => {
-          alert('주문 처리 중 오류가 발생했습니다.');
-        });
-    }
-  };
+  // // 주문하기 함수
+  // const placeOrder = () => {
+  //   if (selectedItems.length === 0) {
+  //     alert('주문할 상품을 선택해주세요.');
+  //   } else {
+  //     // 사용자 데이터 생성
+  //     const orderData = {
+  //       productId: 6,
+  //       productRepresentativeImage:
+  //         'http://123.108.166.72:8080/api/images/1f66d818-4ff2-4a14-9c0c-d77dc30c0639_Rectangle_635.png',
+  //       productTitle: '개화',
+  //       quantity: 0, // 이 부분은 선택에 따라 업데이트
+  //       price: 100000,
+  //     };
+
+  //     // API 요청 보내기
+  //     axios
+  //       .post('여기에 API 엔드포인트 URL', orderData)
+  //       .then((response) => {
+  //         alert(`주문이 완료되었습니다. 총 가격: ${selectedItemsTotalPrice}원`);
+  //       })
+  //       .catch((error) => {
+  //         alert('주문 처리 중 오류가 발생했습니다.');
+  //       });
+  //   }
+  // };
 
   // 상품을 장바구니에 추가하는 함수
   const addToCart = (product) => {
@@ -198,12 +211,8 @@ function ShoppingCart() {
               <p className="text-gray-400 bg-white text-black">가격: {item.productPrice}원</p>
               <p className="text-gray-400 bg-white text-black">수량: {item.productQuantity}</p>
 
-              <button onClick={() => increaseQuantity(item.id)} className="ml-2">
-                +
-              </button>
-              <button onClick={() => decreaseQuantity(item.id)} className="ml-2">
-                -
-              </button>
+              <button onClick={() => increaseQuantity(item.productQuantity)}>수량 증가</button>
+              <button className="ml-2">-</button>
             </div>
           </li>
         ))}
