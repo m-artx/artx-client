@@ -27,8 +27,8 @@ function App() {
           <Route path="/art" element={<ArtPage />} /> { /* 작품관 */}
 
           {/*작품관 하부 페이지 도자기, 그림, 기타로 연결*/}
-          <Route path="/productlist" element={<ProductList />} /> 
-          {/* <Route path="/productlist/:categoryName" element={<ProductList />} />  */}
+          {/* <Route path="/productlist" element={<ProductList />} />  */}
+          <Route path="/productlist/:productCategoryName" element={<ProductList />} /> 
 
 
           <Route path="/signup" element={<SignUpPage />} />

@@ -2,11 +2,18 @@ import React from 'react';
 import ImageSlide from '../components/ImageSlide';
 import SlideMain from '../components/SlideMain';
 import SlideSecond from '../components/SlideSecond';
-// import ApiLoader from '../instance/ApiLoader';
+import CategorySlider from "../components/CategorySlider";
+import ApiLoader from '../instance/ApiLoader';
+import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
+import Slider from 'react-slick';
+
+
 
 function MainPage() {
   // return 값이 data이다
   // const data = ApiLoader();
+
+
 
   return (
     <div className="border max-w-[1300px] ">
@@ -21,12 +28,14 @@ function MainPage() {
           <div className="flex-1 border  bg-slate-400 pt-2 flex flex-col items-center overflow-hidden">
             <p className="p-3">인기작가:新作</p>
             <div className="w-[80%] flex-1 ">
+              {/* 인기작가 제품 10개 */}
               <SlideMain />
             </div>
           </div>
           <div className="flex-1 border  bg-slate-400 pt-2 flex flex-col items-center overflow-hidden">
             <p className="p-3">주목할만한:作</p>
             <div className="w-[80%] flex-1 ">
+              {/* 신규둥록작품 10개 */}
               <SlideSecond />
             </div>
           </div>
@@ -35,9 +44,10 @@ function MainPage() {
 
       {/* 범주 슬라이드 */}
       <div className="flex flex-col w-full items-center pt-2 border yellow-purple-800 overflow-hidden h-[400px]">
-        <p className="p-3">인기작가:新作</p>
-        <div className="flex border w-screen flex-grow">
-          <ImageSlide className="" />
+        <p className="p-3">둘러보기</p>
+        {/* 클릭시제품카테고리페이지로연결 */}
+        <div className="flex border w-screen justify-center ">
+          <CategorySlider />
         </div>
       </div>
 

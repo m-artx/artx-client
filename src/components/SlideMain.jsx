@@ -4,7 +4,7 @@ import Slider from 'react-slick';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import ApiLoader from '../instance/ApiLoader';
 import { useNavigate } from 'react-router-dom';
-
+// 최상위 슬라이드
 
 const dummy = Dummy3();
 

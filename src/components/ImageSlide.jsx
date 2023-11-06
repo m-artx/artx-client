@@ -4,6 +4,8 @@ import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import dummy3 from '../instance/dummy3';
 
+//세번째 슬라이드 - 작품카테고리로 이동
+
 function ImageSlide() {
   // const data = ApiLoader(process.env.REACT_APP_artx_prud_new_ten); // return 값이 배열 data이다
   const data = dummy3();

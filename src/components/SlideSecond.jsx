@@ -2,6 +2,9 @@ import React, { useRef, useState } from 'react';
 import Slider from 'react-slick';
 import Dummy3 from '../instance/dummy2';
 
+//두번째 슬라이드
+
+
 const data = Dummy3();
 const halfIndex = Math.ceil(data.length / 2); // 올바른 halfIndex 계산
 
