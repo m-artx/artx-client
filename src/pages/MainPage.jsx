@@ -16,7 +16,7 @@ function MainPage() {
     <div className="flex items-center flex-col border max-w-[1300px]">
       {/* 인풋 */}
       <div className="flex flex-col items-center justify-center border border-blue-700 max-w-[1300px] h-[1000px]">
-        <div className="h-[60px]">
+        <div className="h-[100px]">
           <Search />
         </div>
         {/* 슬라이드두개감쌈 */}
@@ -39,7 +39,7 @@ function MainPage() {
       </div>
 
       {/* 범주 슬라이드 */}
-      <div className="w-full">
+      <div className="flex w-full ">
         <div className="flex flex-col w-full items-center pt-2 border  yellow-purple-800 overflow-hidden h-[400px]">
           <p className="p-3">둘러보기</p>
           <div className="flex border w-screen justify-center ">

@@ -72,6 +72,10 @@ function Header() {
           <Link to="login">
             <div className="ml-5">로그인</div>
           </Link>
+          {/* 카트 임시링크 */}
+          <Link to="/carts/1">
+            <div className="ml-5">장바구니</div>
+          </Link>
         </div>
       </div>
     </div>

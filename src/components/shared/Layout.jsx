@@ -8,8 +8,7 @@ export default function Layout() {
       <div className="flex justify-center h-[140px] max-w-[1500px] min-h-[140px] border">
         <Header />
       </div>
-      <div className="flex-1 justify-center border border-blue-500
-      bg-yellow-200 h-screen-140  ">
+      <div className="flex justify-center border border-blue-500 h-screen-140  ">
         {<Outlet />}
         </div>
       {/* Outlet는 중첩된 라우트의 자식 라우트들이 랜더링된다 */}
