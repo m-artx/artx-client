@@ -30,7 +30,7 @@ function Header() {
   // Links
   function links() {
     return (
-      <div className="flex justify-center text-center text-sm w-[300px] border ">
+      <div className="flex justify-center text-center text-sm w-[300px]  border ">
         <button className="pr-9" onClick={() => goToPage('/')}>
           홈 화면
         </button>

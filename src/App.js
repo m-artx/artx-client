@@ -30,7 +30,7 @@ function App() {
 
           {/*작품관 하부 페이지 도자기, 그림, 기타로 연결*/}
           {/* <Route path="/productlist" element={<ProductList />} />  */}
-          <Route path="/productlist/:productCategoryName" element={<ProductList />} /> 
+          <Route path="/productslist/:productCategoryName" element={<ProductList />} /> 
 
 
           <Route path="/signup" element={<SignUpPage />} />
@@ -42,7 +42,7 @@ function App() {
           <Route path="/carts/:cartId" element={<ShoppingCart />} />
           <Route path="/orderhistory" element={<OrderHistory />} />
           <Route path="/productpage" element={<ProductPage />} />
-          <Route path="/productdetail" element={<ProductDetailPage />} />
+          {/* <Route path="/productdetail" element={<ProductDetailPage />} /> */}
           <Route path="/productdetail/:productId" element={<ProductDetailPage />} />
 
 
@@ -55,5 +55,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

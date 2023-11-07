@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
-import ApiLoader from '../instance/ApiLoader';
 import axios from 'axios';
 
 // 제품 상세페이지

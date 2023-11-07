@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Dummy3 from '../instance/dummy2';
 import Slider from 'react-slick';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import ApiLoader from '../instance/ApiLoader';
 import { useNavigate } from 'react-router-dom';
 // 최상위 슬라이드
 
-const dummy = Dummy3();
 
 const PrevArrow = ({ onClick }) => {
   return (
@@ -60,12 +58,12 @@ function SlideMain() {
   
 
   return (
-    <div className="border border-yellow-200 text-white h-50%">
+    <div className="border border-yellow-200 text-white ">
       <Slider className="relative min-h-[200px]" {...settings}>
         {apiData.map((image, idx) => (
-          <div key={idx} className="h-[250px]">
+          <div key={idx} className="h-[200px]">
             <div
-              className="flex-1 w-[80%] h-[30%]  border border-red-500 rounded-3xl"
+              className="flex-1 w-[80%] h-[200px]  border border-red-500 rounded-xl"
               style={{
                 backgroundImage: `url(${image.productRepresentativeImage})`,
                 backgroundSize: 'cover',

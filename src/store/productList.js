@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 // 초기 이미지 목록 데이터
+
 const initialState = {
   ProductList: [
     {

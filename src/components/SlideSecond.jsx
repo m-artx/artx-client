@@ -1,20 +1,30 @@
-import React, { useRef, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import Slider from 'react-slick';
-import Dummy3 from '../instance/dummy2';
+import ApiLoader from '../instance/ApiLoader';
+import { useNavigate } from 'react-router-dom';
 
-//두번째 슬라이드
-
-
-const data = Dummy3();
-const halfIndex = Math.ceil(data.length / 2); // 올바른 halfIndex 계산
-
-// 배열 나눔
-const firstHalf = data.slice(0, halfIndex);
-const secondHalf = data.slice(halfIndex);
 
 const SlideSecond = () => {
   const sliderRef1 = useRef(); // 첫 번째 슬라이더 ref
-  const sliderRef2 = useRef(); // 두 번째 슬라이더 ref
+
+  const apiData = ApiLoader(process.env.REACT_APP_artx_prod_new_ten);
+  // console.log(apiData.length)
+  const doubleData = [...apiData, ...apiData]
+
+  // 데이터가 준비되었다면, 배열을 나눕니다.
+  const halfIndex = Math.ceil(apiData.length / 2);
+  const firstHalf = apiData.slice(0, halfIndex);
+  const secondHalf = apiData.slice(halfIndex);
+
+  const [currentIndex1, setCurrentIndex1] = useState(0); // 첫 번째 슬라이더 인덱스 상태
+  const [currentIndex2, setCurrentIndex2] = useState(0); // 첫 번째 슬라이더 인덱스 상태
+
+  const navigate = useNavigate();
+  const goToProductDetail = (id) => {
+    navigate(`/productdetail/${id}`);
+  };
+  
 
   // 첫 번째 슬라이더 함수
   const play1 = () => {
@@ -25,74 +35,80 @@ const SlideSecond = () => {
   };
 
   // 두 번째 슬라이더 함수
-  const play2 = () => {
-    sliderRef2.current.slickPlay();
-  };
-  const pause2 = () => {
-    sliderRef2.current.slickPause();
-  };
-
-  const [currentIndex1, setCurrentIndex1] = useState(0);
-  const [currentIndex2, setCurrentIndex2] = useState(0);
+  // const play2 = () => {
+  //   sliderRef2.current.slickPlay();
+  // };
+  // const pause2 = () => {
+  //   sliderRef2.current.slickPause();
+  // };
 
   const settings1 = {
-    dots: true,
+    // centerMode:true,
     infinite: true,
-    slidesToShow: 3,
+    slidesToShow: 10,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
     initialSlide: 1,
+    draggable: true,
+    arrows: false,
     beforeChange: (current, next) => setCurrentIndex1(next),
   };
 
+  // 두 번째 슬라이더 설정 (첫 번째 슬라이더 설정을 상속받음)
   const settings2 = {
-    ...settings1, // 첫 번째 슬라이더 설정을 상속하고,
-    beforeChange: (current, next) => setCurrentIndex2(next), // 다른 beforeChange 함수를 사용
+    // centerMode:true,
+    infinite: true,
+    slidesToShow: 10,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    initialSlide: 5,  
+    draggable: true,
+    arrows: false,
+    beforeChange: (current, next) => setCurrentIndex2(next),
   };
 
   return (
-    <div className="">
-      이미지가 뜨지 않네. 테일윈드 css처리가 필요할듯.
+    <div className="h">
       {/* 첫 번째 슬라이더 */}
-      <Slider ref={sliderRef1} {...settings1} className="h-[100px]">
-        {firstHalf.map((image, index) => (
-          <div
-            key={index}
-            className={`w-24 h-24 bg-cover bg-no-repeat bg-center rounded-md ${index === currentIndex1 ? 'ring-2 ring-blue-500' : ''}`}
-            style={{ backgroundImage: `url(${image})` }}
-          />
+      <Slider {...settings1} className="pr-[50px]">
+        {doubleData.map((item, idx) => (
+          <div key={idx} className="h-[100px] pl-2 ">
+            <div
+              className="rounded-xl h-[200px]"
+              style={{
+                backgroundImage: `url(${item.productRepresentativeImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+              }}
+              onClick={() => goToProductDetail(item.productId)}
+
+            ></div>
+          </div>
         ))}
       </Slider>
-      <div style={{ textAlign: 'center' }}>
-        <button className="button" onClick={play1}>
-          Play
-        </button>
-        <button className="button" onClick={pause1}>
-          Pause
-        </button>
-      </div>
-
+      <div style={{ textAlign: 'center' }}></div>
       {/* 두 번째 슬라이더 */}
-      <Slider ref={sliderRef2} {...settings2} className="h-[100px]">
-        
-        {secondHalf.map((image, index) => (
-          <div
-            key={index}
-            className={`w-24 h-24 bg-cover bg-no-repeat bg-center rounded-md ${index === currentIndex1 ? 'ring-2 ring-blue-500' : ''}`}
+      <Slider {...settings2} className="pl-[50px]">
+        {doubleData.map((item, idx) => (
+          <div key={idx} className="h-[100px] pl-2">
+            <div
+              className="rounded-xl h-[200px]"
+              style={{
+                backgroundImage: `url(${item.productRepresentativeImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+              }}
+              onClick={() => goToProductDetail(item.productId)}
 
-            style={{ backgroundImage: `url(${image})` }}
-          />
+            ></div>
+          </div>
         ))}
       </Slider>
-      <div style={{ textAlign: 'center' }}>
-        <button className="button" onClick={play2}>
-          Play
-        </button>
-        <button className="button" onClick={pause2}>
-          Pause
-        </button>
-      </div>
+      <div style={{ textAlign: 'center' }}></div>
     </div>
   );
 };
