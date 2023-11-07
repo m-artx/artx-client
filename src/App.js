@@ -15,6 +15,7 @@ import Test from './pages/Test';
 import ProductList from './pages/ProductList';
 import MyPage from './pages/Mypage';
 import MemberInfoPage from './pages/MemberInfoPage';
+import Orderpage from './pages/Orderpage';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route path="/test" element={<Test />} /> {/* 슬라이드 테스트. 임시. */}
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/member" element={<MemberInfoPage />} />
+          <Route path="/order" element={<Orderpage />} />
         </Route>
       </Routes>
     </div>
