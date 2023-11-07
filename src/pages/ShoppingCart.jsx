@@ -31,14 +31,14 @@ function ShoppingCart() {
   const increaseQuantity = (productId) => {
     // API 요청을 보내어 서버에서 수량을 증가시킴
     axios
-      .patch(`http://64.110.89.251:8081/api/carts/${cartId}/products/11/increase`)
+      .patch(`http://64.110.89.251:8081/api/carts/${cartId}/products/${productId}/increase`)
       .then((response) => {
         const updatedCart = cartItems.map((item) => {
           if (item.productId === productId) {
             return { ...item, cartProductQuantity: item.cartProductQuantity + 1 };
           }
 
-          return { ...item, cartProductQuantity: item.cartProductQuantity + 1 };
+          return { ...item };
         });
         setCartItems(updatedCart);
         console.log(updatedCart);
@@ -52,22 +52,23 @@ function ShoppingCart() {
   const decreaseQuantity = (productId) => {
     // API 요청을 보내어 서버에서 수량을 감소시킴
     axios
-      .patch(`http://64.110.89.251:8081/api/carts/${cartId}/products/11/decrease`)
+      .patch(`http://64.110.89.251:8081/api/carts/${cartId}/products/${productId}/decrease`)
       .then((response) => {
-        const updatedCart = cartItems.map((item) => {
-          if (item.productId === productId && item.quantity > 1) {
-            return { ...item, cartProductQuantity: item.cartProductQuantity - 1 };
-          }
-          return { ...item, cartProductQuantity: item.cartProductQuantity - 1 };
+        setCartItems((prevCartItems) => {
+          const updatedCart = prevCartItems.map((item) => {
+            if (item.productId === productId && item.cartProductQuantity > 1) {
+              return { ...item, cartProductQuantity: item.cartProductQuantity - 1 };
+            }
+            return { ...item };
+          });
+          console.log(updatedCart);
+          return updatedCart;
         });
-        setCartItems(updatedCart);
-        console.log(updatedCart);
       })
       .catch((error) => {
         alert('수량 감소 중 오류가 발생했습니다.');
       });
   };
-
   // 상품을 장바구니에 추가하는 함수
   const addToCart = (product) => {
     // 이미 장바구니에 있는 상품인지 확인
@@ -186,8 +187,8 @@ function ShoppingCart() {
               <p className="text-gray-400 bg-white text-black">가격: {item.productPrice}원</p>
               <p className="text-gray-400 bg-white text-black">수량: {item.cartProductQuantity}</p>
 
-              <button onClick={() => increaseQuantity(item.cartProductQuantity)}>수량증가 </button>
-              <button onClick={() => decreaseQuantity(item.cartProductQuantity)}> 수량감소</button>
+              <button onClick={() => increaseQuantity(item.productId)}>수량증가 </button>
+              <button onClick={() => decreaseQuantity(item.productId)}> 수량감소</button>
             </div>
           </li>
         ))}
