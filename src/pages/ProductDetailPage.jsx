@@ -93,7 +93,7 @@ function ProductDetailPage() {
                 <p className="w-[300px] border"> 작가이름 api </p>
                 <div className="w-[300px] border p-2">
                   <p className=""> {productData.productDescription} </p>
-                  <p className="">ex 유화 1200*1000</p>
+                  {/* <p className="">ex 유화 1200*1000</p> */}
                 </div>
               </div>
               <div className="flex flex-col text-center pt-5">
