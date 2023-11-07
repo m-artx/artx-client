@@ -2,7 +2,7 @@ import React from 'react';
 
 function Search() {
   return (
-    <div className="flex justify-center items-center h-[100px] border">
+    <div className="flex justify-center items-center  border">
     <div>
       <input
         className="border rounded-full bg-black w-[320px] p-3 text-center placeholder-white "

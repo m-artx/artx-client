@@ -12,10 +12,6 @@ function Header() {
   const goToPage = (path) => {
     navigate(path);
   };
-  //카테고리 이동 함수
-  const goToCategory = (path) => {
-    navigate(path);
-  };
 
   // 마우스를 버튼 위에 올리면 드롭다운을 보여주는 함수
   const showDropdown = () => {
@@ -40,13 +36,14 @@ function Header() {
           onMouseEnter={showDropdown}
           onMouseLeave={hideDropdown}
         >
-          <button onClick={() => goToPage('/art')}className="">작품관</button>
+          <button onClick={() => goToPage('productslist/ART')}className="">작품관</button>
           {dropdownVisibility && (
             <Dropdown>
               <ul className="flex text-center border w-[250px] absolute p-2">
-                <li className="flex-1  border" onClick={() => goToCategory('productlist')}>그림</li>
-                <li className="flex-1  border" onClick={() => goToCategory('ceramic')}>도자기</li>
-                <li className="flex-1  border" onClick={() => goToCategory('etc')}>etc.</li>
+                <li className="flex-1  border" onClick={() => goToPage('productslist/ART')}>전체보기</li>
+                <li className="flex-1  border" onClick={() => goToPage('productslist/ART')}>그림</li>
+                <li className="flex-1  border" onClick={() => goToPage('productslist/CERAMIC')}>도자기</li>
+                <li className="flex-1  border" onClick={() => goToPage('productslist/ETC')}>etc.</li>
               </ul>
             </Dropdown>
           )}

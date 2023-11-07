@@ -16,7 +16,7 @@ function MainPage() {
     <div className="flex items-center flex-col border max-w-[1300px]">
       {/* 인풋 */}
       <div className="flex flex-col items-center justify-center border border-blue-700 max-w-[1300px] h-[1000px]">
-        <div className="h-[200px]">
+        <div className="h-[100px]">
           <Search />
         </div>
         {/* 슬라이드두개감쌈 */}
