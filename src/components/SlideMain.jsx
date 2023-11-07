@@ -3,6 +3,7 @@ import Slider from 'react-slick';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import ApiLoader from '../instance/ApiLoader';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 // 최상위 슬라이드
 
 
@@ -44,18 +45,17 @@ const settings = {
   lazyLoad: true,
 };
 
-
-
 function SlideMain() {
-
   const apiData = ApiLoader(process.env.REACT_APP_artx_prod_pop_ten);
   //apiData가 array가 아닌 경우도 처리해야하나?
 
+  console.log(`apiData:`, apiData);
+  const apiData2 = 'http://64.110.89.251:8081/api/products/main?type=LATEST';
+  console.log(`apiData2:`, apiData2);
   const navigate = useNavigate();
   const goToProductDetail = (id) => {
     navigate(`/productdetail/${id}`);
   };
-  
 
   return (
     <div className="border border-yellow-200 text-white ">
@@ -69,69 +69,13 @@ function SlideMain() {
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
-                
               }}
               onClick={() => goToProductDetail(image.productId)}
-
             ></div>
           </div>
         ))}
-
-        {/* <div className="flex-1 min-w-[100px] min-h-[180px] border border-red-500">1</div>
-          <div className="flex-1 min-w-[100px] min-h-[180px] border border-red-500">2</div>
-          <div className="flex-1 min-w-[100px] min-h-[180px] border border-red-500">3</div>
-          <div className="flex-1 min-w-[100px] min-h-[180px] border border-red-500">4</div>
-          <div className="flex-1 min-w-[100px] min-h-[180px] border border-red-500">5</div>
-          <div className="flex-1 min-w-[100px] min-h-[180px] border border-red-500">6</div> */}
-
-        {/* <div className="px-4 h-auto">1
-          <img className="w-[180px] h-[220px] rounded-xl object-cover m-auto" src={dummy[0].productImageUrl} />
-        </div>
-        <div className="px-4 h-auto">2
-          <img className="w-[180px] h-[220px] rounded-xl object-cover m-auto" src={dummy[1].productImageUrl} />
-        </div>
-        <div className="px-4 h-auto">3
-          <img className="w-[180px] h-[220px] rounded-xl object-cover m-auto" src={dummy[2].productImageUrl} />
-        </div>
-        <div className="px-4 h-auto">4
-          <img className="w-[180px] h-[220px] rounded-xl object-cover m-auto" src={dummy[4].productImageUrl} />
-        </div>
-        <div className="px-4 h-auto">5
-          <img className="w-[180px] h-[220px] rounded-xl object-cover m-auto " src={dummy[5].productImageUrl} />
-        </div>
-        <div className="px-4 h-auto">6
-          <img className="w-[180px] h-[220px] rounded-xl object-cover m-auto " src={dummy[6].productImageUrl} />
-        </div>
-        <div className="px-4 h-auto">7
-          <img className="w-[180px] h-[220px] rounded-xl object-cover m-auto" src={dummy[7].productImageUrl} />
-        </div>
-        <div className="px-4 h-auto">8
-          <img className="w-[180px] h-[220px] rounded-xl object-cover m-auto " src={dummy[8].productImageUrl} />
-        </div>
-        <div className="px-4 h-auto">9
-          <img className="w-[180px] h-[220px] rounded-xl object-cover m-auto " src={dummy[9].productImageUrl} />
-        </div>
-        <div className="px-4 h-auto">10
-          <img className="w-[180px] h-[220px] rounded-xl object-cover m-auto " src={dummy[9].productImageUrl} />
-        </div> */}
       </Slider>
     </div>
-
-    // <div className="border border-yellow-200 h-100%" style={{}}>
-    //   <Slider className="relative" {...settings}>
-    //     {dummy.map((image, idx) => (
-    //       <div key={idx} >
-    //         <div className="px-4 h-auto">
-    //           <img
-    //             className="w-[180px] h-[220px] rounded-xl object-cover m-auto"
-    //             src={image.productImageUrl}
-    //             alt={`이미지 ${idx}`}
-    //           />
-    //         </div>
-    //       </div>
-    //     ))}
-    //   </Slider>
-    // </div>
   );
 }
 

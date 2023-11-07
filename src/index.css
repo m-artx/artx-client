@@ -14,18 +14,17 @@
 }
 
 body {
-  display:flex;
+  display: flex;
   justify-content: center;
 }
 
 .slick-slider {
-  height:auto;
+  height: auto;
 }
-
 
 /* 헤더 버튼용 css */
 .nav-link {
-  @apply text-sm text-center ;
+  @apply text-sm text-center;
 }
 
 .slick-slide > div {

@@ -36,11 +36,11 @@ function MemberInfoPage() {
   return (
     <div className="bg-white min-h-screen py-8 w-screen">
       <div className="max-w-md mx-auto bg-gray-100 p-4 rounded-lg shadow-lg">
-        <h1 className="flex justify-center text-5xl  text-black">마이페이지</h1>
-        <span className="font-bold flex justify-center text-4x  text-blackl">홍길동 님</span>
-        <form onSubmit={handleSubmit}>
+        <h1 className="flex justify-center text-5xl  text-black bg-white">마이페이지</h1>
+        <span className="font-bold flex justify-center text-4x bg-white text-blackl">홍길동 님</span>
+        <form className="bg-white" onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="name" className="text-sm text-gray-600">
+            <label htmlFor="name" className="text-sm text-gray-600 ">
               이름
             </label>
             <input

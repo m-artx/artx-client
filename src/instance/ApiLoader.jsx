@@ -7,9 +7,8 @@ function ApiLoader(url) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    
     const apiUrl = `${process.env.REACT_APP_artx_base_url}${url}`;
-    // console.log('apiurl컴포넌트 : ' + apiUrl);
+    console.log('apiurl컴포넌트 : ' + apiUrl);
 
     axios
       .get(apiUrl)
