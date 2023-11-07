@@ -35,6 +35,7 @@ function ImageSlide() {
     const newIndex = (currentIndex - 1 + data.length) % data.length;
     setCurrentIndex(newIndex);
   };
+  
 
   console.log(data[currentIndex]); // 이 줄을 추가하여 현재 요소를 콘솔에 출력
 
