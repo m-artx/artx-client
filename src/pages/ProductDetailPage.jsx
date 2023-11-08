@@ -4,6 +4,7 @@ import Slider from 'react-slick';
 import axios from 'axios';
 
 // 제품 상세페이지
+// api 컴포넌트 사용해서 바꿔보자
 
 function ProductDetailPage() {
   let { productId } = useParams();

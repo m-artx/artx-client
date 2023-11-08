@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'; // axios 라이브러리를 임포트
+import useApiLoader from "../../instance/useApiLoader";
+
+
+//use param사용해야하는지? cartId 어떻게 가져오는지 고민하기
 
 function ShoppingCart() {
   // 초기 장바구니 상태
-
   const [cartItems, setCartItems] = useState([]);
   const cartId = 1; // 가져오려는 장바구니 ID
 
@@ -12,21 +15,39 @@ function ShoppingCart() {
   const [selectAll, setSelectAll] = useState(false);
   const navigate = useNavigate();
 
+  // 데이터 url 세팅
+  const apiUrl = (`${process.env.REACT_APP_artx_prod_cart}/${cartId}`);
+  console.log('apiUrl : ', apiUrl)
+
+  //useApiliader로 데이터 받아오기
+  const apiData = useApiLoader(apiUrl)
+  console.log('apiData : ', apiData)
+
+  //배열에 안담아진다..
+
+
+
+
+
+
   useEffect(() => {
     // 장바구니 데이터를 가져오는 부분
     axios
-      .get(`http://64.110.89.251:8081/api/carts/${cartId}`)
+      .get(`${process.env.REACT_APP_artx_base_url}${apiUrl}`)
       .then((response) => {
         const cartData = response.data;
         // cartItemDetails를 사용하여 배열을 얻음
         const cartArray = cartData.cartItemDetails;
         setCartItems(cartArray);
-        console.log(cartArray);
       })
       .catch((error) => {
         console.error('API 요청 중 오류 발생:', error);
       });
   }, []);
+
+
+
+
 
   const increaseQuantity = (productId) => {
     // API 요청을 보내어 서버에서 수량을 증가시킴
@@ -154,8 +175,16 @@ function ShoppingCart() {
     }
   };
 
+
+
+
+    // 데이터 로딩상태 메시지
+    // if (loading) return <div>Loading...</div>;
+    // if (error) return <div>Error: {error.message}</div>;
+  
+
   return (
-    <div className=" bg-white text-black p-4  w-screen">
+    <div className=" bg-white text-black p-4  w-[1300px]">
       <h1 className="text-4xl font-bold mb-4 flex justify-center bg-white text-black ">장바구니</h1>
       <div className="flex flex-col bg-white">
         <span className="flex justify-center bg-white text-black">장바구니-주문서 작성 및 결제-주문 확인</span>
@@ -187,8 +216,8 @@ function ShoppingCart() {
               <p className="text-gray-400 bg-white text-black">가격: {item.productPrice}원</p>
               <p className="text-gray-400 bg-white text-black">수량: {item.cartProductQuantity}</p>
 
-              <button onClick={() => increaseQuantity(item.productId)}>수량증가 </button>
-              <button onClick={() => decreaseQuantity(item.productId)}> 수량감소</button>
+              <button onClick={() => increaseQuantity(item.productId)}>수량증가</button>
+              <button onClick={() => decreaseQuantity(item.productId)}>수량감소</button>
             </div>
           </li>
         ))}
