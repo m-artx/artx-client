@@ -1,21 +1,32 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight, faSearch } from '@fortawesome/free-solid-svg-icons';
+// ArtSearch.js
 
-function ArtSearch() {
-  return (
-    <div className="border">
-      <div className="flex flex-wrap w-full mb-10 sm:mb-20">
-        <div className="w-1/2 mx-auto mb-6 lg:mb-0 text-center">
-          <h1 className="text-3xl sm:text-8xl font-medium title-font mb-2 text-white">전체작품</h1>
-          <div className="flex items-center border-solid border-2 border-neutral-950 p-3 rounded-full w-800 bg-white">
-            <FontAwesomeIcon icon={faSearch} className="mr-2" />
-            <input className="w-full bg-transparent outline-none" type="text" placeholder="검색어를 입력하세요" />
-          </div>
-        </div>
+import React, { useState } from 'react';
+
+const ArtSearch = ({ onSearch }) => {
+   const [searchTerm, setSearchTerm] = useState('');
+
+   const handleSearch = () => {
+      // 부모 컴포넌트로 검색어 전달
+      onSearch(searchTerm);
+   };
+
+   return (
+      <div className="max-w-2xl mx-auto flex p-4 bg-white">
+         <input
+            type="text"
+            placeholder="작품을 검색하세요."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="flex-grow w-full px-4 border-2 border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+         />
+         <button
+            onClick={handleSearch}
+            className="ml-4 bg-indigo-500 text-white p-2 rounded-md hover:bg-indigo-600 focus:outline-none"
+         >
+            검색
+         </button>
       </div>
-    </div>
-  );
-}
+   );
+};
 
 export default ArtSearch;
