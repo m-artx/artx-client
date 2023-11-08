@@ -17,6 +17,8 @@ import MyPage from './pages/Mypage';
 import MemberInfoPage from './pages/MemberInfoPage';
 import Orderpage from './pages/Orderpage';
 import ProductRegistrationPage from './pages/ProductRegistrationPage';
+import ArtistRegistrationPage from './pages/ArtistRegistrationPage';
+import ArtistProfilePage from './pages/ArtistProfilePage';
 
 function App() {
    return (
@@ -44,6 +46,8 @@ function App() {
                <Route path="/member" element={<MemberInfoPage />} />
                <Route path="/order" element={<Orderpage />} />
                <Route path="/ProductRegistration" element={<ProductRegistrationPage />} />
+               <Route path="/ArtistRegistration" element={<ArtistRegistrationPage />} />
+               <Route path="/ArtistProfile" element={<ArtistProfilePage />} />
             </Route>
          </Routes>
       </div>
