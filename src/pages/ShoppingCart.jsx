@@ -7,6 +7,7 @@ function ShoppingCart() {
 
    const [cartItems, setCartItems] = useState([]);
    const cartId = 1; // 가져오려는 장바구니 ID
+   const [isSoldOut, setIsSoldOut] = useState(false);
 
    const [selectedItems, setSelectedItems] = useState([]);
    const [selectAll, setSelectAll] = useState(false);
@@ -35,6 +36,8 @@ function ShoppingCart() {
          .then((response) => {
             const updatedCart = cartItems.map((item) => {
                if (item.productId === productId) {
+                  const updatedQuantity = item.cartProductQuantity + 1;
+                  setIsSoldOut(updatedQuantity === 0); // 체크하여 품절 여부 업데이트
                   return { ...item, cartProductQuantity: item.cartProductQuantity + 1 };
                }
 
@@ -50,14 +53,15 @@ function ShoppingCart() {
    };
 
    const decreaseQuantity = (productId) => {
-      // API 요청을 보내어 서버에서 수량을 감소시킴
       axios
          .patch(`http://64.110.89.251:8081/api/carts/${cartId}/products/${productId}/decrease`)
          .then((response) => {
             setCartItems((prevCartItems) => {
                const updatedCart = prevCartItems.map((item) => {
                   if (item.productId === productId && item.cartProductQuantity > 1) {
-                     return { ...item, cartProductQuantity: item.cartProductQuantity - 1 };
+                     const updatedQuantity = item.cartProductQuantity - 1;
+                     setIsSoldOut(updatedQuantity === 0); // 체크하여 품절 여부 업데이트
+                     return { ...item, cartProductQuantity: updatedQuantity };
                   }
                   return { ...item };
                });
@@ -185,10 +189,14 @@ function ShoppingCart() {
                   <div className="ml-4 bg-white text-black">
                      <p className="text-lg font-semibold bg-white text-black">{item.productTitle}</p>
                      <p className="text-gray-400 bg-white text-black">가격: {item.productPrice}원</p>
-                     <p className="text-gray-400 bg-white text-black">수량: {item.cartProductQuantity}</p>
-
-                     <button onClick={() => increaseQuantity(item.productId)}>수량증가 </button>
-                     <button onClick={() => decreaseQuantity(item.productId)}> 수량감소</button>
+                     {isSoldOut && <p className="text-red-500">품절</p>}
+                     {!isSoldOut && (
+                        <>
+                           <p className="text-gray-400 bg-white text-black">수량: {item.cartProductQuantity}</p>
+                           <button onClick={() => increaseQuantity(item.productId)}>수량증가 </button>
+                           <button onClick={() => decreaseQuantity(item.productId)}> 수량감소</button>
+                        </>
+                     )}
                   </div>
                </li>
             ))}
