@@ -2,49 +2,51 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function ProductRegistrationPage() {
-   const [formData, setFormData] = useState({
-      request: {
-         userId: 'fafe2100-e770-4cfc-aef7-960837b777df',
-         productCategoryId: 1,
-         productName: '검은 장미',
-         productTitle: '목탄으로 표현한 어둠 속에 피어난 장미',
-         productDescription: '10년 전 우연히 길을 지나가다 발견한 장미의 낯빛이 어두웠습니다. 그때의 감정을..',
-         productQuantity: 100,
-         productPrice: 100000,
-      },
-      files: [],
+   const [request, setRequest] = useState({
+      userId: '35a69652-6a41-4372-9f1b-0b32215e8af7',
+      productCategoryId: 4,
+      productTitle: '',
+      productDescription: '',
+      productQuantity: 0,
+      productPrice: 0,
    });
+   const [files, setFiles] = useState(null);
+
    const [inputValue, setInputValue] = useState(''); // 빈 문자열로 기본값 설정
    const handleInputChange = (e) => {
       const { name, value } = e.target;
-
-      setFormData((prevFormData) => ({
-         ...prevFormData,
+      setRequest((prevData) => ({
+         ...prevData,
          [name]: value,
       }));
    };
 
    const handleFileChange = (e) => {
       const file = e.target.files[0];
-      setFormData((prevFormData) => ({
-         ...prevFormData,
-         files: file,
-      }));
+      setFiles(file);
    };
 
-   const addProduct = async (productData) => {
-      try {
-         const response = await axios.post(
-            `https://64.110.89.251:8081/api/products/new
-         /api/products/new`,
-            productData
-         );
-         console.log('상품 등록 성공:', response.data);
-         return response.data; // 성공 시 서버 응답 데이터 반환
-      } catch (error) {
-         console.error('상품 등록 실패:', error);
-         throw error; // 실패 시 에러를 던져서 상위 컴포넌트에서 처리
-      }
+   const addProduct = (e) => {
+      e.preventDefault();
+
+      const formData = new FormData();
+      formData.append('files', files);
+
+      const json = JSON.stringify(request);
+      const blob = new Blob([json], { type: "application/json" });
+
+      formData.append('request', blob);
+
+
+      // Axios를 사용하여 FormData를 전송
+      axios
+         .post('http://64.110.89.251:8081/api/products/new',formData)
+         .then((response) => {
+            console.log(response);
+         })
+         .catch((error) => {
+            console.log(error);
+         });
    };
    return (
       <div className="bg-black min-h-screen flex items-center justify-center">
@@ -55,26 +57,16 @@ function ProductRegistrationPage() {
                   <label className="text-sm font-medium mb-2 block">작품 이미지:</label>
                   <input
                      type="file"
-                     name="productImage"
+                     name="files"
                      accept=".png, .jpg, .jpeg"
                      onChange={handleFileChange}
                      className="w-full py-2 px-4 bg-white border rounded text-black focus:outline-none focus:border-black"
                   />
                </div>
                <div className="mb-4">
-                  <label className="text-sm font-medium mb-2 block">작품 이름:</label>
+                  <label className="text-sm font-medium mb-2 block">작품명:</label>
                   <input
-                     value={formData.productName}
-                     onChange={handleInputChange}
-                     type="text"
-                     name="productName"
-                     className="w-full py-2 px-4 bg-white border rounded text-black focus:outline-none focus:border-black"
-                  />
-               </div>
-               <div className="mb-4">
-                  <label className="text-sm font-medium mb-2 block">작품 제목:</label>
-                  <input
-                     value={formData.productTitle}
+                     value={request.productTitle}
                      onChange={handleInputChange}
                      type="text"
                      name="productTitle"
@@ -84,7 +76,7 @@ function ProductRegistrationPage() {
                <div className="mb-4">
                   <label className="text-sm font-medium mb-2 block">작품 설명:</label>
                   <textarea
-                     value={formData.productDescription}
+                     value={request.productDescription}
                      onChange={handleInputChange}
                      name="productDescription"
                      className="w-full py-2 px-4 bg-white border rounded text-black focus:outline-none focus:border-black"
@@ -96,7 +88,7 @@ function ProductRegistrationPage() {
                      type="number"
                      name="productQuantity"
                      onChange={handleInputChange}
-                     value={formData.productQuantity}
+                     value={request.productQuantity}
                      className="w-full py-2 px-4 bg-white border rounded text-black focus:outline-none focus:border-black"
                   />
                </div>
@@ -106,7 +98,7 @@ function ProductRegistrationPage() {
                      type="number"
                      name="productPrice"
                      onChange={handleInputChange}
-                     value={formData.productPrice}
+                     value={request.productPrice}
                      className="w-full py-2 px-4 bg-white border rounded text-black focus:outline-none focus:border-black"
                   />
                </div>
