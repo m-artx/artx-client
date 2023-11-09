@@ -27,13 +27,16 @@ function ShoppingCart() {
    useEffect(() => {
       // 장바구니 데이터를 가져오는 부분
       axios
-         .get(`${process.env.REACT_APP_artx_base_url}${apiUrl}`)
+         .get(`${process.env.REACT_APP_artx_base_url}carts/1`)
          .then((response) => {
             const cartData = response.data;
             // cartItemDetails를 사용하여 배열을 얻음
             const cartArray = cartData.cartItemDetails;
             setCartItems(cartArray);
+            console.log('cartArray', cartArray[0].productQuantity);
+            console.log('cartArray', cartArray[0].cartProductQuantity);
          })
+
          .catch((error) => {
             console.error('API 요청 중 오류 발생:', error);
          });
@@ -81,27 +84,27 @@ function ShoppingCart() {
          });
    };
    // 상품을 장바구니에 추가하는 함수
-   const addToCart = (product) => {
-      // 이미 장바구니에 있는 상품인지 확인
-      const existingItem = cartItems.find((item) => item.id === product.id);
+   // const addToCart = (product) => {
+   //    // 이미 장바구니에 있는 상품인지 확인
+   //    const existingItem = cartItems.find((item) => item.id === product.id);
 
-      if (existingItem) {
-         // 이미 장바구니에 있는 경우, 수량을 증가
-         const updatedCart = cartItems.map((item) =>
-            item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-         );
-         setCartItems(updatedCart);
-      } else {
-         // 장바구니에 없는 경우, 새로운 항목으로 추가
-         setCartItems([...cartItems, { ...product, quantity: 1 }]);
-      }
-   };
+   //    if (existingItem) {
+   //       // 이미 장바구니에 있는 경우, 수량을 증가
+   //       const updatedCart = cartItems.map((item) =>
+   //          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+   //       );
+   //       setCartItems(updatedCart);
+   //    } else {
+   //       // 장바구니에 없는 경우, 새로운 항목으로 추가
+   //       setCartItems([...cartItems, { ...product, quantity: 1 }]);
+   //    }
+   // };
 
    // 장바구니에서 상품을 제거하는 함수
-   const removeFromCart = (productId) => {
-      const updatedCart = cartItems.filter((item) => item.id !== productId);
-      setCartItems(updatedCart);
-   };
+   // const removeFromCart = (productId) => {
+   //    const updatedCart = cartItems.filter((item) => item.id !== productId);
+   //    setCartItems(updatedCart);
+   // };
 
    // 상품을 선택 또는 해제하는 함수
    const toggleItemSelection = (productId) => {
@@ -200,10 +203,25 @@ function ShoppingCart() {
                   <div className="ml-4 bg-white text-black">
                      <p className="text-lg font-semibold bg-white text-black">{item.productTitle}</p>
                      <p className="text-gray-400 bg-white text-black">가격: {item.productPrice}원</p>
-                     <p className="text-gray-400 bg-white text-black">수량: {item.cartProductQuantity}</p>
-
-                     <button onClick={() => increaseQuantity(item.productId)}>수량증가</button>
-                     <button onClick={() => decreaseQuantity(item.productId)}>수량감소</button>
+                     {item.productQuantity === 0 ? (
+                        <p className="text-red-500 font-bold bg-white text-black">품절</p>
+                     ) : (
+                        <>
+                           <p className="text-gray-400 bg-white text-black">수량: {item.cartProductQuantity}</p>
+                           <button
+                              onClick={() => increaseQuantity(item.productId)}
+                              disabled={item.productQuantity === 0} // 품절인 경우 비활성화
+                           >
+                              수량증가
+                           </button>
+                           <button
+                              onClick={() => decreaseQuantity(item.productId)}
+                              disabled={item.productQuantity === 0} // 품절인 경우 비활성화
+                           >
+                              수량감소
+                           </button>
+                        </>
+                     )}
                   </div>
                </li>
             ))}

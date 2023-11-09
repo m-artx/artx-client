@@ -19,6 +19,8 @@ import Orderpage from './pages/Orderpage';
 import ProductRegistrationPage from './pages/ProductRegistrationPage';
 import ArtistRegistrationPage from './pages/ArtistRegistrationPage';
 import ArtistProfilePage from './pages/ArtistProfilePage';
+import Kakaologin from './pages/Kakaologin';
+import KakaoAuth from './pages/KakaoAuth';
 
 function App() {
    return (
@@ -27,10 +29,10 @@ function App() {
             <Route path="/" element={<Layout />}>
                {/* 메인으로 받아오는 페이지는 메인페이지 */}
                <Route index element={<MainPage />} /> {/*메인페이지 */}
-               <Route path="/art" element={<ArtPage />} /> {/* 작품관 */}
+               <Route path="/paint" element={<ArtPage />} /> {/* 작품관 */}
                {/*작품관 하부 페이지 도자기, 그림, 기타로 연결*/}
                {/* <Route path="/productlist" element={<ProductList />} />  */}
-               <Route path="/productslist/:productCategoryName" element={<ProductList />} />
+               <Route path="/productslist/:productCategoryType" element={<ProductList />} />
                <Route path="/signup" element={<SignUpPage />} />
                <Route path="/login" element={<LoginPage />} />
                <Route path="/artx" element={<ArtxPage />} />
@@ -48,6 +50,8 @@ function App() {
                <Route path="/ProductRegistration" element={<ProductRegistrationPage />} />
                <Route path="/ArtistRegistration" element={<ArtistRegistrationPage />} />
                <Route path="/ArtistProfile" element={<ArtistProfilePage />} />
+               <Route path="/kakao" element={<Kakaologin />} />
+               <Route path="/auth" element={<KakaoAuth />} />
             </Route>
          </Routes>
       </div>
