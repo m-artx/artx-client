@@ -4,11 +4,14 @@ import Search from '../components/shared/Search';
 import SlideMain from '../components/SlideMain';
 import SlideSecond from '../components/SlideSecond';
 import CategorySlider from '../components/CategorySlider';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function MainPage() {
    const [searchTerm, setSearchTerm] = useState('');
    const [data, setData] = useState([]);
-
+   let { productCategoryType } = useParams();
+   let apiUrl;
+   const navigate = useNavigate();
    useEffect(() => {
       if (searchTerm.trim() === '') {
          setData([]);
@@ -24,7 +27,7 @@ function MainPage() {
                searchTerm: searchTerm,
             },
          });
-         setData(response.data.content);
+         setData(response.data.productTitle);
       } catch (error) {
          console.error('데이터를 가져오는 중 오류 발생:', error);
          setData([]);

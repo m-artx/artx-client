@@ -1,161 +1,139 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import ArtSearch from '../components/shared/ArtSearch';
+import axios from 'axios';
 
 function ArtPage() {
-  const productList = [
-    // imageList를 productList로 변경
-    {
-      url: 'https://dummyimage.com/720x400',
-      title: 'Title 1',
-      name: 'name',
-      price: 10000,
-      id: 0,
-    },
-    {
-      url: 'https://dummyimage.com/720x400',
-      title: 'Title 2',
-      name: 'name',
-      price: 15000,
-      id: 1,
-    },
-    {
-      url: 'https://dummyimage.com/720x400',
-      title: 'Title 3',
-      name: 'name',
-      price: 12000,
-      id: 2,
-    },
-    {
-      url: 'https://dummyimage.com/723x403',
-      title: 'Title 4',
-      name: 'name',
-      price: 8000,
-      id: 3,
-    },
-    {
-      url: 'https://dummyimage.com/720x400',
-      title: 'Title 5',
-      name: 'name',
-      price: 10000,
-      id: 4,
-    },
-    {
-      url: 'https://dummyimage.com/720x400',
-      title: 'Title 6',
-      name: 'name',
-      price: 15000,
-      id: 5,
-    },
-    {
-      url: 'https://dummyimage.com/720x400',
-      title: 'Title 7',
-      name: 'name',
-      price: 12000,
-      id: 6,
-    },
-    {
-      url: 'https://dummyimage.com/723x403',
-      title: 'Title 8',
-      name: 'name',
-      price: 8000,
-      id: 7,
-    },
-    {
-      url: 'https://dummyimage.com/720x400',
-      title: 'Title 5',
-      name: 'name',
-      price: 10000,
-      id: 8,
-    },
-    {
-      url: 'https://dummyimage.com/720x400',
-      title: 'Title 6',
-      name: 'name',
-      price: 15000,
-      id: 9,
-    },
-    {
-      url: 'https://dummyimage.com/720x400',
-      title: 'Title 7',
-      name: 'name',
-      price: 12000,
-      id: 10,
-    },
-    {
-      url: 'https://dummyimage.com/723x403',
-      title: 'Title 8',
-      name: 'name',
-      price: 8000,
-      id: 11,
-    },
-  ];
+   const [productList, setProductList] = useState([]);
+   const [originalPosts, setOriginalPosts] = useState([]);
+   const [name, setName] = useState('');
+   const itemsPerPage = 6;
+   const [currentPage, setCurrentPage] = useState(1);
+   const [searchTerm, setSearchTerm] = useState('');
 
-  const itemsPerPage = 8; // 한 페이지당 보여줄 항목 수
-  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
+   useEffect(() => {
+      const fetchData = async () => {
+         try {
+            const response = await axios.get(
+               `${process.env.REACT_APP_artx_base_url}${process.env.REACT_APP_artx_prod_all}`
+            );
+            setProductList(response.data.content);
+            setOriginalPosts(response.data);
+         } catch (error) {
+            console.error('데이터를 가져오는 중 오류 발생:', error);
+         }
+      };
 
-  const totalPages = Math.ceil(productList.length / itemsPerPage);
+      fetchData();
+   }, []);
 
-  // 다음 페이지로 이동하는 함수
-  const nextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    } else {
-      // 다음 페이지가 없는 경우 첫 페이지로 돌아가도록 설정
-      setCurrentPage(1);
-    }
-  };
+   useEffect(() => {
+      const search = async () => {
+         try {
+            const response = await axios.get(`http://64.110.89.251:8081/api/products/search`, {
+               params: {
+                  type: 'TITLE',
+                  name: searchTerm,
+                  page: 0,
+                  size: 1,
+                  sort: [],
+               },
+               headers: {},
+            });
 
-  // 이전 페이지로 이동하는 함수
-  const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    } else {
-      // 첫 페이지에서 이전 버튼을 누르면 마지막 페이지로 이동
-      setCurrentPage(totalPages);
-    }
-  };
+            const searchData = response.data;
 
-  // 현재 페이지에 표시할 이미지 목록을 계산
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentImageList = productList.slice(startIndex, endIndex);
+            if (searchData.totalPages > 0 && searchData.totalElements > 0) {
+               setProductList(searchData.content);
+            } else {
+               setProductList(originalPosts);
+            }
+         } catch (error) {
+            console.log(error);
+         }
+      };
 
-  const imageComponents = currentImageList.map((image, index) => (
-    <div className="xl:w-1/4 md:w-1/2 sm:w-1/2 p-4 mb-8 mx-auto relative group" key={index}>
-      <div className="bg-gray-100 mx-auto overflow-hidden shadow-md transform transition-transform hover:scale-105 cursor-pointer">
-        <img className="h-28 w-full object-cover object-center mb-6" src={image.url} alt="content" />
-        <h3 className="tracking-widest text-black text-s font-medium title-font ml-3 hover:font-bold">{image.title}</h3>
-        <p className="sm:text-sm  mb-4 ml-3 ">{image.name}</p>
-        <p className="leading-relaxed text-base ml-3 ">₩{image.price}</p>
-      </div>
-    </div>
-  ));
+      search();
+   }, [searchTerm]);
 
-  return (
-    <div className="border">
-      <section className="text-gray-600 body-font mx-auto">
-        <div className="container px-5 mx-auto">
-          <ArtSearch />
-          <div>
-            <div className="flex justify-between items-center">
-              <button className="mr-10 transform hover:scale-110" onClick={prevPage}>
-                <FontAwesomeIcon icon={faArrowLeft} size="2xl" style={{ color: '#c7c7c7' }} />
-              </button>
-              <Link to="product">
-                <div className="flex flex-wrap -m-4 justify-center">{imageComponents}</div>
-              </Link>
-              <button className="ml-10 transform hover:scale-110" onClick={nextPage}>
-                <FontAwesomeIcon icon={faArrowRight} size="2xl" style={{ color: '#c7c7c7' }} />
-              </button>
+   const resetSearch = () => {
+      setSearchTerm('');
+      setProductList(originalPosts);
+   };
+
+   const totalPages = Math.ceil(productList.length / itemsPerPage);
+
+   const nextPage = () => {
+      if (currentPage < totalPages) {
+         setCurrentPage(currentPage + 1);
+      } else {
+         setCurrentPage(1);
+      }
+   };
+
+   const prevPage = () => {
+      if (currentPage > 1) {
+         setCurrentPage(currentPage - 1);
+      } else {
+         setCurrentPage(totalPages);
+      }
+   };
+
+   const startIndex = (currentPage - 1) * itemsPerPage;
+   const endIndex = startIndex + itemsPerPage;
+   const currentImageList = productList.slice(startIndex, endIndex);
+
+   const imageComponents = currentImageList.map((image) => (
+      <div className="xl:w-1/4 md:w-1/2 sm:w-1/2 p-4 mb-8 mx-auto relative group" key={image.productId}>
+         <Link to={`/productdetail/${image.productId}`}>
+            <div className="bg-gray-100 mx-auto overflow-hidden shadow-md transform transition-transform hover:scale-105 cursor-pointer">
+               <div className="xl:w-1/4 md:w-1/2 sm:w-1/2 p-4 mb-8 mx-auto relative group">
+                  <img
+                     className="h-28 w-full object-cover object-center mb-6 bg"
+                     src={image.productRepresentativeImage}
+                     alt="content"
+                  />
+               </div>
+
+               <h3 className="tracking-widest text-black text-s font-medium title-font ml-3 hover:font-bold bg-white">
+                  {image.productTitle}
+               </h3>
+
+               <p className="leading-relaxed text-base ml-3 bg-white text-black">₩{image.productPrice}</p>
             </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
+         </Link>
+      </div>
+   ));
+
+   const handleInputChange = (e) => {
+      const { value } = e.target;
+      setSearchTerm(value);
+   };
+
+   return (
+      <div className="border">
+         <section className="text-gray-600 body-font mx-auto">
+            <div className="container px-5 mx-auto">
+               <ArtSearch handleInputChange={handleInputChange} handleSearch={resetSearch} resetSearch={resetSearch} />
+               <div>
+                  <div className="flex justify-between items-center text-black">
+                     <button className="mr-10 transform hover:scale-10" onClick={prevPage}>
+                        <FontAwesomeIcon icon={faArrowLeft} size="2xl" style={{ color: '#c7c7c7' }} />
+                     </button>
+
+                     <div className="flex flex-wrap -m-4 justify-center">{imageComponents}</div>
+
+                     <button className="ml-10 transform hover:scale-110" onClick={nextPage}>
+                        <FontAwesomeIcon icon={faArrowRight} size="2xl" style={{ color: '#c7c7c7' }} />
+                     </button>
+                  </div>
+               </div>
+            </div>
+         </section>
+      </div>
+   );
 }
 
 export default ArtPage;

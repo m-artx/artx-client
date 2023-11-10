@@ -1,49 +1,73 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-function OrderPage(props) {
-  // props로 선택된 상품 정보를 받아옵니다.
+export default function OrderPage() {
+   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(''); // 선택된 결제 수단을 담는 상태
+   // 수정: cartItems를 가져올 때 state.cart.items가 아니라 state.cart.cartItems를 사용
+   const cartItems = useSelector((state) => state.cart.cartItems);
+   const dispatch = useDispatch();
 
-  const selectedProducts = props.location?.state?.selectedProducts || [];
-  console.log(selectedProducts);
+   const handlePaymentMethod = (method) => {
+      // 선택된 결제 수단 업데이트
+      setSelectedPaymentMethod(method);
+   };
 
-  
-  // props 객체 내에서 location 속성이 있는지 확인합니다. props.location이 존재하지 않으면 undefined를 반환합니다.
-  // props.location이 존재하면, 이어서 state 속성이 있는지 확인합니다. props.location.state가 존재하지 않으면 또 다시 undefined를 반환합니다.
-  // props.location.state가 존재하면, 그 값을 selectedProducts 변수에 할당합니다.
-  // 그렇지 않은 경우, 빈 배열 []을 selectedProducts 변수에 할당합니다.
-
-
-
-  
-  // 주문하기 페이지 내용을 구현합니다.
-
-
-
-
-
-
-
-
-
-  return (
-    <div className="bg-white text-black p-4 w-[1300px]">
-      <h1 className="text-4xl font-bold mb-4 flex justify-center bg-white text-black">주문하기</h1>
-
-      {/* 선택된 상품 정보를 여기에 출력 */}
-      {selectedProducts.map((product) => (
-        <div key={product.productId} className="bg-white text-black">
-          <p>{product.productTitle}</p>
-          <p>가격: {product.productPrice}원</p>
-          <p>수량: {product.cartProductQuantity}</p>
-        </div>
-      ))}
-
-      {/* 주문서 작성 양식을 추가합니다. */}
-      {/* 여기에 주문자 정보, 배송 정보, 결제 수단 선택 등을 구현할 수 있습니다. */}
-
-      <button className="bg-black text-white px-4 py-2">결제하기</button>
-    </div>
-  );
+   console.log(cartItems);
+   return (
+      <div className="text-white border p-8">
+         <div className="mb-8 border-b pb-4">
+            <h3 className="text-2xl font-semibold mb-2">주문 고객</h3>
+            <div className="flex flex-col space-y-2">
+               <span>주문 고객 이름: </span>
+               <span>주문 고객 전화번호: </span>
+            </div>
+         </div>
+         <div className="mb-8 border-b pb-4">
+            <h3 className="text-2xl font-semibold mb-2">배송 정보</h3>
+            <div className="flex flex-col space-y-2">
+               <span>수령인 이름: </span>
+               <span>수령인 번호: </span>
+               <span>수령인 주소: </span>
+            </div>
+         </div>
+         <div className="mb-8 border-b pb-4">
+            <h2 className="text-3xl font-semibold mb-4">주문 작품 정보</h2>
+            {cartItems.map((item) => (
+               <div key={item.productId} className="flex items-center mb-4 space-x-4 text-white">
+                  <img src={item.productRepresentativeImage} alt="작품 이미지" className="w-16 h-16 object-cover" />
+                  <div>
+                     <p className="text-xl font-semibold text-white">{item.productTitle}</p>
+                     <p>수량: {item.cartProductQuantity}</p>
+                     <p>배송비: {item.shippingFee}</p>
+                     <p>합계: {item.productPrice * item.cartProductQuantity}</p>
+                  </div>
+               </div>
+            ))}
+         </div>
+         <div className="mb-8 border-b pb-4">
+            <h2 className="text-3xl font-semibold mb-4">결제 수단</h2>
+            <div className="flex space-x-4">
+               <label>
+                  <input
+                     type="radio"
+                     name="paymentMethod"
+                     checked={selectedPaymentMethod === 'KakaoPay'}
+                     onChange={() => handlePaymentMethod('KakaoPay')}
+                  />
+                  카카오 페이
+               </label>
+               <label>
+                  <input
+                     type="radio"
+                     name="paymentMethod"
+                     checked={selectedPaymentMethod === 'CreditCard'}
+                     onChange={() => handlePaymentMethod('CreditCard')}
+                  />
+                  신용카드
+               </label>
+            </div>
+         </div>
+         <button className="bg-blue-500 text-white py-3 px-6 rounded-full mt-4">결제하기</button>
+      </div>
+   );
 }
-
-export default OrderPage;

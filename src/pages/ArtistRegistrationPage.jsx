@@ -8,6 +8,7 @@ const ArtistRegistrationPage = () => {
       artistName: '',
       artistBio: '',
       artistPhoneNumber: '', // 새로운 휴대폰 번호 필드 추가
+
       // 추가적인 필드들을 필요에 따라 추가하세요
    });
 
