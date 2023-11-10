@@ -17,6 +17,8 @@ function ProductList() {
       apiUrl = process.env.REACT_APP_artx_prod_ceramic;
    } else if (productCategoryType === 'ETC') {
       apiUrl = process.env.REACT_APP_artx_prod_etc;
+   } else if (productCategoryType === 'ALL') {
+      apiUrl = process.env.REACT_APP_artx_prod_all;
    }
 
    // useApiLoader 사용하기
@@ -67,7 +69,7 @@ function ProductList() {
                         onClick={() => GoToProductDetail(item.productId)}
                      />
                      <div className="flex justify-around">
-                        <p>{item.productName}</p>
+                        <p>{item.productTitle}</p>
                         <p>{item.productPrice}</p>
                      </div>
                   </div>

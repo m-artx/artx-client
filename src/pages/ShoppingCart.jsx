@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'; // axios 라이브러리를 임포트
 import useApiLoader from '../instance/useApiLoader';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleItemSelection, toggleSelectAll, setCartItems, fetchCartData } from '../store/cartSlice';
 //use param사용해야하는지? cartId 어떻게 가져오는지 고민하기
 
 function ShoppingCart() {
    // 초기 장바구니 상태
-   const [cartItems, setCartItems] = useState([]);
+   const cartItems = useSelector((state) => state.cart.cartItems);
    const cartId = 1; // 가져오려는 장바구니 ID
-
-   const [selectedItems, setSelectedItems] = useState([]);
-   const [selectAll, setSelectAll] = useState(false);
+   const selectedItems = useSelector((state) => state.cart.selectedItems);
+   const selectAll = useSelector((state) => state.cart.selectAll);
    const navigate = useNavigate();
-
+   const dispatch = useDispatch();
    // 데이터 url 세팅
    const apiUrl = `${process.env.REACT_APP_artx_prod_cart}/${cartId}`;
    console.log('apiUrl : ', apiUrl);
@@ -25,22 +25,8 @@ function ShoppingCart() {
    //배열에 안담아진다..
 
    useEffect(() => {
-      // 장바구니 데이터를 가져오는 부분
-      axios
-         .get(`${process.env.REACT_APP_artx_base_url}carts/1`)
-         .then((response) => {
-            const cartData = response.data;
-            // cartItemDetails를 사용하여 배열을 얻음
-            const cartArray = cartData.cartItemDetails;
-            setCartItems(cartArray);
-            console.log('cartArray', cartArray[0].productQuantity);
-            console.log('cartArray', cartArray[0].cartProductQuantity);
-         })
-
-         .catch((error) => {
-            console.error('API 요청 중 오류 발생:', error);
-         });
-   }, []);
+      dispatch(fetchCartData(cartId));
+   }, [dispatch, cartId]);
 
    const increaseQuantity = (productId) => {
       // API 요청을 보내어 서버에서 수량을 증가시킴
@@ -54,7 +40,7 @@ function ShoppingCart() {
 
                return { ...item };
             });
-            setCartItems(updatedCart);
+            dispatch(setCartItems(updatedCart));
             console.log(updatedCart);
          })
 
@@ -75,6 +61,7 @@ function ShoppingCart() {
                   }
                   return { ...item };
                });
+
                console.log(updatedCart);
                return updatedCart;
             });
@@ -83,51 +70,16 @@ function ShoppingCart() {
             alert('수량 감소 중 오류가 발생했습니다.');
          });
    };
-   // 상품을 장바구니에 추가하는 함수
-   // const addToCart = (product) => {
-   //    // 이미 장바구니에 있는 상품인지 확인
-   //    const existingItem = cartItems.find((item) => item.id === product.id);
-
-   //    if (existingItem) {
-   //       // 이미 장바구니에 있는 경우, 수량을 증가
-   //       const updatedCart = cartItems.map((item) =>
-   //          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-   //       );
-   //       setCartItems(updatedCart);
-   //    } else {
-   //       // 장바구니에 없는 경우, 새로운 항목으로 추가
-   //       setCartItems([...cartItems, { ...product, quantity: 1 }]);
-   //    }
-   // };
-
-   // 장바구니에서 상품을 제거하는 함수
-   // const removeFromCart = (productId) => {
-   //    const updatedCart = cartItems.filter((item) => item.id !== productId);
-   //    setCartItems(updatedCart);
-   // };
 
    // 상품을 선택 또는 해제하는 함수
-   const toggleItemSelection = (productId) => {
-      if (selectedItems.includes(productId)) {
-         setSelectedItems(selectedItems.filter((id) => id !== productId));
-         // 체크박스를 선택 해제하면 전체 선택 체크박스도 해제
-         setSelectAll(false);
-      } else {
-         setSelectedItems([...selectedItems, productId]);
-      }
+   const handleToggleItemSelection = (productId) => {
+      dispatch(toggleItemSelection(productId));
    };
-   // 전체 선택 체크박스를 토글하는 함수
-   const toggleSelectAll = () => {
-      // 체크박스를 전체 선택하면 선택된 상품들의 ID를 배열로 설정
-      if (!selectAll) {
-         setSelectedItems(cartItems.map((item) => item.productId));
-      } else {
-         // 체크박스를 해제하면 선택된 상품들의 ID를 빈 배열로 설정
-         setSelectedItems([]);
-      }
-      setSelectAll(!selectAll); // 전체 선택 상태를 토글
+
+   const handleToggleSelectAll = () => {
+      console.log('toggleSelectAll 액션 디스패치됨');
+      dispatch(toggleSelectAll());
    };
-   // 선택된 상품들의 가격 합계 계산
 
    //삭제하기
    const removeFromSelected = () => {
@@ -139,7 +91,7 @@ function ShoppingCart() {
          if (confirmDelete) {
             const updatedCart = cartItems.filter((item) => !selectedItems.includes(item.productId));
             setCartItems(updatedCart);
-            setSelectedItems([]); // 선택된 항목을 초기화
+            // setSelectedItems([]); // 선택된 항목을 초기화
          }
       }
    };
@@ -186,8 +138,8 @@ function ShoppingCart() {
          </div>
          <ul className="border-solid border-t border-b border-black ml-3 bg-white text-black">
             <li className="flex items-center mb-2 bg-white text-black">
-               <input type="checkbox" checked={selectAll} onChange={toggleSelectAll} className="mr-2 ml-0" />
-               <span onClick={toggleSelectAll} className="bg-white text-black">
+               <input type="checkbox" checked={selectAll} onChange={handleToggleSelectAll} className="mr-2 ml-0" />
+               <span onClick={handleToggleSelectAll} className="bg-white text-black">
                   전체 선택
                </span>
             </li>
@@ -196,9 +148,10 @@ function ShoppingCart() {
                   <input
                      type="checkbox"
                      checked={selectedItems.includes(item.productId)}
-                     onChange={() => toggleItemSelection(item.productId)}
+                     onChange={() => handleToggleItemSelection(item.productId)}
                      className="mr-2"
-                  />
+                  />{' '}
+                  {item.productName}
                   <img src={item.productRepresentativeImage} alt={item.productTitle} width="100" height="100" />
                   <div className="ml-4 bg-white text-black">
                      <p className="text-lg font-semibold bg-white text-black">{item.productTitle}</p>

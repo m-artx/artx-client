@@ -16,8 +16,10 @@ function ArtPage() {
    useEffect(() => {
       const fetchData = async () => {
          try {
-            const response = await axios.get(`http://64.110.89.251:8081/api/products/main?type=POPULARITY`);
-            setProductList(response.data);
+            const response = await axios.get(
+               `${process.env.REACT_APP_artx_base_url}${process.env.REACT_APP_artx_prod_all}`
+            );
+            setProductList(response.data.content);
             setOriginalPosts(response.data);
          } catch (error) {
             console.error('데이터를 가져오는 중 오류 발생:', error);

@@ -36,13 +36,13 @@ function Header() {
                onMouseEnter={showDropdown}
                onMouseLeave={hideDropdown}
             >
-               <button onClick={() => goToPage('productslist/PAINT')} className="">
+               <button onClick={() => goToPage('productslist/ALL')} className="">
                   작품관
                </button>
                {dropdownVisibility && (
                   <Dropdown>
                      <ul className="flex text-center border w-[250px] absolute p-2">
-                        <li className="flex-1  border" onClick={() => goToPage('productslist/PAINT')}>
+                        <li className="flex-1  border" onClick={() => goToPage('productslist/ALL')}>
                            전체보기
                         </li>
                         <li className="flex-1  border" onClick={() => goToPage('productslist/PAINT')}>
