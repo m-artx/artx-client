@@ -13,16 +13,25 @@ function ProductList() {
    // productCategoryType에 따라 apiUrl 변경
    if (productCategoryType === 'PAINT') {
       apiUrl = process.env.REACT_APP_artx_prod_paint;
+      console.log('페인트 apiUrl', apiUrl)
    } else if (productCategoryType === 'CERAMIC') {
       apiUrl = process.env.REACT_APP_artx_prod_ceramic;
+      console.log('세라믹 apiUrl', apiUrl)
+
    } else if (productCategoryType === 'ETC') {
       apiUrl = process.env.REACT_APP_artx_prod_etc;
+      console.log('ETC apiUrl', apiUrl)
+
    } else if (productCategoryType === 'ALL') {
       apiUrl = process.env.REACT_APP_artx_prod_all;
+      console.log('ALL apiUrl', apiUrl)
+
    }
 
    // useApiLoader 사용하기
    const { data: apiData, loading, error } = useApiLoader(apiUrl);
+   console.log('apiData', apiData)
+
 
    // 페이지네이션용
    const itemsPerPage = 8; // 한페이지당 이미지숫자
@@ -53,6 +62,9 @@ function ProductList() {
    const GoToProductDetail = (id) => {
       navigate(`/productdetail/${id}`);
    };
+
+
+   console.log('currentItems', currentItems)
 
    return (
       <div className="w-screen border max-w-[1300px] border-blue-600 flex flex-col ">
