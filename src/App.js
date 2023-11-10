@@ -24,6 +24,7 @@ import KakaoAuth from './pages/KakaoAuth';
 import ShippingInfo from './pages/ShippingInfo';
 import Addaddress from './pages/Addaddress';
 import KakaoSuccess from './pages/KakaoSuccess';
+import KakaoFail from './pages/KakaoFail';
 
 function App() {
    return (
@@ -58,6 +59,7 @@ function App() {
                <Route path="/shippingInfo" element={<ShippingInfo />} />
                <Route path="/addaddress" element={<Addaddress />} />
                <Route path="/kakaosuccess" element={<KakaoSuccess />} />
+               <Route path="/kakaofail" element={<KakaoFail />} />
             </Route>
          </Routes>
       </div>
