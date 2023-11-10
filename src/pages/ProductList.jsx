@@ -70,7 +70,7 @@ function ProductList() {
                      />
                      <div className="flex justify-around">
                         <p>{item.productTitle}</p>
-                        <p>{item.productPrice}</p>
+                        <p>{item.productPrice} </p>
                      </div>
                   </div>
                ))}
