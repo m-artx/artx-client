@@ -16,7 +16,7 @@ export default function SignUpPage() {
         password: '',
         confirmPassword: '',
         name: '',
-        nickName: '',
+        nickName: '', 
         email: '',
         phoneNumber: '',
         address: '',
