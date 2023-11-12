@@ -5,7 +5,7 @@ import ArtPage from './pages/ArtPage';
 import ArtxPage from './pages/ArtxPage';
 import Layout from './components/shared/Layout';
 import SignUpPage from './pages/userPages/SignUpPage';
-import LoginPage from './pages/LoginPage';
+import LoginPage from './pages/userPages/LoginPage';
 import Product from './pages/Product';
 import ShoppingCart from './pages/ShoppingCart';
 import OrderHistory from './pages/OrderHistory';

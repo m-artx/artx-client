@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../store/userSlice';
+import { loginUser } from '../../store/userSlice';
 import axios from 'axios';
 
 export default function LoginPage() {
