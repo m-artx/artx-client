@@ -23,6 +23,11 @@ function ProductList() {
 
    // useApiLoader 사용하기
    const { data: apiData, loading, error } = useApiLoader(apiUrl);
+<<<<<<< HEAD
+   console.log('apiData', apiData)
+
+=======
+>>>>>>> develop
 
    // 페이지네이션용
    const itemsPerPage = 8; // 한페이지당 이미지숫자
@@ -54,6 +59,12 @@ function ProductList() {
       navigate(`/productdetail/${id}`);
    };
 
+<<<<<<< HEAD
+
+   console.log('currentItems', currentItems)
+
+=======
+>>>>>>> develop
    return (
       <div className="w-screen border max-w-[1300px] border-blue-600 flex flex-col ">
          <div className="text-center">

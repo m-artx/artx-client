@@ -80,6 +80,11 @@ const cartSlice = createSlice({
          }
       },
       toggleSelectAll: (state) => {
+<<<<<<< HEAD
+         state.selectAll = !state.selectAll;
+         state.selectedItems = state.selectAll ? state.cartItems.map((item) => item.productId) : [];
+      },
+=======
          // 품절 상품을 필터링한 배열 생성
          const availableProducts = state.cartItems.filter((item) => item.productQuantity > 0);
 
@@ -90,6 +95,7 @@ const cartSlice = createSlice({
          state.selectedItems = state.selectAll ? availableProducts.map((item) => item.productId) : [];
       },
 
+>>>>>>> develop
       decreaseQuantity: (state, action) => {
          // 여기에 감소 로직 추가
       },
@@ -130,11 +136,14 @@ export const {
    removeFromSelected,
    setSelectAll,
    setSelectedItems,
+<<<<<<< HEAD
+=======
    setUserId,
    setOrderDetails,
    setDeliveryDetail,
    setSelectedPaymentMethod,
    resetOrder,
+>>>>>>> develop
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

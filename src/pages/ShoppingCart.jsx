@@ -31,7 +31,11 @@ function ShoppingCart() {
    const increaseQuantity = (productId) => {
       // API 요청을 보내어 서버에서 수량을 증가시킴
       axios
+<<<<<<< HEAD
+         .patch(`http://64.110.89.251:8081/api/carts/${cartId}/products/${productId}/increase`)
+=======
          .patch(`https://ka8d596e67406a.user-app.krampoline.com/api/carts/${cartId}/products/${productId}/increase`)
+>>>>>>> develop
          .then((response) => {
             const updatedCart = cartItems.map((item) => {
                if (item.productId === productId) {
@@ -52,7 +56,11 @@ function ShoppingCart() {
    const decreaseQuantity = (productId) => {
       // API 요청을 보내어 서버에서 수량을 감소시킴
       axios
+<<<<<<< HEAD
+         .patch(`http://64.110.89.251:8081/api/carts/${cartId}/products/${productId}/decrease`)
+=======
          .patch(`https://ka8d596e67406a.user-app.krampoline.com/api/carts/${cartId}/products/${productId}/decrease`)
+>>>>>>> develop
          .then((response) => {
             setCartItems((prevCartItems) => {
                const updatedCart = prevCartItems.map((item) => {
@@ -90,7 +98,11 @@ function ShoppingCart() {
 
          if (confirmDelete) {
             const updatedCart = cartItems.filter((item) => !selectedItems.includes(item.productId));
+<<<<<<< HEAD
+            setCartItems(updatedCart);
+=======
             dispatch(setCartItems(updatedCart));
+>>>>>>> develop
             // setSelectedItems([]); // 선택된 항목을 초기화
          }
       }
@@ -116,7 +128,11 @@ function ShoppingCart() {
       } else {
          // 선택된 상품의 정보를 다음 페이지로 전달하고 이동
          const selectedProducts = cartItems.filter((item) => selectedItems.includes(item.productId));
+<<<<<<< HEAD
+         navigate(`/order`, { state: { selectedProducts, cartItems } });
+=======
          navigate(`/order`, { state: { selectedProducts } });
+>>>>>>> develop
       }
    };
 
@@ -150,7 +166,10 @@ function ShoppingCart() {
                      checked={selectedItems.includes(item.productId)}
                      onChange={() => handleToggleItemSelection(item.productId)}
                      className="mr-2"
+<<<<<<< HEAD
+=======
                      disabled={item.productQuantity === 0}
+>>>>>>> develop
                   />{' '}
                   {item.productName}
                   <img src={item.productRepresentativeImage} alt={item.productTitle} width="100" height="100" />
