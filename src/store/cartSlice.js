@@ -18,14 +18,57 @@ const cartSlice = createSlice({
    name: 'cart',
    initialState: {
       cartItems: [],
-      selectedItems: [],
+      selectedItems: [
+         {
+            productId: '',
+            productQuantity: '',
+         },
+      ],
       selectAll: false,
       status: 'idle', // 비동기 작업 상태를 관리할 필드 추가
+      userId: '', // 사용자 ID
+      orderDetails: [
+         {
+            productId: '',
+            productQuantity: '',
+         },
+      ], // 주문 상세 정보
+      deliveryDetail: {
+         deliveryReceiver: '',
+         deliveryReceiverPhoneNumber: '',
+         deliveryReceiverAddress: '',
+         deliveryReceiverAddressDetail: '',
+      }, // 배송 정보
+      selectedPaymentMethod: '', // 선택된 결제 수단
    },
    reducers: {
+      setUserId: (state, action) => {
+         state.userId = action.payload;
+      },
+      setOrderDetails: (state, action) => {
+         state.orderDetails = action.payload;
+      },
+      setDeliveryDetail: (state, action) => {
+         state.deliveryDetail = action.payload;
+      },
+      setSelectedPaymentMethod: (state, action) => {
+         state.selectedPaymentMethod = action.payload;
+      },
+      resetOrder: (state) => {
+         state.userId = '';
+         state.orderDetails = [];
+         state.deliveryDetail = {
+            deliveryReceiver: '',
+            deliveryReceiverPhoneNumber: '',
+            deliveryReceiverAddress: '',
+            deliveryReceiverAddressDetail: '',
+         };
+         state.selectedPaymentMethod = '';
+      },
       setCartItems: (state, action) => {
          state.cartItems = action.payload;
       },
+
       toggleItemSelection: (state, action) => {
          const productId = action.payload;
          const index = state.selectedItems.indexOf(productId);
@@ -37,9 +80,22 @@ const cartSlice = createSlice({
          }
       },
       toggleSelectAll: (state) => {
+<<<<<<< HEAD
          state.selectAll = !state.selectAll;
          state.selectedItems = state.selectAll ? state.cartItems.map((item) => item.productId) : [];
       },
+=======
+         // 품절 상품을 필터링한 배열 생성
+         const availableProducts = state.cartItems.filter((item) => item.productQuantity > 0);
+
+         // 전체 선택 상태 변경
+         state.selectAll = !state.selectAll;
+
+         // 선택된 상품 업데이트
+         state.selectedItems = state.selectAll ? availableProducts.map((item) => item.productId) : [];
+      },
+
+>>>>>>> develop
       decreaseQuantity: (state, action) => {
          // 여기에 감소 로직 추가
       },
@@ -80,6 +136,14 @@ export const {
    removeFromSelected,
    setSelectAll,
    setSelectedItems,
+<<<<<<< HEAD
+=======
+   setUserId,
+   setOrderDetails,
+   setDeliveryDetail,
+   setSelectedPaymentMethod,
+   resetOrder,
+>>>>>>> develop
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

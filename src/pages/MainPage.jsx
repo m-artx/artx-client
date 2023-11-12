@@ -22,7 +22,7 @@ function MainPage() {
 
    const searchData = async (searchTerm) => {
       try {
-         const response = await Axios.get(`http://64.110.89.251:8081/api/products/search`, {
+         const response = await Axios.get(`https://ka8d596e67406a.user-app.krampoline.com/api/products/search`, {
             params: {
                searchTerm: searchTerm,
             },

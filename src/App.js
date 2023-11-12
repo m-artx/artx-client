@@ -21,6 +21,18 @@ import ArtistRegistrationPage from './pages/userPages/ArtistRegistrationPage';
 import ArtistProfilePage from './pages/userPages/ArtistProfilePage';
 import Kakaologin from './pages/Kakaologin';
 import KakaoAuth from './pages/KakaoAuth';
+import MyPage from './pages/Mypage';
+import MemberInfoPage from './pages/MemberInfoPage';
+import Orderpage from './pages/Orderpage';
+import ProductRegistrationPage from './pages/ProductRegistrationPage';
+import ArtistRegistrationPage from './pages/ArtistRegistrationPage';
+import ArtistProfilePage from './pages/ArtistProfilePage';
+import Kakaologin from './pages/Kakaologin';
+import KakaoAuth from './pages/KakaoAuth';
+import ShippingInfo from './pages/ShippingInfo';
+import Addaddress from './pages/Addaddress';
+import KakaoSuccess from './pages/KakaoSuccess';
+import KakaoFail from './pages/KakaoFail';
 
 function App() {
    return (
@@ -52,6 +64,13 @@ function App() {
                <Route path="/ArtistProfile" element={<ArtistProfilePage />} />
                <Route path="/kakao" element={<Kakaologin />} />
                <Route path="/auth" element={<KakaoAuth />} />
+<<<<<<< HEAD
+=======
+               <Route path="/shippingInfo" element={<ShippingInfo />} />
+               <Route path="/addaddress" element={<Addaddress />} />
+               <Route path="/kakaosuccess" element={<KakaoSuccess />} />
+               <Route path="/kakaofail" element={<KakaoFail />} />
+>>>>>>> develop
             </Route>
          </Routes>
       </div>

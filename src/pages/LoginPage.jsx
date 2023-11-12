@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../../store/userSlice';
+import { loginUser } from '../store/userSlice';
 import axios from 'axios';
 
 export default function LoginPage() {
@@ -30,7 +30,7 @@ export default function LoginPage() {
             const userInfo = response.data;
             dispatch(loginUser(userInfo));
             console.log('로그인 성공');
-         })  
+         })
          .catch((error) => {
             console.error('로그인 실패', error);
          });

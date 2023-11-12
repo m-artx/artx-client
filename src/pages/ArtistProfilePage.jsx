@@ -21,5 +21,5 @@ const ArtistProfilePage = () => {
       </div>
    );
 };
-  
+
 export default ArtistProfilePage;

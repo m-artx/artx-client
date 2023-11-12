@@ -32,7 +32,7 @@ function ArtPage() {
    useEffect(() => {
       const search = async () => {
          try {
-            const response = await axios.get(`http://64.110.89.251:8081/api/products/search`, {
+            const response = await axios.get(`https://ka8d596e67406a.user-app.krampoline.com/api/products/search`, {
                params: {
                   type: 'TITLE',
                   name: searchTerm,

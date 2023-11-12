@@ -33,14 +33,13 @@ function ProductRegistrationPage() {
       formData.append('files', files);
 
       const json = JSON.stringify(request);
-      const blob = new Blob([json], { type: "application/json" });
+      const blob = new Blob([json], { type: 'application/json' });
 
       formData.append('request', blob);
 
-
       // Axios를 사용하여 FormData를 전송
       axios
-         .post('http://64.110.89.251:8081/api/products/new',formData)
+         .post('https://ka8d596e67406a.user-app.krampoline.com/api/products/new', formData)
          .then((response) => {
             console.log(response);
          })
