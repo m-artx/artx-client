@@ -72,12 +72,6 @@ export default function OrderPage() {
          </div>
          <div className="mb-8 border-b pb-4">
             <h3 className="text-2xl font-semibold mb-2">배송 정보</h3>
-<<<<<<< HEAD
-            <div className="flex flex-col space-y-2">
-               <span>수령인 이름: </span>
-               <span>수령인 번호: </span>
-               <span>수령인 주소: </span>
-=======
             <Link to="/changeaddress">
                <button className="bg-white text-black border border-solid border-black">배송지 변경</button>
             </Link>
@@ -114,21 +108,10 @@ export default function OrderPage() {
                   value={deliveryInfo.deliveryReceiver}
                   onChange={handleInputChange}
                />
->>>>>>> develop
             </div>
          </div>
          <div className="mb-8 border-b pb-4">
             <h2 className="text-3xl font-semibold mb-4">주문 작품 정보</h2>
-<<<<<<< HEAD
-            {cartItems.map((item) => (
-               <div key={item.productId} className="flex items-center mb-4 space-x-4 text-white">
-                  <img src={item.productRepresentativeImage} alt="작품 이미지" className="w-16 h-16 object-cover" />
-                  <div>
-                     <p className="text-xl font-semibold text-white">{item.productTitle}</p>
-                     <p>수량: {item.cartProductQuantity}</p>
-                     <p>배송비: {item.shippingFee}</p>
-                     <p>합계: {item.productPrice * item.cartProductQuantity}</p>
-=======
             {selectedProducts.map((product) => (
                <div key={product.productId} className="flex items-center mb-4 space-x-4 text-white">
                   <img src={product.productRepresentativeImage} alt="작품 이미지" className="w-16 h-16 object-cover" />
@@ -137,7 +120,6 @@ export default function OrderPage() {
                      <p>수량: {product.cartProductQuantity}</p>
                      <p>배송비: {product.shippingFee}</p>
                      <p>합계: {product.productPrice * product.cartProductQuantity}</p>
->>>>>>> develop
                   </div>
                </div>
             ))}
@@ -146,40 +128,18 @@ export default function OrderPage() {
             <h2 className="text-3xl font-semibold mb-4">결제 수단</h2>
             <div className="flex space-x-4">
                <label>
-<<<<<<< HEAD
-                  <input
-                     type="radio"
-                     name="paymentMethod"
-                     checked={selectedPaymentMethod === 'KakaoPay'}
-                     onChange={() => handlePaymentMethod('KakaoPay')}
-                  />
-                  카카오 페이
-               </label>
-               <label>
-                  <input
-                     type="radio"
-                     name="paymentMethod"
-                     checked={selectedPaymentMethod === 'CreditCard'}
-                     onChange={() => handlePaymentMethod('CreditCard')}
-                  />
-=======
                   <input type="radio" />
                   카카오 페이
                </label>
                <label>
                   <input type="radio" disabled />
->>>>>>> develop
                   신용카드
                </label>
             </div>
          </div>
-<<<<<<< HEAD
-         <button className="bg-blue-500 text-white py-3 px-6 rounded-full mt-4">결제하기</button>
-=======
          <button className="bg-blue-500 text-white py-3 px-6 rounded-full mt-4" onClick={handleOrder}>
             결제하기
          </button>
->>>>>>> develop
       </div>
    );
 }

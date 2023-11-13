@@ -1,8 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
 import MainPage from './pages/MainPage';
-import DownloadPage from './pages/DownloadPage';
-import ArtPage from './pages/ArtPage';
-import ArtxPage from './pages/ArtxPage';
 import Layout from './components/shared/Layout';
 
 
@@ -17,12 +14,9 @@ import ProductRegistrationPage from './pages/ProductRegistrationPage';
 //유저 라우터
 import SignUpPage from './pages/userPages/SignUpPage';
 import LoginPage from './pages/userPages/LoginPage';
-import Product from './pages/Product';
 import ShoppingCart from './pages/ShoppingCart';
 import OrderHistory from './pages/OrderHistory';
 import ProductPage from './pages/ProductPage';
-import ProductDetailPage from './pages/ProductDetailPage';
-import ProductList from './pages/ProductList';
 import MyPage from './pages/userPages/Mypage';
 import MemberInfoPage from './pages/userPages/MemberInfoPage';
 import Orderpage from './pages/Orderpage';
@@ -48,7 +42,6 @@ import AdminPage from "./pages/AdminPage";
 //아직 사용하지 않는 페이지
 import DownloadPage from './pages/DownloadPage';
 import ArtxPage from './pages/ArtxPage';
-import ProductPage from './pages/ProductPage';
 import Test from './pages/Test';
 import NoticePage from "./pages/NoticePage";
 
@@ -81,8 +74,6 @@ function App() {
                <Route path="/order" element={<Orderpage />} />
                <Route path="/kakao" element={<Kakaologin />} />
                <Route path="/auth" element={<KakaoAuth />} />
-<<<<<<< HEAD
-=======
                <Route path="/shippingInfo" element={<ShippingInfo />} />
                <Route path="/addaddress" element={<Addaddress />} />
                <Route path="/kakaosuccess" element={<KakaoSuccess />} />
