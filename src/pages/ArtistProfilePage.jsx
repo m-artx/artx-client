@@ -16,6 +16,13 @@ const ArtistProfilePage = () => {
             </div>
             <h3 className="text-xl font-semibold mb-2">작가 이름</h3>
             <p className="text-gray-500 mb-4">작가 소개 내용...</p>
+
+            <div>기본정보.. 채현님 와이어프레임 참고</div>
+            <div>진행중인 커미션 보기 - 커미션 신청창</div>
+            <div>문의하기</div>
+
+
+
             {/* 추가적인 작가 정보 표시 (ex. 작품 수, 전시회 등) */}
          </div>
       </div>
