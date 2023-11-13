@@ -3,8 +3,8 @@ import axios from 'axios';
 
 function ProductRegistrationPage() {
    const [request, setRequest] = useState({
-      userId: '35a69652-6a41-4372-9f1b-0b32215e8af7',
-      productCategoryId: 4,
+      userId: 'dd877036-b45e-4e13-8563-e985ab8cd9b2',
+      productCategory: 'PAINT',
       productTitle: '',
       productDescription: '',
       productQuantity: 0,
@@ -39,7 +39,7 @@ function ProductRegistrationPage() {
 
       // Axios를 사용하여 FormData를 전송
       axios
-         .post('https://ka8d596e67406a.user-app.krampoline.com/api/products/new', formData)
+         .post('https://ka8d596e67406a.user-app.krampoline.com/api/products', formData)
          .then((response) => {
             console.log(response);
          })

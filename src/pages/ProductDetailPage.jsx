@@ -10,7 +10,7 @@ function ProductDetailPage() {
    let { productId } = useParams();
    const [productData, setProductData] = useState(null);
    const [isLoading, setIsLoading] = useState(true);
-
+   const cartId = 1;
    useEffect(() => {
       async function fetchData() {
          setIsLoading(true); // 데이터 로딩 시작
@@ -46,6 +46,23 @@ function ProductDetailPage() {
       return <div>Product not found</div>;
    }
 
+   const handleAddToCart = async () => {
+      try {
+         // 상품을 카트에 추가하는 요청을 보냅니다.
+         await axios.post(`https://ka8d596e67406a.user-app.krampoline.com/api/carts/${cartId}/products/${productId}`, {
+            productId: productData.productId,
+            quantity: 1, // 원하는 수량으로 변경 가능
+         });
+
+         // 성공 시 메시지를 표시하거나 다른 작업을 수행할 수 있습니다.
+
+         alert('상품이 카트에 추가되었습니다.');
+      } catch (error) {
+         console.error('Error adding product to cart:', error);
+         // 실패 시에 대한 처리를 추가할 수 있습니다.
+      }
+   };
+
    // 제품 이미지가 배열이 아닐 경우를 대비해 배열로 변환합니다.
    const ensuredImages = Array.isArray(productData.productImages)
       ? productData.productImages
@@ -65,6 +82,34 @@ function ProductDetailPage() {
       speed: 500,
       slidesToShow: 1,
       slidesToScroll: 1,
+   };
+
+   const handlePay = () => {
+      const isInputEmpty = Object.values().some((value) => value.trim() === '');
+      // axios를 사용하여 서버에 주문 요청
+      axios
+         .post(
+            `https://ka8d596e67406a.user-app.krampoline.com/api/orders`,
+            {
+               productId: productData.productId,
+               quantity: 1, // 원하는 수량으로 변경 가능
+            },
+            {
+               headers: {
+                  'Content-Type': 'application/json',
+                  accept: '*/*',
+               },
+            }
+         )
+         .then((response) => {
+            // 성공적으로 주문이 완료되었을 때 수행할 작업
+            console.log('주문 성공:', response.data);
+            window.open(response.data.next_redirect_pc_url, '_blank');
+         })
+         .catch((error) => {
+            // 주문 실패 시 수행할 작업
+            console.error('주문 실패:', error);
+         });
    };
 
    return (
@@ -98,10 +143,16 @@ function ProductDetailPage() {
                      <div className="flex flex-col text-center pt-5">
                         <p className="w-[300px] border">price '{productData.productPrice}' </p>
                         <div className="">
-                           <button className="w-[110px] py-2.5 px-5 m-2 text-sm text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700">
-                              cart
+                           <button
+                              onClick={handleAddToCart}
+                              className="w-[110px] py-2.5 px-5 m-2 text-sm text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700"
+                           >
+                              Cart
                            </button>
-                           <button className="py-2.5 px-5 m-2 text-sm text-gray-900 bg-yellow-200 rounded-lg border border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700">
+                           <button
+                              className="py-2.5 px-5 m-2 text-sm text-gray-900 bg-yellow-200 rounded-lg border border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700"
+                              onClick={handlePay}
+                           >
                               kakao pay
                            </button>
                         </div>

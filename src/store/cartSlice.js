@@ -6,8 +6,9 @@ import axios from 'axios';
 // 비동기 액션을 위한 thunk 생성
 export const fetchCartData = createAsyncThunk('cart/fetchCartData', async (cartId) => {
    try {
-      const response = await axios.get(`${process.env.REACT_APP_artx_base_url}carts/${cartId}`);
-      return response.data;
+      const response = await axios.get(`https://ka8d596e67406a.user-app.krampoline.com/api/carts/1?size=10&page=1`);
+
+      return response.data.cartItemDetails;
    } catch (error) {
       throw error;
    }
@@ -17,7 +18,7 @@ export const fetchCartData = createAsyncThunk('cart/fetchCartData', async (cartI
 const cartSlice = createSlice({
    name: 'cart',
    initialState: {
-      cartItems: [],
+      cartItemDetails: undefined,
       selectedItems: [
          {
             productId: '',
@@ -65,8 +66,16 @@ const cartSlice = createSlice({
          };
          state.selectedPaymentMethod = '';
       },
-      setCartItems: (state, action) => {
-         state.cartItems = action.payload;
+      setCartItemDetails: (state, action) => {
+         const newcartItemDetails = action.payload;
+         console.log('ccc');
+
+         if (Array.isArray(newcartItemDetails)) {
+            state.cartItemDetails = newcartItemDetails;
+            console.log('bbb');
+         } else {
+            console.error('Invalid cartItemDetails type. Expected an array.');
+         }
       },
 
       toggleItemSelection: (state, action) => {
@@ -80,8 +89,10 @@ const cartSlice = createSlice({
          }
       },
       toggleSelectAll: (state) => {
-         // 품절 상품을 필터링한 배열 생성
-         const availableProducts = state.cartItems.filter((item) => item.productQuantity > 0);
+         // state.cartItemDetails가 배열이 아닌 경우 초기화
+         const availableProducts = Array.isArray(state.cartItemDetails)
+            ? state.cartItemDetails.filter((item) => item.productQuantity > 0)
+            : [];
 
          // 전체 선택 상태 변경
          state.selectAll = !state.selectAll;
@@ -113,7 +124,7 @@ const cartSlice = createSlice({
          })
          .addCase(fetchCartData.fulfilled, (state, action) => {
             state.status = 'succeeded';
-            state.cartItems = action.payload.cartItemDetails;
+            state.cartItemDetails = action.payload.cartItemDetails;
          })
          .addCase(fetchCartData.rejected, (state) => {
             state.status = 'failed';
@@ -122,7 +133,7 @@ const cartSlice = createSlice({
 });
 
 export const {
-   setCartItems,
+   setCartItemDetails,
    toggleItemSelection,
    toggleSelectAll,
    decreaseQuantity,

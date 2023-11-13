@@ -76,7 +76,7 @@ function App() {
                <Route path="/auth" element={<KakaoAuth />} />
                <Route path="/shippingInfo" element={<ShippingInfo />} />
                <Route path="/addaddress" element={<Addaddress />} />
-               <Route path="/kakaosuccess" element={<KakaoSuccess />} />
+               <Route path="/success" element={<KakaoSuccess />} />
                <Route path="/kakaofail" element={<KakaoFail />} />
                <Route path="/customer" element={<CustomerCenter />} />
 

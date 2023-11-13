@@ -15,7 +15,7 @@ export default function OrderPage() {
    });
    const orderDetails = useSelector((state) => state.cart.orderDetails);
    const location = useLocation();
-   const selectedProducts = location.state.selectedProducts;
+   const selectedProducts = location.state?.selectedProducts || [];
 
    const handleInputChange = (e) => {
       const { name, value } = e.target;
@@ -41,7 +41,7 @@ export default function OrderPage() {
             deliveryReceiverAddressDetail: deliveryInfo.deliveryReceiver,
          },
       };
-
+      const isInputEmpty = Object.values(deliveryInfo).some((value) => value.trim() === '');
       // axios를 사용하여 서버에 주문 요청
       axios
          .post(`https://ka8d596e67406a.user-app.krampoline.com/api/orders`, orderData, {
@@ -72,7 +72,7 @@ export default function OrderPage() {
          </div>
          <div className="mb-8 border-b pb-4">
             <h3 className="text-2xl font-semibold mb-2">배송 정보</h3>
-            <Link to="/changeaddress">
+            <Link to="/shippingInfo">
                <button className="bg-white text-black border border-solid border-black">배송지 변경</button>
             </Link>
             <div className="flex flex-col space-y-2 ">
@@ -137,7 +137,15 @@ export default function OrderPage() {
                </label>
             </div>
          </div>
-         <button className="bg-blue-500 text-white py-3 px-6 rounded-full mt-4" onClick={handleOrder}>
+         <button
+            className={`bg-${
+               Object.values(deliveryInfo).some((value) => value.trim() === '') ? 'gray-800' : 'blue-500'
+            } text-white py-3 px-6 rounded-full mt-4 ${
+               Object.values(deliveryInfo).some((value) => value.trim() === '') && 'opacity-50 cursor-not-allowed'
+            }`}
+            onClick={handleOrder}
+            disabled={Object.values(deliveryInfo).some((value) => value.trim() === '')}
+         >
             결제하기
          </button>
       </div>
