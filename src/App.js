@@ -4,6 +4,17 @@ import DownloadPage from './pages/DownloadPage';
 import ArtPage from './pages/ArtPage';
 import ArtxPage from './pages/ArtxPage';
 import Layout from './components/shared/Layout';
+
+
+//제품 라우터
+import ArtPage from './pages/ArtPage';
+import Product from './pages/Product';
+import ProductDetailPage from './pages/ProductDetailPage';
+import ProductList from './pages/ProductList';
+import ProductRegistrationPage from './pages/ProductRegistrationPage';
+
+
+//유저 라우터
 import SignUpPage from './pages/userPages/SignUpPage';
 import LoginPage from './pages/userPages/LoginPage';
 import Product from './pages/Product';
@@ -11,57 +22,63 @@ import ShoppingCart from './pages/ShoppingCart';
 import OrderHistory from './pages/OrderHistory';
 import ProductPage from './pages/ProductPage';
 import ProductDetailPage from './pages/ProductDetailPage';
-import Test from './pages/Test';
 import ProductList from './pages/ProductList';
 import MyPage from './pages/userPages/Mypage';
 import MemberInfoPage from './pages/userPages/MemberInfoPage';
 import Orderpage from './pages/Orderpage';
-import ProductRegistrationPage from './pages/ProductRegistrationPage';
-import ArtistRegistrationPage from './pages/userPages/ArtistRegistrationPage';
-import ArtistProfilePage from './pages/userPages/ArtistProfilePage';
-import Kakaologin from './pages/Kakaologin';
-import KakaoAuth from './pages/KakaoAuth';
-import MyPage from './pages/Mypage';
-import MemberInfoPage from './pages/MemberInfoPage';
-import Orderpage from './pages/Orderpage';
-import ProductRegistrationPage from './pages/ProductRegistrationPage';
-import ArtistRegistrationPage from './pages/ArtistRegistrationPage';
-import ArtistProfilePage from './pages/ArtistProfilePage';
-import Kakaologin from './pages/Kakaologin';
-import KakaoAuth from './pages/KakaoAuth';
+import Kakaologin from './pages/userPages/Kakaologin';
+import KakaoAuth from './pages/userPages/KakaoAuth';
 import ShippingInfo from './pages/ShippingInfo';
 import Addaddress from './pages/Addaddress';
-import KakaoSuccess from './pages/KakaoSuccess';
-import KakaoFail from './pages/KakaoFail';
+import KakaoSuccess from './pages/userPages/KakaoSuccess';
+import KakaoFail from './pages/userPages/KakaoFail';
+import CustomerCenter from "./pages/CustomerCenter";
+
+
+
+//작가용
+import ArtistRegistrationPage from './pages/userPages/ArtistRegistrationPage';
+import ArtistProfilePage from './pages/userPages/ArtistProfilePage';
+import ArtistsPage from "./pages/ArtistsPage";
+
+//관리자용
+import AdminPage from "./pages/AdminPage";
+
+
+//아직 사용하지 않는 페이지
+import DownloadPage from './pages/DownloadPage';
+import ArtxPage from './pages/ArtxPage';
+import ProductPage from './pages/ProductPage';
+import Test from './pages/Test';
+import NoticePage from "./pages/NoticePage";
+
+
+
+
 
 function App() {
    return (
       <div>
          <Routes>
             <Route path="/" element={<Layout />}>
-               {/* 메인으로 받아오는 페이지는 메인페이지 */}
-               <Route index element={<MainPage />} /> {/*메인페이지 */}
+               <Route index element={<MainPage />} /> 
+
+               {/* 제품 페이지 */}
                <Route path="/paint" element={<ArtPage />} /> {/* 작품관 */}
-               {/*작품관 하부 페이지 도자기, 그림, 기타로 연결*/}
-               {/* <Route path="/productlist" element={<ProductList />} />  */}
-               <Route path="/productslist/:productCategoryType" element={<ProductList />} />
+               <Route path="/product" element={<Product />} />
+               <Route path="/productpage" element={<ProductPage />} />
+               <Route path="/productdetail/:productId" element={<ProductDetailPage />} />
+               <Route path="/ProductRegistration" element={<ProductRegistrationPage />} />
+
+
+               {/* 유저 페이지 */}
                <Route path="/signup" element={<SignUpPage />} />
                <Route path="/login" element={<LoginPage />} />
-               <Route path="/artx" element={<ArtxPage />} />
-               <Route path="/download" element={<DownloadPage />} />
-               <Route path="/product" element={<Product />} />
                <Route path="/carts/:cartId" element={<ShoppingCart />} />
                <Route path="/orderhistory" element={<OrderHistory />} />
-               <Route path="/productpage" element={<ProductPage />} />
-               {/* <Route path="/productdetail" element={<ProductDetailPage />} /> */}
-               <Route path="/productdetail/:productId" element={<ProductDetailPage />} />
-               <Route path="/test" element={<Test />} /> {/* 슬라이드 테스트. 임시. */}
                <Route path="/mypage" element={<MyPage />} />
                <Route path="/member" element={<MemberInfoPage />} />
                <Route path="/order" element={<Orderpage />} />
-               <Route path="/ProductRegistration" element={<ProductRegistrationPage />} />
-               <Route path="/ArtistRegistration" element={<ArtistRegistrationPage />} />
-               <Route path="/ArtistProfile" element={<ArtistProfilePage />} />
                <Route path="/kakao" element={<Kakaologin />} />
                <Route path="/auth" element={<KakaoAuth />} />
 <<<<<<< HEAD
@@ -70,7 +87,26 @@ function App() {
                <Route path="/addaddress" element={<Addaddress />} />
                <Route path="/kakaosuccess" element={<KakaoSuccess />} />
                <Route path="/kakaofail" element={<KakaoFail />} />
->>>>>>> develop
+               <Route path="/customer" element={<CustomerCenter />} />
+
+
+               {/* 작가관련 페이지 */}
+               <Route path="/ArtistRegistration" element={<ArtistRegistrationPage />} />
+               <Route path="/ArtistProfile" element={<ArtistProfilePage />} />
+               <Route path="/Artist" element={<ArtistsPage />} />
+
+               {/* 관리자 페이지 */}
+               <Route path="/admin" element={<AdminPage />} />
+               <Route path="/notice" element={<NoticePage />} />
+
+
+               {/* 현재 사용하지 않는 페이지 */}
+               <Route path="/productslist/:productCategoryType" element={<ProductList />} />
+               <Route path="/artx" element={<ArtxPage />} />
+               <Route path="/download" element={<DownloadPage />} />
+               <Route path="/test" element={<Test />} /> {/* 슬라이드 테스트. 임시. */}
+
+
             </Route>
          </Routes>
       </div>
