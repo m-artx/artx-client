@@ -1,21 +1,42 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Slider from 'react-slick';
-import ApiLoader from '../instance/ApiLoader';
 import { useNavigate } from 'react-router-dom';
+import customAxios from '../store/customAxios';
 
 
+//메인화면 두번째 슬라이더
 const SlideSecond = () => {
   const sliderRef1 = useRef(); // 첫 번째 슬라이더 ref
 
-  const apiData = ApiLoader(process.env.REACT_APP_artx_prod_new_ten);
+  // const apiData = ApiLoader(process.env.REACT_APP_artx_prod_new_ten);
+
+const [data, setData] = useState([]);
+
+   useEffect(() => {
+      customAxios.get('/api/products/main?type=POPULARITY')
+      .then((response) =>{
+         setData(response.data);
+         console.log('카테고리슬라이더내부 리스폰스성공')
+      })
+      .catch((error) => {
+         console.error('Error:',error);
+         console.log('카테고리슬라이더내부 에러')
+
+      })
+   }, [])
+
+
+
+
+
   // console.log(apiData.length)
-  const doubleData = [...apiData, ...apiData]
+  const doubleData = [...data, ...data]
 
   // 데이터가 준비되었다면, 배열을 나눕니다.
-  const halfIndex = Math.ceil(apiData.length / 2);
-  const firstHalf = apiData.slice(0, halfIndex);
-  const secondHalf = apiData.slice(halfIndex);
+  const halfIndex = Math.ceil(data.length / 2);
+  const firstHalf = data.slice(0, halfIndex);
+  const secondHalf = data.slice(halfIndex);
 
   const [currentIndex1, setCurrentIndex1] = useState(0); // 첫 번째 슬라이더 인덱스 상태
   const [currentIndex2, setCurrentIndex2] = useState(0); // 첫 번째 슬라이더 인덱스 상태
