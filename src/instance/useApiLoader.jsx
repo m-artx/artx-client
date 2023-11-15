@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { REACT_APP_ARTX_BASE_URL } from "../utils/env"
+
 
 // 이 훅은 API로부터 데이터를 불러와서 반환합니다.
 function useApiLoader(url) {
@@ -7,10 +9,13 @@ function useApiLoader(url) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const apiUrl = `${process.env.REACT_APP_artx_base_url}${url}`;
+        // const apiUrl = `${process.env.REACT_APP_ARTX_BASE_URL}${url}`;
+        const apiUrl = `${REACT_APP_ARTX_BASE_URL}${url}`;
+        console.log('apiUrl 유효:', apiUrl)
         const response = await axios.get(apiUrl);
         setData(response.data);
         console.log('useApiLoader 데이터타입' , typeof(data))

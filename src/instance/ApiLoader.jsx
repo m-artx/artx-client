@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { REACT_APP_ARTX_BASE_URL } from "../utils/env"
+
 
 //연동원하는 urㅣ을 넣는다. Url 주소는 env.local 참고
 
@@ -7,7 +9,8 @@ function ApiLoader(url) {
    const [data, setData] = useState([]);
 
    useEffect(() => {
-      const apiUrl = `${process.env.REACT_APP_artx_base_url}${url}`;
+      // const apiUrl = `${process.env.REACT_APP_artx_base_url}${url}`;
+      const apiUrl = `${REACT_APP_ARTX_BASE_URL}${url}`
       console.log('apiurl컴포넌트 : ' + apiUrl);
 
       axios
