@@ -247,14 +247,14 @@ export default function SignUpPage() {
         const userInfo = { ...formData };
         // //사용자정보 복사 및 저장
 
-        
+
         // dispatch(loginUser(userInfo));
         // //loginUser 액션을 발행하며 전역상태 업데이트.
 
         try {
             const userResponse = await registerUser(userInfo);
             console.log(userInfo);
-            // navigate('/login');
+            // navigate('/login'); 
         } catch (error) {
             alert('회원가입 실패: ' + error.message);
         }
