@@ -56,7 +56,7 @@ export default function SignUpPage() {
         username: '',
         email: '',
     });
-
+ 
     // 유효성 검사 및 인풋하단 스테이트 업데이트
     const handleValidationAndChange = (name, value) => {
         let errorMsg = '';
