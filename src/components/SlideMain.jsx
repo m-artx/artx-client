@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
-import ApiLoader from '../instance/ApiLoader';
 import { useNavigate } from 'react-router-dom';
-// 최상위 슬라이드
+import customAxios from '../store/customAxios';
+import axios from "axios";
+
+//메인화면 첫번째 슬라이더
 
 const PrevArrow = ({ onClick }) => {
    return (
@@ -44,7 +46,24 @@ const settings = {
 };
 
 function SlideMain() {
-   const apiData = ApiLoader(process.env.REACT_APP_artx_prod_pop_ten);
+   // const apiData = ApiLoader(process.env.REACT_APP_artx_prod_pop_ten);
+   const [data, setData] = useState([]);
+
+   useEffect(() => {
+      console.log('위치: 슬라이드메인')
+
+      customAxios.get('/api/products/main?type=POPULARITY')
+      // axios.get('https://ka8d596e67406a.user-app.krampoline.com/api/products/main?type=POPULARITY')
+
+      .then((response) =>{
+         setData(response.data);
+         
+      })
+      .catch((error) => {
+         console.error('Error:',error);
+      })
+   }, [])
+   
    //apiData가 array가 아닌 경우도 처리해야하나?
 
    const navigate = useNavigate();
@@ -55,7 +74,7 @@ function SlideMain() {
    return (
       <div className="border border-yellow-200 text-white ">
          <Slider className="relative min-h-[200px]" {...settings}>
-            {apiData.map((image, idx) => (
+            {data.map((image, idx) => (
                <div key={idx} className="h-[200px]">
                   <div
                      className="flex-1 w-[80%] h-[200px]  border border-red-500 rounded-xl"

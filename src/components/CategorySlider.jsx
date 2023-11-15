@@ -1,11 +1,25 @@
-import React from 'react';
-import ApiLoader from '../instance/ApiLoader';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import customAxios from '../store/customAxios';
 
-// 배열을 받아 슬라이드를 만든다
-
+//메인화면 세번째 슬라이더
 function CategorySlider() {
-   const data = ApiLoader(process.env.REACT_APP_artx_prod_categories);
+   
+   const [data, setData] = useState([]);
+
+   useEffect(() => {
+      customAxios.get('/api/products/categories')
+      .then((response) =>{
+         setData(response.data);
+         console.log('카테고리슬라이더내부 리스폰스성공')
+      })
+      .catch((error) => {
+         console.error('Error:',error);
+         console.log('카테고리슬라이더내부 에러')
+
+      })
+   }, [])
+
    console.log('카테고리이미지데이터' + data.length);
    const navigate = useNavigate();
 

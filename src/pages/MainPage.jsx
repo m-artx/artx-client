@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-import Search from '../components/shared/Search';
+// import Search from '../components/shared/Search';
 import SlideMain from '../components/SlideMain';
 import SlideSecond from '../components/SlideSecond';
 import CategorySlider from '../components/CategorySlider';
@@ -42,10 +42,9 @@ function MainPage() {
    return (
       <div className="flex items-center flex-col border max-w-[1300px]">
          <div className="flex flex-col items-center justify-center border border-blue-700 max-w-[1300px] h-[1000px]">
-            <div className="h-[100px]">
-               {/* Pass the handleSearch function to the Search component */}
+            {/* <div className="h-[100px]">
                <Search onChange={handleSearch} />
-            </div>
+            </div> */}
 
             <div className="w-[80%] flex-1">
                {data.map((item) => (
