@@ -23,6 +23,9 @@ module.exports = {
       height: {
         'h-100p-140': 'calc(100vh - 140px)',
       },
+      colors: {
+        black: 'rgb(30, 30, 30)', // Redefine black color to rgb(30, 30, 30)
+      },
     },
     screens: {
       sm: { max: '599px' },

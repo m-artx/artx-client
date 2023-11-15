@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 // import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import InputBox from '../../components/shared/InputBox';
 import Button1 from '../../components/shared/Button1';
 import customAxios from '../../store/customAxios';
-import Modal from '../../components/shared/Modal';
 
 //재영님이 메일은 문자열식?으로 반환되야한다고 한것같음
 
@@ -136,7 +134,7 @@ export default function SignUpPage() {
             label: '아이디',
             name: 'username',
             type: 'text',
-            placeholder: '',
+            // placeholder: '',
             error: formErrors,
             onDuplicateCheck: handleDuplicateCheck,
             isDuplicateChecking: isDuplicateChecking.username,
@@ -251,24 +249,24 @@ export default function SignUpPage() {
     };
 
     return (
-        <div className="bg-white text-black justify-center items-center w-[1000px] ">
+        <div className="bg-white text-black justify-center items-center w-[1300px] max-w-[1300px]">
             <form
-                className="flex items-center flex-col h-auto p-4 bg-white shadow-md text-black border-8 border-green-600"
+                className="flex items-center flex-col h-auto p-4 bg-white shadow-md text-black"
                 onSubmit={handleSubmit}
             >
                 {inputFields.map((field) => (
                     <InputBox
-                        key={field.name}
+                        // key={field.name}
                         label={field.label}
                         name={field.name}
                         type={field.type}
-                        value={formData[field.name]}
+                        // value={formData[field.name]}
                         onChange={(e) => handleValidationAndChange(field.name, e.target.value)}
                         error={formErrors[field.name]}
-                        placeholder={field.placeholder}
-                        validate={field.validate}
+                        // placeholder={field.placeholder}
+                        // validate={field.validate}
                         onDuplicateCheck={field.onDuplicateCheck} //중복버튼 켰는지 확인
-                        handleDuplicateCheck={() => handleDuplicateCheck(field.name)}
+                        // handleDuplicateCheck={() => handleDuplicateCheck(field.name)}
                         isDuplicateChecking={isDuplicateChecking[field.name]}
                     />
                 ))}

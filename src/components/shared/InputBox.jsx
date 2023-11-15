@@ -13,7 +13,7 @@ import { MdCheckCircle, MdCancel } from 'react-icons/md'; // 필요한 아이콘
 // isDuplicateChecking 중복 체크 결과값이 '완료'라면 글씨만 파란색으로, '중복확인'이라면 파란색 border로 바꿔준다
 
 function InputBox({ label, name, type, value, onChange, error, placeholder, onDuplicateCheck, isDuplicateChecking }) {
-    const errorMessageStyle = error === '완료' ? 'text-blue-500' : 'text-red-300';
+    const errorMessageStyle = error === '완료' ? 'text-blue-500' : 'text-red-400';
 
     return (
         <div className="mb- bg-white w-[300px]">
@@ -29,7 +29,7 @@ function InputBox({ label, name, type, value, onChange, error, placeholder, onDu
                     value={value}
                     onChange={onChange}
                     required
-                    placeholder={placeholder}
+                    // placeholder={placeholder}
                     autoComplete="new-password" // 경고해제용
                 />
                 {/* 중복체크박스 부분 */}

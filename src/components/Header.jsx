@@ -69,7 +69,7 @@ function Header() {
     return (
         <div className=" w-screen max-w-[1300px] border border-red-400">
             {/* 작가센터, 관리자센터, 마이페이지 */}
-            <div className="absolute flex w-screen h-[25px] max-w-[1300px] justify-between border text-gray-500">
+            <div className="absolute flex w-screen h-[25px] max-w-[1300px] justify-between border text-gray-400">
                 <div className="flex border justify-end items-center ">
                         <Link to="/Artist">
                             <div className="px-4">작가센터</div>

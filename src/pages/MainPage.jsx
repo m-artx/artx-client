@@ -40,7 +40,7 @@ function MainPage() {
    };
 
    return (
-      <div className="flex items-center flex-col border max-w-[1300px]">
+      <div className="flex items-center flex-col border-4 max-w-[1300px] ">
          <div className="flex flex-col items-center justify-center border border-blue-700 max-w-[1300px] h-[1000px]">
             {/* <div className="h-[100px]">
                <Search onChange={handleSearch} />
@@ -72,8 +72,8 @@ function MainPage() {
             </div>
          </div>
 
-         <div className="flex w-full">
-            <div className="flex flex-col w-full items-center pt-2 border yellow-purple-800 overflow-hidden h-[400px]">
+         <div className="flex w-[1300px]">
+            <div className="flex flex-col w-full items-center pt-2 border yellow-purple-800 overflow-hidden h-[380px]">
                <p className="p-3">둘러보기</p>
                <div className="flex border w-screen justify-center">
                   <CategorySlider />
