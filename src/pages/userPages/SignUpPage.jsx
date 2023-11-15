@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 // import { useDispatch } from 'react-redux';
-// import { loginUser } from '../../store/userSlice';
 import { useNavigate } from 'react-router-dom';
 import InputBox from '../../components/shared/InputBox';
 import Button1 from '../../components/shared/Button1';
-// import axios from 'axios';
 import customAxios from '../../store/customAxios';
+import Modal from '../../components/shared/Modal';
+
+//재영님이 메일은 문자열식?으로 반환되야한다고 한것같음
 
 export default function SignUpPage() {
     const navigate = useNavigate();
@@ -28,7 +29,7 @@ export default function SignUpPage() {
 
     //에러 state 초기값
     const [formErrors, setFormErrors] = useState({
-        username: '* 4자 이상, 특수 문자 제외한 알파벳 소문자',
+        username: '* 4자 이상, 영문 소문자와 숫자만 허용됩니다.',
         password: '* 영문, 숫자, 특수문자를 포함하여 8~30자로 입력하세요.',
         // confirmPassword: '* 동일한 비밀번호를 입력해주세요.',
         email: '* 알맞은 이메일 형식을 작성하여주세요.',
@@ -56,7 +57,7 @@ export default function SignUpPage() {
         username: '',
         email: '',
     });
- 
+
     // 유효성 검사 및 인풋하단 스테이트 업데이트
     const handleValidationAndChange = (name, value) => {
         let errorMsg = '';
@@ -64,8 +65,8 @@ export default function SignUpPage() {
 
         // 아이디 유효성 검사
         if (name === 'username') {
-            isValid = value.length >= 4 && /^[a-z]+$/.test(value);
-            errorMsg = isValid ? '' : '* 4자 이상, 특수 문자 제외한 알파벳 소문자';
+            isValid = value.length >= 4 && /^[a-z0-9]+$/.test(value); // 수정된 정규 표현식
+            errorMsg = isValid ? '' : '* 4자 이상, 영문 소문자와 숫자만 허용됩니다.';
         }
 
         // 비밀번호 유효성 검사
@@ -85,7 +86,6 @@ export default function SignUpPage() {
         //     setFormErrors({ ...formErrors, [name]: errorMsg });
         //     setValidationStates({ ...validationStates, [`${name}Valid`]: isValid });
         // }
-     
 
         // 이메일 유효성 검사
         if (name === 'email') {
@@ -111,40 +111,13 @@ export default function SignUpPage() {
         setFormData({ ...formData, [name]: value }); // 사용자의 입력에 따른 스테이트 업데이트
         setFormErrors({ ...formErrors, [name]: errorMsg }); // 오류체크 및 에러메시지 업데이트
         setValidationStates({ ...validationStates, [`${name}Valid`]: isValid });
-
-
-
-        //  if (name === 'confirmPassword') {
-        //     const isValid = value === formData.password;
-        //     const errorMsg = isValid ? '' : '* 동일한 비밀번호를 입력해주세요.';
-        //     setConfirmPassword(value); // 별도의 상태 변수를 업데이트합니다.
-        //     setFormErrors({ ...formErrors, confirmPassword: errorMsg });
-        //     setValidationStates({ ...validationStates, confirmPasswordValid: isValid });
-        // } else {
-        //     // 기존 로직을 유지합니다.
-        //     setFormData({ ...formData, [name]: value });
-        //     setFormErrors({ ...formErrors, [name]: errorMsg });
-        //     setValidationStates({ ...validationStates, [`${name}Valid`]: isValid });
-        // }
     };
-
-   // 비밀번호 확인 검사
-// const  passwordDupleCheck = (e) => {
-//     if (name === 'confirmPassword') {
-//         isValid = value && value === formData.password;
-//         errorMsg = isValid ? '' : '* 동일한 비밀번호를 입력해주세요.';
-//     }
-// } 
-  
 
     // 중복 확인 함수
     const handleDuplicateCheck = async (target) => {
         //false : 중복이 아니다
         const isDuplicate = ''; // 서버에 중복 확인 요청 (임시 로직)
 
-        // isDuplicate의 상태에 따라 inputBox의 isDuplicateChecking에 넣어준다
-
-        //중복이 아니라면 isDuplicateChecking의 각 값을 true로 만들어라
         if (!isDuplicate) {
             setIsDuplicateChecking((prev) => ({
                 ...prev,
@@ -228,36 +201,35 @@ export default function SignUpPage() {
         );
     };
 
-    // 유효성 찍어보기
+    // 회원가입 성공 모달 상태 변수 추가
+    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
     //회원가입 버튼 누를때 작동하는 함수
     const handleSubmit = async (e) => {
         e.preventDefault();
         const isValid = isFormValid();
-        setIsFormValidState(isValid); // 여기서 상태를 업데이트
-        console.log('isValid :', isValid);
-
-        console.log('validationStates:', validationStates);
-        console.log('isDuplicateChecking:', isDuplicateChecking);
+        setIsFormValidState(isValid);
 
         if (!isValid) {
             alert('모든 입력이 완료되고 중복 검사를 통과해야 합니다.');
             return;
         }
-        const userInfo = { ...formData };
-        // //사용자정보 복사 및 저장
-
-
-        // dispatch(loginUser(userInfo));
-        // //loginUser 액션을 발행하며 전역상태 업데이트.
 
         try {
-            const userResponse = await registerUser(userInfo);
-            console.log(userInfo);
-            // navigate('/login'); 
+            const userInfo = { ...formData };
+            await registerUser(userInfo);
+            setIsSuccessModalOpen(true); // 성공 모달 표시
         } catch (error) {
-            alert('회원가입 실패: ' + error.message);
+            alert(error.message); // 실패 시 오류 메시지 표시
         }
+    };
+
+    // 모달을 닫는 함수
+    const handleCloseSuccessModal = () => {
+        setIsSuccessModalOpen(false);
+        // 모달을 닫을 때 추가 작업을 할 수 있습니다.
+        // 예: 다른 페이지로 이동
+        navigate('/login'); // 회원가입 성공 후 로그인 페이지로 이동
     };
 
     const handleCancelClick = () => {
@@ -270,13 +242,11 @@ export default function SignUpPage() {
     const registerUser = async (userData) => {
         try {
             const response = await customAxios.post('/api/users', userData);
-            // return response.data; 
-            //회원가입 성공시 응답 데이터 반환
-
+            console.log('회원가입 성공', userData);
+            return response.data; // 회원가입 성공시 응답 데이터 반환
         } catch (error) {
             console.error('Signup error', error.response || error);
-            alert('회원가입 실패: ' + (error.response ? error.response.data.message : error.message));
-
+            throw new Error('회원가입 실패: ' + (error.response ? error.response.data.message : error.message));
         }
     };
 
@@ -324,11 +294,17 @@ export default function SignUpPage() {
                         // onClick={handleSubmit}
                         label="가입하기"
                         type="submit"
-                        disabled={!isFormValid} // 유효성 검사 상태에 따라 버튼 활성화 상태 결정
-                        className={`w-[140px] ${isFormValid ? 'border-2 border-blue-500' : ''}`} // 조건부 클래스 추가
+                        className={`w-[140px]`} 
                     />
                 </div>
             </form>
+            {isSuccessModalOpen && (<div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-500 bg-opacity-50">
+                <div className="bg-white text-black border-4 p-4 rounded flex  flex-col justify-center items-center w-[200px]">
+                        <h2 className="bg-white p-4">회원가입 성공</h2>
+                        <button onClick={handleCloseSuccessModal}className="bg-black text-white w-20 ">닫기</button>
+                </div>
+            </div>
+            )}
         </div>
     );
 }
