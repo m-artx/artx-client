@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 import axios from 'axios';
-
+import { setDeliveryDetail } from '../store/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
 // 제품 상세페이지
 // api 컴포넌트 사용해서 바꿔보자
 
@@ -10,12 +11,17 @@ function ProductDetailPage() {
     let { productId } = useParams();
     const [productData, setProductData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const cartId = 1;
+    const cartId = 25;
+    const dispatch = useDispatch();
+    const deliveryDetail = useSelector((state) => state.cart.deliveryDetail);
+
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true); // 데이터 로딩 시작
             try {
-                const response = await axios.get(`${process.env.REACT_APP_artx_base_url}products/${productId}`);
+                const response = await axios.get(
+                    `http://ka8d596e67406a.user-app.krampoline.com/api/products/${productId}`
+                );
                 const prodData = response.data;
                 console.log(prodData);
 
@@ -46,14 +52,18 @@ function ProductDetailPage() {
         return <div>Product not found</div>;
     }
 
-    const handleAddToCart = async () => {
+    const handleAddToCart = async (e) => {
+        e.preventDefault(); // 기본 폼 제출 동작 방지
         try {
             // 상품을 카트에 추가하는 요청을 보냅니다.
             await axios.post(
-                `https://ka8d596e67406a.user-app.krampoline.comapi/products?/${cartId}/products/${productId}`,
+                `https://ka8d596e67406a.user-app.krampoline.com/api/carts/${cartId}/products/${productId}`,
                 {
+                    cartId: 25,
                     productId: productData.productId,
-                    quantity: 1, // 원하는 수량으로 변경 가능
+                },
+                {
+                    withCredentials: false,
                 }
             );
 
@@ -88,46 +98,51 @@ function ProductDetailPage() {
     };
 
     const handlePay = () => {
-        // 예시로 formData라는 객체를 생성
-        const formData = {
-            // 필요한 폼 필드들을 여기에 추가
-        };
-
-        // 입력 필드 중 하나라도 비어 있으면 isInputEmpty를 true로 설정
-        const isInputEmpty = Object.values(formData).some((value) => value.trim() === '');
-
-        if (isInputEmpty) {
-            // 필요한 입력 필드들이 비어있을 때 수행할 작업
-            console.error('Some input fields are empty.');
-            return;
-        }
-
-        // axios를 사용하여 서버에 주문 요청
-        axios
-            .post(
-                `https://ka8d596e67406a.user-app.krampoline.com/api/products?/orders`,
+        // 결제 정보 구성
+        const orderData = {
+            userId: '29efc8ca-d618-44bd-b67b-29ede70ce3c9',
+            orderDetails: [
                 {
                     productId: productData.productId,
-                    quantity: 1, // 원하는 수량으로 변경 가능
+                    productQuantity: 1, // 주문 수량, 원하는 수량으로 변경 가능
                 },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        accept: '*/*',
-                    },
-                }
-            )
+            ],
+            deliveryDetail,
+        };
+
+        axios
+            .post(`https://ka8d596e67406a.user-app.krampoline.com/api/orders`, orderData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    accept: '*/*',
+                },
+            })
             .then((response) => {
-                // 성공적으로 주문이 완료되었을 때 수행할 작업
                 console.log('주문 성공:', response.data);
                 window.open(response.data.next_redirect_pc_url, '_blank');
             })
             .catch((error) => {
-                // 주문 실패 시 수행할 작업
                 console.error('주문 실패:', error);
+
+                // 실패 시에도 API에 요청을 보낼 수 있도록 여기서 추가적인 API 호출을 수행
+                // 예시: 실패 정보를 서버에 기록하는 API 호출
+                axios
+                    .post('https://example.com/api/log-order-failure', {
+                        error: error.message,
+                        orderData,
+                    })
+                    .then((logResponse) => {
+                        console.log('주문 실패 기록 성공:', logResponse.data);
+                    })
+                    .catch((logError) => {
+                        console.error('주문 실패 기록 실패:', logError);
+                    });
+
+                // 여기서 페이지 이동 코드를 추가
+                // 예시: 실패 페이지로 이동
+                window.location.href = '/kakaofail';
             });
     };
-
     return (
         <div className="flex w-full max-w-[1500px]">
             {/* 이미지 슬라이더 */}
