@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { setOrderDetails } from '../store/cartSlice';
 import { useLocation } from 'react-router-dom';
+import { setDeliveryDetail, setProductsDetail, setOrderDetails } from '../store/cartSlice';
 
 export default function OrderPage() {
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
@@ -16,6 +16,7 @@ export default function OrderPage() {
     const orderDetails = useSelector((state) => state.cart.orderDetails);
     const location = useLocation();
     const selectedProducts = location.state?.selectedProducts || [];
+    const deliveryDetail = useSelector((state) => state.cart.deliveryDetail);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -24,40 +25,59 @@ export default function OrderPage() {
             [name]: value,
         });
     };
+    const orderId = '';
 
     // 주문하기 버튼 클릭 시 실행되는 함수
-    const handleOrder = () => {
+    const handleOrder = (produtId) => {
         // 주문 정보 구성
         const orderData = {
-            userId: '63b1fdff-b1fb-4141-bb4c-5342a81bd7b0',
+            userId: '29efc8ca-d618-44bd-b67b-29ede70ce3c9',
             orderDetails: selectedProducts.map((product) => ({
                 productId: product.productId,
                 productQuantity: 1,
             })),
-            deliveryDetail: {
-                deliveryReceiver: deliveryInfo.receiverName,
-                deliveryReceiverPhoneNumber: deliveryInfo.receiverPhoneNumber,
-                deliveryReceiverAddress: deliveryInfo.receiverAddress,
-                deliveryReceiverAddressDetail: deliveryInfo.deliveryReceiver,
-            },
+            deliveryDetail,
         };
         const isInputEmpty = Object.values(deliveryInfo).some((value) => value.trim() === '');
         // axios를 사용하여 서버에 주문 요청
         axios
-            .post(`https://ka8d596e67406a.user-app.krampoline.com/api/orders`, orderData, {
+            .post(`http://ka8d596e67406a.user-app.krampoline.com/api/orders`, orderData, {
                 headers: {
                     'Content-Type': 'application/json',
                     accept: '*/*',
                 },
             })
             .then((response) => {
-                // 성공적으로 주문이 완료되었을 때 수행할 작업
                 console.log('주문 성공:', response.data);
                 window.open(response.data.next_redirect_pc_url, '_blank');
             })
             .catch((error) => {
                 // 주문 실패 시 수행할 작업
                 console.error('주문 실패:', error);
+            });
+    };
+    // 주문 취소 버튼 클릭 시 실행되는 함수
+    const handleCancelOrder = () => {
+        // 적절한 주문 취소 API 엔드포인트와 데이터를 설정
+        const cancelOrderData = {
+            // 주문 취소에 필요한 데이터 추가
+        };
+
+        axios
+            .patch(`http://ka8d596e67406a.user-app.krampoline.com/api/orders/${orderId}/cancel`, cancelOrderData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    accept: '*/*',
+                },
+            })
+            .then((response) => {
+                // 성공적으로 주문 취소가 완료되었을 때 수행할 작업
+                console.log('주문 취소 성공:', response.data);
+                // 적절한 리덕스 액션을 디스패치하여 상태를 업데이트할 수도 있습니다.
+            })
+            .catch((error) => {
+                // 주문 취소 실패 시 수행할 작업
+                console.error('주문 취소 실패:', error);
             });
     };
 
@@ -152,6 +172,7 @@ export default function OrderPage() {
             >
                 결제하기
             </button>
+            <button onClick={handleCancelOrder}>주문취소</button>
         </div>
     );
 }
