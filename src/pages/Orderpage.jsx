@@ -25,23 +25,25 @@ export default function OrderPage() {
             [name]: value,
         });
     };
-    const orderId = '';
+    const orderId = '5';
 
     // 주문하기 버튼 클릭 시 실행되는 함수
     const handleOrder = (produtId) => {
         // 주문 정보 구성
         const orderData = {
             userId: '29efc8ca-d618-44bd-b67b-29ede70ce3c9',
-            orderDetails: selectedProducts.map((product) => ({
-                productId: product.productId,
-                productQuantity: 1,
-            })),
+            orderDetails: [
+                {
+                    productId: 7,
+                    productQuantity: 1,
+                },
+            ],
             deliveryDetail,
         };
         const isInputEmpty = Object.values(deliveryInfo).some((value) => value.trim() === '');
         // axios를 사용하여 서버에 주문 요청
         axios
-            .post(`http://ka8d596e67406a.user-app.krampoline.com/api/orders`, orderData, {
+            .post(`https://ka8d596e67406a.user-app.krampoline.com/api/orders`, orderData, {
                 headers: {
                     'Content-Type': 'application/json',
                     accept: '*/*',
@@ -64,7 +66,7 @@ export default function OrderPage() {
         };
 
         axios
-            .patch(`http://ka8d596e67406a.user-app.krampoline.com/api/orders/${orderId}/cancel`, cancelOrderData, {
+            .patch(`https://ka8d596e67406a.user-app.krampoline.com/api/orders/${orderId}/cancel`, cancelOrderData, {
                 headers: {
                     'Content-Type': 'application/json',
                     accept: '*/*',
