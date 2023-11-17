@@ -1,7 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux'; 
+
 
 function MyPage() {
+  const userInfo = useSelector((state) => state.user);
+  console.log(userInfo)
+
   return (
     <div className="bg-white text-black border border-black p-4  shadow-lg w-screen h-screen ">
       <h1 className="flex justify-center text-5xl bg-white text-black">마이페이지</h1>

@@ -1,12 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Dropdown from './Dropdown';
+import { useSelector, useDispatch } from 'react-redux';
+import logoutUser from '../store/userSlice';
 
-//강의에서 말하는 APP부분
+
+
+//로그인 후 유저롤이 USER일때, ARTIST일때, ADMIN일때 상단 메뉴가 다 달라야한다.
+
 
 function Header() {
     const navigate = useNavigate();
     const [dropdownVisibility, setDropdownVisibility] = React.useState(false);
+    const storedUsername = localStorage.getItem('username');
+    const { isLogin, username } = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (isLogin) {
+            navigate('/');
+            console.log('헤더 : 로그인된상태의 유즈이펙트다');
+        } else if (!isLogin) {
+            console.log('헤더 : 로그인 안된 상태의 유즈이펙트다');
+        }
+    }, [isLogin, navigate]);
+
+    const handleLogout = () => {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('username');
+        dispatch(logoutUser());
+        navigate('/');
+    };
 
     // 페이지 이동 함수
     const goToPage = (path) => {
@@ -66,17 +90,37 @@ function Header() {
         );
     }
 
+    const renderAuthButtons = () => {
+        return isLogin ? (
+            <div className="flex">
+                <div className="ml-5"> {username} 님</div>
+                <button onClick={handleLogout} className="ml-5">
+                    로그아웃
+                </button>
+            </div>
+        ) : (
+            <div className="flex">
+                <Link to="signup">
+                    <div className="ml-5">회원가입</div>
+                </Link>
+                <Link to="login">
+                    <div className="ml-5">로그인</div>
+                </Link>
+            </div>
+        );
+    };
+
     return (
         <div className=" w-screen max-w-[1300px] border border-red-400">
             {/* 작가센터, 관리자센터, 마이페이지 */}
             <div className="absolute flex w-screen h-[25px] max-w-[1300px] justify-between border text-gray-400">
                 <div className="flex border justify-end items-center ">
-                        <Link to="/Artist">
-                            <div className="px-4">작가센터</div>
-                        </Link>
-                        <Link to="/admin">
-                            <div className="px-4">관리자센터</div>
-                        </Link>
+                    <Link to="/Artist">
+                        <div className="px-4">작가센터</div>
+                    </Link>
+                    <Link to="/admin">
+                        <div className="px-4">관리자센터</div>
+                    </Link>
                 </div>
                 <div className="flex border">
                     <div>
@@ -101,12 +145,8 @@ function Header() {
                 <div className="flex-1 flex justify-center items-center text-sm">{links()}</div>
                 <div className="flex-1 text-sm border">
                     <div className="flex justify-end mr-20">
-                        <Link to="signup">
-                            <div className="ml-5">회원가입</div>
-                        </Link>
-                        <Link to="login">
-                            <div className="ml-5">로그인</div>
-                        </Link>
+                        {renderAuthButtons()}
+
                         {/* 카트 임시링크 */}
                         <Link to="/carts/1">
                             <div className="ml-5">장바구니</div>

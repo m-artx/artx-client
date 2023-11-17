@@ -17,6 +17,7 @@ const instance = axios.create({
 
    // baseUrl axios 인스턴스 구성 중 하나로 이 인스턴스에 보내는 모든 요청의 기본 url 주소를 설정한다
    // withCredentials axios 인스턴스 구성 중 하나로 요청에 자격 증명(쿠키, 인증 등)을 포함시킬지 여부를 설정한다
+   // 이부분을 사용하는건 필수는 아니다..
 
 });
 
