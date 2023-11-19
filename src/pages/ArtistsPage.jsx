@@ -1,18 +1,28 @@
 import React from 'react';
 import ArtistRegistrationPage from './userPages/ArtistRegistrationPage';
 import ProductRegistrationPage from './ProductRegistrationPage';
+import { useNavigate } from "react-router-dom";
+
+
+
+// 작품관리(작품등록 포함)
+// 문의관리
+// 커미션관리
 
 function ArtistsPage() {
+    const navigate = useNavigate();
+
+    const goToPage = (path) => {
+        navigate(path);
+    };
+
     return (
         <div>
             <div>
                 작가등록관리
                 {/* <ArtistRegistrationPage /> */}
             </div>
-            <div>
-                작품등록
-                {/* <ProductRegistrationPage /> */}
-            </div>
+            <div onClick={() => goToPage('ArtistRegistration')}>작품등록</div>
             <div>
                 주문관리
                 <div>배송관리</div>

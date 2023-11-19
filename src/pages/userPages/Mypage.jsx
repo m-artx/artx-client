@@ -1,28 +1,50 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux'; 
-
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+// 개인정보관리
+// 비밀번호변경
+// 주문/배송정보
+// 배송지관리
+// 고객센터
+// 로그아웃
 
 function MyPage() {
-  const userInfo = useSelector((state) => state.user);
-  console.log(userInfo)
+    const navigate = useNavigate();
 
-  return (
-    <div className="bg-white text-black border border-black p-4  shadow-lg w-screen h-screen ">
-      <h1 className="flex justify-center text-5xl bg-white text-black">마이페이지</h1>
-      <span className="font-bold flex justify-center text-4x bg-white text-blackl">홍길동 님</span>
-      <div className="mb-4 bg-white text-black">
-        <Link to="/orderhistory" className="bloc bg-white text-black px-4 py-2 rounded-lg flex justify-center">
-          주문/배송 정보
-        </Link>
+    const userInfo = useSelector((state) => state.user);
+    console.log(userInfo);
+
+    const goToPage = (path) => {
+        navigate(path);
+    };
+
+    return (
+      <div className="bg-white text-black shadow-lg w-screen h-screen flex flex-col">
+      <h1 className="text-center border text-3xl bg-white text-black">마이페이지</h1>
+      <div className="mb-4 bg-white w-[300px] text-black flex flex-col justify-center mx-auto">
+          <button className=" bg-white text-black py-2 mt-4 border" onClick={() => goToPage('/personal')}>
+              개인정보관리
+          </button>
+          <button className=" bg-white text-black py-2 mt-4 border" onClick={() => goToPage('/')}>
+              비밀번호 변경
+          </button>
+          <button className=" bg-white text-black py-2 mt-4 border" onClick={() => goToPage('/')}>
+              주문/배송정보
+          </button>
+          <button className=" bg-white text-black py-2 mt-4 border" onClick={() => goToPage('/')}>
+              배송지관리
+          </button>
+          <button className=" bg-white text-black py-2 mt-4 border" onClick={() => goToPage('/')}>
+              고객센터 개인문의
+          </button>
+          <button className=" bg-white text-black py-2 mt-4 border" onClick={() => goToPage('/')}>
+              로그아웃
+          </button>
+          
+
       </div>
-      <div>
-        <Link to="/member" className=" bg-white text-black px-4 py-2 flex justify-center ">
-          개인정보 관리
-        </Link>
-      </div>
-    </div>
-  );
+  </div>
+    );
 }
 
 export default MyPage;

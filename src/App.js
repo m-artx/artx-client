@@ -46,6 +46,8 @@ import Test from './pages/Test';
 import NoticePage from "./pages/NoticePage";
 
 
+//마이페이지
+import Personal from "./pages/myPages/Personal"
 
 
 
@@ -96,6 +98,12 @@ function App() {
                <Route path="/artx" element={<ArtxPage />} />
                <Route path="/download" element={<DownloadPage />} />
                <Route path="/test" element={<Test />} /> {/* 슬라이드 테스트. 임시. */}
+
+
+               {/* 마이페이지 */}
+               {/* 개인정보관리 */}
+               <Route path="/personal" element={<Personal />} />
+
 
 
             </Route>
