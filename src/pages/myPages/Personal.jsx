@@ -1,4 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { useSelector } from 'react-redux'; //디스패치로 저장하고 셀렉터로 가져온다
+import instance from '../../instance/instance';
+import { useNavigate } from 'react-router-dom';
 
 // 아이디
 // 이름
@@ -25,6 +28,26 @@ const Div = ({ children }) => {
 };
 
 function Personal() {
+    const userInfo = useSelector((state) => state.user);
+    const [userData, setUserData] = useState(null); // 사용자 데이터 상태
+    const navigate = useNavigate();
+
+
+  useEffect(() => {
+        instance
+            .get(`/api/users/${userInfo.username}`)
+            .then((response) => {
+                setUserData(response.data); //api로부터 사용자 정보를 받아온다
+                console.log(userData)
+            })
+            .catch((error) => {
+                console.error('유저인포에러', error);
+                if (error.response && (error.response.state === 401 || error.response.state === 403)) {
+                    navigate('/login');
+                }
+            });
+    }, [navigate]);
+
     const fileInputRef = useRef(null);
     const [imageUrl, setImageUrl] = useState(
         'https://mblogthumb-phinf.pstatic.net/MjAyMDExMDFfMTgy/MDAxNjA0MjI4ODc1NDMw.Ex906Mv9nnPEZGCh4SREknadZvzMO8LyDzGOHMKPdwAg.ZAmE6pU5lhEdeOUsPdxg8-gOuZrq_ipJ5VhqaViubI4g.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_%ED%95%98%EB%8A%98%EC%83%89.jpg?type=w800'

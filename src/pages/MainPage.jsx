@@ -10,11 +10,11 @@ import { useSelector } from 'react-redux'; //디스패치로 저장하고 셀렉
 function MainPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [data, setData] = useState([]);
-    const userInfo = useSelector((state) => state.cart);    
+    // const userInfo = useSelector((state) => state.cart);    
     const navigate = useNavigate();
 
     //현재상태만알려준다
-    console.log(userInfo);
+    // console.log(userInfo);
 
     let { productCategoryType } = useParams();
     let apiUrl;

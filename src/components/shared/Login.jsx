@@ -10,9 +10,6 @@ const Login = () => {
     const dispatch = useDispatch();
     const [message, setMessage] = useState('* 아이디, 비밀번호를 입력해주세요.');
 
-   
-    
-
     const handleLogin = async (e) => {
         e.preventDefault();
 
@@ -29,20 +26,18 @@ const Login = () => {
 
             // 로그인에 성공해서 userInfo에 accessToken이 있다면
             if (userInfo.accessToken) {
-                localStorage.setItem('accessToken',  JSON.stringify(userInfo.accessToken)); //토큰저장
+                localStorage.setItem('accessToken', JSON.stringify(userInfo.accessToken));
+                localStorage.setItem('username', JSON.stringify(username)); //로컬에 토큰, 유저이름저장
+
                 //닉네임은 상단에서 입력받은 값을 받아와 리덕스로 관리한다
                 //리덕스에 유저롤 추가 필요
-                
 
                 setMessage('* 로그인 성공!');
-                console.log('accessToken:'+ localStorage.getItem('accessToken'));
-                console.log('username:'+ localStorage.getItem('username'));
+                console.log('accessToken:' + localStorage.getItem('accessToken'));
+                console.log('username:' + localStorage.getItem('username'));
                 dispatch(loginUser({ token: userInfo.accessToken, username: username }));
-
-                
             } else {
-              console.log('로그인에 성공했으나 엑서스토큰없음');
-
+                console.log('로그인에 성공했으나 엑서스토큰없음');
             }
         } catch (error) {
             console.error('로그인 실패', error);
