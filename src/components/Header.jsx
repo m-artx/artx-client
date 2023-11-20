@@ -1,12 +1,51 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Dropdown from './Dropdown';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutUser, loginUser } from '../store/userSlice';
+import instance from '../instance/instance';
 
-//강의에서 말하는 APP부분
+//로그인 후 유저롤이 USER일때, ARTIST일때, ADMIN일때 상단 메뉴가 다 달라야한다.
 
 function Header() {
     const navigate = useNavigate();
     const [dropdownVisibility, setDropdownVisibility] = React.useState(false);
+    const { isLogin, username } = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+    const localUsername = localStorage.getItem('username')
+    console.log(localUsername)
+
+
+    //토큰확인을 항상 처리해야하는지?
+
+    useEffect(() => {
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+            instance.get(`/api/users/${username}`)
+                .then(response => {
+                    // 토큰이 유효한 경우, 로그인 상태 유지
+                    console.log('헤더 : 로그인 성공처리됨');
+                    dispatch(loginUser({ response })); // response 데이터 구조에 맞게 조정.. 이부분 잘 모르겠음
+                    navigate('/');
+
+                })
+                .catch(error => {
+                    // 토큰이 유효하지 않은 경우, 로그아웃 처리
+                    console.log('헤더 : 로그인 안됨');
+                    dispatch(logoutUser());
+                    localStorage.removeItem('accessToken');
+                    navigate('/login');
+                });
+        }
+    }, [dispatch, navigate]);
+
+
+    const handleLogout = () => {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('username');
+        dispatch(logoutUser());
+        navigate('/');
+    };
 
     // 페이지 이동 함수
     const goToPage = (path) => {
@@ -66,17 +105,37 @@ function Header() {
         );
     }
 
+    const renderAuthButtons = () => {
+        return isLogin ? (
+            <div className="flex">
+                <div className="ml-5"> {localUsername} 님</div>
+                <button onClick={handleLogout} className="ml-5">
+                    로그아웃
+                </button>
+            </div>
+        ) : (
+            <div className="flex">
+                <Link to="signup">
+                    <div className="ml-5">회원가입</div>
+                </Link>
+                <Link to="login">
+                    <div className="ml-5">로그인</div>
+                </Link>
+            </div>
+        );
+    };
+
     return (
         <div className=" w-screen max-w-[1300px] border border-red-400">
             {/* 작가센터, 관리자센터, 마이페이지 */}
             <div className="absolute flex w-screen h-[25px] max-w-[1300px] justify-between border text-gray-500">
                 <div className="flex border justify-end items-center ">
-                        <Link to="/Artist">
-                            <div className="px-4">작가센터</div>
-                        </Link>
-                        <Link to="/admin">
-                            <div className="px-4">관리자센터</div>
-                        </Link>
+                    <Link to="/Artist">
+                        <div className="px-4">작가센터</div>
+                    </Link>
+                    <Link to="/admin">
+                        <div className="px-4">관리자센터</div>
+                    </Link>
                 </div>
                 <div className="flex border">
                     <div>
@@ -101,12 +160,8 @@ function Header() {
                 <div className="flex-1 flex justify-center items-center text-sm">{links()}</div>
                 <div className="flex-1 text-sm border">
                     <div className="flex justify-end mr-20">
-                        <Link to="signup">
-                            <div className="ml-5">회원가입</div>
-                        </Link>
-                        <Link to="login">
-                            <div className="ml-5">로그인</div>
-                        </Link>
+                        {renderAuthButtons()}
+
                         {/* 카트 임시링크 */}
                         <Link to="/carts/1">
                             <div className="ml-5">장바구니</div>

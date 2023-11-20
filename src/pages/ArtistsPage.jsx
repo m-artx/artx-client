@@ -4,6 +4,12 @@ import ProductRegistrationPage from './ProductRegistrationPage';
 import { Link } from 'react-router-dom';
 
 function ArtistsPage() {
+    const navigate = useNavigate();
+
+    const goToPage = (path) => {
+        navigate(path);
+    };
+
     return (
         <div className="container mx-auto p-8">
             <div className="mb-8 border-b border-gray-300 pb-4">

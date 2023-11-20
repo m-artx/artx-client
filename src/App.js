@@ -42,6 +42,9 @@ import NoticePage from './pages/NoticePage';
 import InquiryManagement from './pages/InquiryManagement';
 import InquiryFormPage from './pages/InquiryFormPage';
 
+//마이페이지
+import Personal from './pages/myPages/Personal';
+
 function App() {
     return (
         <div>
@@ -83,6 +86,9 @@ function App() {
                     <Route path="/artx" element={<ArtxPage />} />
                     <Route path="/download" element={<DownloadPage />} />
                     <Route path="/test" element={<Test />} /> {/* 슬라이드 테스트. 임시. */}
+                    {/* 마이페이지 */}
+                    {/* 개인정보관리 */}
+                    <Route path="/personal" element={<Personal />} />
                 </Route>
             </Routes>
         </div>
