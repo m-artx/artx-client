@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 // 작품관리(작품등록 포함)
 // 문의관리
-// 커미션관리
+// 커미션관리 
 
 function ArtistsPage() {
     const navigate = useNavigate();
