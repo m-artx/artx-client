@@ -1,13 +1,7 @@
 import React from 'react';
 import ArtistRegistrationPage from './userPages/ArtistRegistrationPage';
 import ProductRegistrationPage from './ProductRegistrationPage';
-import { useNavigate } from "react-router-dom";
-
-
-
-// 작품관리(작품등록 포함)
-// 문의관리
-// 커미션관리 
+import { Link } from 'react-router-dom';
 
 function ArtistsPage() {
     const navigate = useNavigate();
@@ -17,21 +11,35 @@ function ArtistsPage() {
     };
 
     return (
-        <div>
-            <div>
-                작가등록관리
-                {/* <ArtistRegistrationPage /> */}
+        <div className="container mx-auto p-8">
+            <div className="mb-8 border-b border-gray-300 pb-4">
+                <Link to="/artistRegistration">
+                    <h2 className="text-2xl font-bold mb-4">작가등록관리</h2>
+                    {/* <ArtistRegistrationPage /> */}
+                </Link>
             </div>
-            <div onClick={() => goToPage('ArtistRegistration')}>작품등록</div>
-            <div>
-                주문관리
-                <div>배송관리</div>
-                <div>작가페이지 관리 및 공지</div>
-                <div>커미션 안내 작성 및 커미션 현황</div>
+            <div className="mb-8 border-b border-gray-300 pb-4">
+                <Link to="/productregistration">
+                    <h2 className="text-2xl font-bold mb-4">작품등록</h2>
+                    {/* <ProductRegistrationPage /> */}
+                </Link>
             </div>
-
-            <div>문의관리</div>
-            <div>후기모음</div>
+            <div className="mb-8 border-b border-gray-300 pb-4">
+                <h2 className="text-2xl font-bold mb-4">주문관리</h2>
+                <ul className="list-disc pl-4">
+                    <li>배송관리</li>
+                    <li>작가페이지 관리 및 공지</li>
+                    <li>커미션 안내 작성 및 커미션 현황</li>
+                </ul>
+            </div>
+            <div className="mb-8 border-b border-gray-300 pb-4">
+                <Link to="/inquirymanagement">
+                    <h2 className="text-2xl font-bold mb-4">문의관리</h2>
+                </Link>
+            </div>
+            <div className="mb-8">
+                <h2 className="text-2xl font-bold mb-4">후기모음</h2>
+            </div>
         </div>
     );
 }
