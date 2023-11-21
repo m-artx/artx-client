@@ -6,6 +6,7 @@ import React from 'react';
 function dummyForBoard() {
     const posts = [
         {
+            postId:0,
             userId: 'dddd1',
             title: 'Lorem Ipsum Post 1',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -14,6 +15,7 @@ function dummyForBoard() {
             commentsCount: 0,
         },
         {
+            postId:2,
             userId: 'dddd2',
             title: 'Lorem Ipsum Post 2',
             content: 'Nulla facilisi. Fusce ut nisi nec odio dapibus blandit.',
@@ -22,6 +24,7 @@ function dummyForBoard() {
             commentsCount: 8,
         },
         {
+            postId:3,
             userId: 'dddd1',
             title: 'Lorem Ipsum Post 3',
             content: 'Suspendisse potenti. In in urna a libero lacinia suscipit.',
@@ -30,6 +33,7 @@ function dummyForBoard() {
             commentsCount: 12,
         },
         {
+            postId:4,
             userId: 'dddd2',
             title: 'Lorem Ipsum Post 4',
             content: 'Nulla facilisi. Fusce ut nisi nec odio dapibus blandit.',
@@ -38,6 +42,7 @@ function dummyForBoard() {
             commentsCount: 8,
         },
         {
+            postId:5,
             userId: 'dddd1',
             title: 'Lorem Ipsum Post 5',
             content: 'Suspendisse potenti. In in urna a libero lacinia suscipit.',

@@ -9,7 +9,7 @@ const url = REACT_APP_ARTX_BASE_URL;
 // 이 인스턴스는 특정한 구성 옵션을 가지고 있으며 나중에 http요청을 보낼 때 이 구성을 사용한다.
 const instance = axios.create({
    baseURL: url,
-   withCredentials: true, 
+   withCredentials: false, 
    //CORS 관련이다 허용할거냐 안할거냐를 세팅하는부분
    //모든 도메인 다 와일드 카드 상태
    //false로 해도 괜찮은건지? 
