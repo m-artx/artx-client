@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../store/userSlice';
 import customAxios from '../../store/customAxios';
+import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
 
 const Login = () => {  
     const [username, setUsername] = useState('');
@@ -12,38 +13,57 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
-        const userRole = '';
+        console.log('핸들로그인내부');
 
         try {
-            const response = await customAxios.post('/api/auth/login', { username: username, password: password });
+            //로그인
+            const response = await customAxios.post('/api/auth/login', { username, password});
             const userInfo = response.data;
+            console.log('userInfo',userInfo); 
 
-            //디스패치를 통해서 저장소에 접근
-            //무엇을 할지를 유저슬라이스에서 세팅한 로그인유저라던지
- 
             console.log('로그인성공');
-
             // 로그인에 성공해서 userInfo에 accessToken이 있다면
-            if (userInfo.accessToken) {
-                localStorage.setItem('accessToken', JSON.stringify(userInfo.accessToken));
-                localStorage.setItem('username', JSON.stringify(username)); //로컬에 토큰, 유저이름저장
-
-                //닉네임은 상단에서 입력받은 값을 받아와 리덕스로 관리한다
-                //리덕스에 유저롤 추가 필요
+            if (userInfo.accessToken && userInfo.accessToken.value) {
+                localStorage.setItem('accessToken', (userInfo.accessToken.value));
+                localStorage.setItem('username',username); 
+               
+                //로컬에 토큰, 유저이름저장
 
                 setMessage('* 로그인 성공!');
                 console.log('accessToken:' + localStorage.getItem('accessToken'));
                 console.log('username:' + localStorage.getItem('username'));
-                dispatch(loginUser({ token: userInfo.accessToken, username: username }));
+
+
+                // const res = await customAxios.get(`/api/users/${username}`)
+                // const userData = res.data;
+                // const userRole = userData.userRole;
+
+                dispatch(loginUser({ token: userInfo.accessToken.value, userId:userInfo.userId, userRole:userInfo.userRole }));
+
             } else {
                 console.log('로그인에 성공했으나 엑서스토큰없음');
             }
         } catch (error) {
             console.error('로그인 실패', error);
             setMessage('* 로그인 실패' + error);
+
+            if (error.response) {
+                // Log the error response status and data
+                console.error('Error Response Status:', error.response.status);
+                console.error('Error Response Data:', error.response.data);
+              } else {
+                // Log other error details if available
+                console.error('Error Details:', error.message);
+              }
+              setMessage('* Login failed. Please check the console for more details.');
+
+
         }
     };
+
+        const userData = useSelector((state) => state.user)
+        console.log(userData)
+
 
     return (
         <div>

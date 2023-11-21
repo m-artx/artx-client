@@ -10,34 +10,32 @@ import instance from '../instance/instance';
 function Header() {
     const navigate = useNavigate();
     const [dropdownVisibility, setDropdownVisibility] = React.useState(false);
-    const { isLogin, username } = useSelector((state) => state.user);
+    const { isLogin, userId, userRole } = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const localUsername = localStorage.getItem('username')
-    console.log(localUsername)
+    console.log('localUsername', localUsername)
+    console.log('userRole', userRole)
+
+    // const data = customAxios.get('/api/users/user1')
+    // console.log(data)
 
 
     //토큰확인을 항상 처리해야하는지?
 
-    useEffect(() => {
-        const token = localStorage.getItem('accessToken');
-        if (token) {
-            instance.get(`/api/users/${username}`)
-                .then(response => {
-                    // 토큰이 유효한 경우, 로그인 상태 유지
-                    console.log('헤더 : 로그인 성공처리됨');
-                    dispatch(loginUser({ response })); // response 데이터 구조에 맞게 조정.. 이부분 잘 모르겠음
-                    navigate('/');
-
-                })
-                .catch(error => {
-                    // 토큰이 유효하지 않은 경우, 로그아웃 처리
-                    console.log('헤더 : 로그인 안됨');
-                    dispatch(logoutUser());
-                    localStorage.removeItem('accessToken');
-                    navigate('/login');
-                });
+    async function fetchUserData() {
+        try {
+            const response = await instance.get(`/api/users/${localUsername}`)
+            const userData = response.data;
+        } catch(error) {
+            console.log('헤더 팻치데이터: 사용자 장보를 가져올 수 없음', error)
         }
-    }, [dispatch, navigate]);
+    }
+
+    useEffect(() => {
+        if (isLogin) {
+           fetchUserData();
+        }
+    }, [isLogin]);
 
 
     const handleLogout = () => {
@@ -108,7 +106,7 @@ function Header() {
     const renderAuthButtons = () => {
         return isLogin ? (
             <div className="flex">
-                <div className="ml-5"> {localUsername} 님</div>
+                <div className="ml-5"> "{localUsername}" 님</div>
                 <button onClick={handleLogout} className="ml-5">
                     로그아웃
                 </button>
@@ -125,11 +123,75 @@ function Header() {
         );
     };
 
+
+    const renderCentralMenu = () => {
+        if (isLogin) {
+            // If the user is logged in, show different menu items based on userRole
+            switch (userRole) {
+                case 'USER':
+                    return (
+                        <div>
+                            {/* Customer Center and My Page */}
+                            <Link to="/customer">
+                                <div className="px-4">고객센터</div>
+                            </Link>
+                            <Link to="/mypage">
+                                <div className="px-4">MyPage</div>
+                            </Link>
+                        </div>
+                    );
+                case 'ARTIST':
+                    return (
+                        <div>
+                            {/* Customer Center, My Page, and Writer Center */}
+                            <Link to="/customer">
+                                <div className="px-4">고객센터</div>
+                            </Link>
+                            <Link to="/mypage">
+                                <div className="px-4">MyPage</div>
+                            </Link>
+                            <Link to="/writer">
+                                <div className="px-4">작가센터</div>
+                            </Link>
+                        </div>
+                    );
+                case 'ADMIN':
+                    return (
+                        <div>
+                            {/* Customer Center, My Page, Writer Center, and Admin Center */}
+                            <Link to="/customer">
+                                <div className="px-4">고객센터</div>
+                            </Link>
+                            <Link to="/mypage">
+                                <div className="px-4">MyPage</div>
+                            </Link>
+                            <Link to="/writer">
+                                <div className="px-4">작가센터</div>
+                            </Link>
+                            <Link to="/admin">
+                                <div className="px-4">관리자센터</div>
+                            </Link>
+                        </div>
+                    );
+                default:
+                    return null;
+            }
+        } else {
+            // If the user is not logged in, only show the Customer Center
+            return (
+                <Link to="/customer">
+                    <div className="px-4">고객센터</div>
+                </Link>
+            );
+        }
+    };
+
     return (
         <div className=" w-screen max-w-[1300px] border border-red-400">
             {/* 작가센터, 관리자센터, 마이페이지 */}
             <div className="absolute flex w-screen h-[25px] max-w-[1300px] justify-between border text-gray-500">
-                <div className="flex border justify-end items-center ">
+
+            <div className="flex border justify-end items-center ">
                     <Link to="/Artist">
                         <div className="px-4">작가센터</div>
                     </Link>
@@ -148,6 +210,24 @@ function Header() {
                             <div className="px-4">마이페이지</div>
                         </Link>
                     </div>
+                </div>
+
+                {/* <div className="flex border justify-end items-center ">
+                    {userRole === 'ARTIST' || userRole === 'ADMIN' ? (
+                        <>
+                            <Link to="/writer">
+                                <div className="px-4">Writer Center</div>
+                            </Link>
+                            <Link to="/admin">
+                                <div className="px-4">Admin Center</div>
+                            </Link>
+                        </>
+                    ) : null}
+                </div> */}
+                <div className="flex border">
+                    {/* {renderCentralMenu()} */}
+
+
                 </div>
             </div>
             {/* 기존 메뉴들 */}

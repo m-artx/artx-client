@@ -1,6 +1,7 @@
 // # base url
 
 export const REACT_APP_ARTX_BASE_URL = 'https://ka8d596e67406a.user-app.krampoline.com';
+// export const REACT_APP_ARTX_BASE_URL = 'http://localhost:8080/api/users';
 
 //  export const  REACT_APP_ARTX_BASE_URL = "http://64.110.89.251:8081/api/"
 //  export const  REACT_APP_ARTX_BASE_URL = "https://api.github.com/users/"
