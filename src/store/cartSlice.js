@@ -6,7 +6,7 @@ import axios from 'axios';
 // 비동기 액션을 위한 thunk 생성
 export const fetchCartData = createAsyncThunk('cart/fetchCartData', async (cartId) => {
     try {
-        const response = await axios.get(`https://ka8d596e67406a.user-app.krampoline.com/api/carts/1?size=10&page=1`);
+        const response = await axios.get(`https://ka8d596e67406a.user-app.krampoline.com/api/cart`);
 
         return response.data.cartItemDetails;
     } catch (error) {

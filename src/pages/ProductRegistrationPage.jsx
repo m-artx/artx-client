@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFile } from '@fortawesome/free-solid-svg-icons';
+import { faFile, faTimes, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 function ProductRegistrationPage() {
     const [request, setRequest] = useState({
@@ -73,7 +73,11 @@ function ProductRegistrationPage() {
     const prevSlide = () => {
         setCurrentSlide((prevSlide) => (prevSlide - 1 + Math.ceil(files.length / 3)) % Math.ceil(files.length / 3));
     };
-
+    const handleRemoveFile = (index) => {
+        const newFiles = [...files];
+        newFiles.splice(index + currentSlide * 3, 1);
+        setFiles(newFiles);
+    };
     return (
         <div className="bg-black min-h-screen flex items-center justify-center">
             <div className="p-6 rounded-lg shadow-lg max-w-md w-full text-white">
@@ -81,14 +85,25 @@ function ProductRegistrationPage() {
                 <form onSubmit={addProduct}>
                     <div>
                         <div className="mb-4">
-                            <label className="text-sm font-medium mb-2 block">파일 미리보기:</label>
+                            <label className="text-sm font-medium mb-2 block">이미지 추가:</label>
                             <div className="flex space-x-2">
                                 <div className="flex items-center">
+                                    <button
+                                        type="button" // 버튼의 타입을 button으로 변경
+                                        onClick={prevSlide}
+                                        className="flex-shrink-0 px-2 py-1 bg-black text-white rounded-l"
+                                    >
+                                        <FontAwesomeIcon icon={faAngleLeft} />
+                                    </button>
                                     <label
                                         htmlFor="file"
                                         className="cursor-pointer p-2 border rounded-md bg-white text-black"
                                     >
-                                        <FontAwesomeIcon icon={faFile} className="mr-2 bg-white text-black" size="2x" />
+                                        <FontAwesomeIcon
+                                            icon={faFile}
+                                            className="mr-4 pr-1 bg-white text-black"
+                                            size="2x"
+                                        />
                                     </label>
                                     <input
                                         type="file"
@@ -101,36 +116,33 @@ function ProductRegistrationPage() {
                                     />
                                 </div>
                                 {files.length > 0 &&
-                                    files
-                                        .slice(currentSlide * 3, currentSlide * 3 + 3)
-                                        .map((file, index) => (
+                                    files.slice(currentSlide * 3, currentSlide * 3 + 3).map((file, index) => (
+                                        <div key={index} className="relative">
                                             <img
                                                 key={index}
                                                 src={URL.createObjectURL(file)}
                                                 alt={`File Preview ${index}`}
-                                                className="flex-shrink-0 w-1/3 h-32 object-cover rounded"
+                                                className="flex-shrink-0 w-1/1 h-32 object-cover rounded"
                                             />
-                                        ))}
-                            </div>
-                        </div>
-                        {files.length > 0 && (
-                            <div className="flex mt-2">
-                                <button
-                                    type="button" // 버튼의 타입을 button으로 변경
-                                    onClick={prevSlide}
-                                    className="flex-shrink-0 px-2 py-1 bg-black text-white rounded-l"
-                                >
-                                    이전
-                                </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleRemoveFile(index)}
+                                                className="absolute top-0 right-0 p-2  text-white rounded-full "
+                                            >
+                                                <FontAwesomeIcon icon={faTimes} className="bg-transparent text-white" />
+                                            </button>
+                                        </div>
+                                    ))}
                                 <button
                                     type="button" // 버튼의 타입을 button으로 변경
                                     onClick={nextSlide}
                                     className="flex-shrink-0 px-2 py-1 bg-black text-white rounded-r"
                                 >
-                                    다음
+                                    <FontAwesomeIcon icon={faAngleRight} />
                                 </button>
                             </div>
-                        )}
+                        </div>
+                        {files.length > 0 && <div className="flex mt-2"></div>}
                     </div>
 
                     <div className="mb-4">

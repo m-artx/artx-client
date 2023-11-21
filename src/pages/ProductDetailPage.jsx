@@ -13,14 +13,14 @@ function ProductDetailPage() {
     const [isLoading, setIsLoading] = useState(true);
     const cartId = 25;
     const dispatch = useDispatch();
-    const deliveryDetail = useSelector((state) => state.cart.deliveryDetail);
+    const orderDeliveryDetail = useSelector((state) => state.cart.orderDeliveryDetail);
 
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true); // 데이터 로딩 시작
             try {
                 const response = await axios.get(
-                    `http://ka8d596e67406a.user-app.krampoline.com/api/products/${productId}`
+                    `https://ka8d596e67406a.user-app.krampoline.com/api/products/${productId}`
                 );
                 const prodData = response.data;
                 console.log(prodData);
@@ -56,16 +56,9 @@ function ProductDetailPage() {
         e.preventDefault(); // 기본 폼 제출 동작 방지
         try {
             // 상품을 카트에 추가하는 요청을 보냅니다.
-            await axios.post(
-                `https://ka8d596e67406a.user-app.krampoline.com/api/carts/${cartId}/products/${productId}`,
-                {
-                    cartId: 25,
-                    productId: productData.productId,
-                },
-                {
-                    withCredentials: false,
-                }
-            );
+            await axios.post(`https://ka8d596e67406a.user-app.krampoline.com/api/cart`, {
+                productId: 1,
+            });
 
             // 성공 시 메시지를 표시하거나 다른 작업을 수행할 수 있습니다.
 
@@ -100,22 +93,27 @@ function ProductDetailPage() {
     const handlePay = () => {
         // 결제 정보 구성
         const orderData = {
-            userId: '29efc8ca-d618-44bd-b67b-29ede70ce3c9',
-            orderDetails: [
+            orderProductDetails: [
                 {
-                    productId: productData.productId,
-                    productQuantity: 1, // 주문 수량, 원하는 수량으로 변경 가능
+                    productId: 0,
+                    productQuantity: 0,
                 },
             ],
-            deliveryDetail,
+            orderDeliveryDetail: {
+                deliveryReceiver: 'string',
+                deliveryReceiverPhoneNumber: 'string',
+                deliveryReceiverAddress: 'string',
+                deliveryReceiverAddressDetail: 'string',
+                deliveryStatus: 'DELIVERY_READY',
+            },
         };
-
         axios
             .post(`https://ka8d596e67406a.user-app.krampoline.com/api/orders`, orderData, {
                 headers: {
                     'Content-Type': 'application/json',
                     accept: '*/*',
                 },
+                withCredentials: false,
             })
             .then((response) => {
                 console.log('주문 성공:', response.data);
@@ -127,7 +125,7 @@ function ProductDetailPage() {
                 // 실패 시에도 API에 요청을 보낼 수 있도록 여기서 추가적인 API 호출을 수행
                 // 예시: 실패 정보를 서버에 기록하는 API 호출
                 axios
-                    .post('https://example.com/api/log-order-failure', {
+                    .post(`https://ka8d596e67406a.user-app.krampoline.com/api/payments/fail`, {
                         error: error.message,
                         orderData,
                     })
@@ -140,7 +138,7 @@ function ProductDetailPage() {
 
                 // 여기서 페이지 이동 코드를 추가
                 // 예시: 실패 페이지로 이동
-                window.location.href = '/kakaofail';
+                // window.location.href = '/kakaofail';
             });
     };
     return (

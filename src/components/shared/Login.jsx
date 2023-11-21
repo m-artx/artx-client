@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../store/userSlice';
 import customAxios from '../../store/customAxios';
-import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
+import { UseSelector, useSelector } from 'react-redux/es/hooks/useSelector';
 
-const Login = () => {  
+const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
@@ -17,29 +17,33 @@ const Login = () => {
 
         try {
             //로그인
-            const response = await customAxios.post('/api/auth/login', { username, password});
+            const response = await customAxios.post('/api/auth/login', { username, password });
             const userInfo = response.data;
-            console.log('userInfo',userInfo); 
+            console.log('userInfo', userInfo);
 
             console.log('로그인성공');
             // 로그인에 성공해서 userInfo에 accessToken이 있다면
             if (userInfo.accessToken && userInfo.accessToken.value) {
-                localStorage.setItem('accessToken', (userInfo.accessToken.value));
-                localStorage.setItem('username',username); 
-               
+                localStorage.setItem('accessToken', userInfo.accessToken.value);
+                localStorage.setItem('username', username);
+
                 //로컬에 토큰, 유저이름저장
 
                 setMessage('* 로그인 성공!');
                 console.log('accessToken:' + localStorage.getItem('accessToken'));
                 console.log('username:' + localStorage.getItem('username'));
 
-
                 // const res = await customAxios.get(`/api/users/${username}`)
                 // const userData = res.data;
                 // const userRole = userData.userRole;
 
-                dispatch(loginUser({ token: userInfo.accessToken.value, userId:userInfo.userId, userRole:userInfo.userRole }));
-
+                dispatch(
+                    loginUser({
+                        token: userInfo.accessToken.value,
+                        userId: userInfo.userId,
+                        userRole: userInfo.userRole,
+                    })
+                );
             } else {
                 console.log('로그인에 성공했으나 엑서스토큰없음');
             }
@@ -51,19 +55,16 @@ const Login = () => {
                 // Log the error response status and data
                 console.error('Error Response Status:', error.response.status);
                 console.error('Error Response Data:', error.response.data);
-              } else {
+            } else {
                 // Log other error details if available
                 console.error('Error Details:', error.message);
-              }
-              setMessage('* Login failed. Please check the console for more details.');
-
-
+            }
+            setMessage('* Login failed. Please check the console for more details.');
         }
     };
 
-        const userData = useSelector((state) => state.user)
-        console.log(userData)
-
+    const userData = useSelector((state) => state.user);
+    console.log(userData);
 
     return (
         <div>
