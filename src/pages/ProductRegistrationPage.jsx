@@ -1,117 +1,199 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFile } from '@fortawesome/free-solid-svg-icons';
 
 function ProductRegistrationPage() {
-   const [request, setRequest] = useState({
-      userId: 'dd877036-b45e-4e13-8563-e985ab8cd9b2',
-      productCategory: 'PAINT',
-      productTitle: '',
-      productDescription: '',
-      productQuantity: 0,
-      productPrice: 0,
-   });
-   const [files, setFiles] = useState(null);
+    const [request, setRequest] = useState({
+        userId: 'dd877036-b45e-4e13-8563-e985ab8cd9b2',
+        productCategory: 'PAINT',
+        productTitle: '',
+        productDescription: '',
+        productQuantity: 0,
+        productPrice: 0,
+    });
+    const [files, setFiles] = useState([]);
+    const [uploadedFiles, setUploadedFiles] = useState([]);
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const [inputValue, setInputValue] = useState('');
 
-   const [inputValue, setInputValue] = useState(''); // 빈 문자열로 기본값 설정
-   const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setRequest((prevData) => ({
-         ...prevData,
-         [name]: value,
-      }));
-   };
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setRequest((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
 
-   const handleFileChange = (e) => {
-      const file = e.target.files[0];
-      setFiles(file);
-   };
+    const handleFileChange = (e) => {
+        const selectedFiles = e.target.files;
+        setFiles((prevFiles) => [...prevFiles, ...selectedFiles]);
+    };
 
-   const addProduct = (e) => {
-      e.preventDefault();
+    const addProduct = (e) => {
+        e.preventDefault();
 
-      const formData = new FormData();
-      formData.append('files', files);
+        const formData = new FormData();
+        for (let i = 0; i < files.length; i++) {
+            formData.append('files', files[i]);
+        }
 
-      const json = JSON.stringify(request);
-      const blob = new Blob([json], { type: 'application/json' });
+        const requestJson = JSON.stringify({
+            userId: request.userId,
+            productCategory: request.productCategory,
+            productTitle: request.productTitle,
+            productDescription: request.productDescription,
+            productStockQuantity: request.productQuantity,
+            productPrice: request.productPrice,
+        });
 
-      formData.append('request', blob);
+        const requestBlob = new Blob([requestJson], { type: 'application/json' });
+        formData.append('request', requestBlob);
 
-      // Axios를 사용하여 FormData를 전송
-      axios
-         .post('https://ka8d596e67406a.user-app.krampoline.com/api/products', formData)
-         .then((response) => {
-            console.log(response);
-         })
-         .catch((error) => {
-            console.log(error);
-         });
-   };
-   return (
-      <div className="bg-black min-h-screen flex items-center justify-center">
-         <div className="p-6 rounded-lg shadow-lg max-w-md w-full text-white">
-            <h2 className="text-3xl font-semibold mb-4 text-center">작품 등록 페이지</h2>
-            <form onSubmit={addProduct}>
-               <div className="mb-4">
-                  <label className="text-sm font-medium mb-2 block">작품 이미지:</label>
-                  <input
-                     type="file"
-                     name="files"
-                     accept=".png, .jpg, .jpeg"
-                     onChange={handleFileChange}
-                     className="w-full py-2 px-4 bg-white border rounded text-black focus:outline-none focus:border-black"
-                  />
-               </div>
-               <div className="mb-4">
-                  <label className="text-sm font-medium mb-2 block">작품명:</label>
-                  <input
-                     value={request.productTitle}
-                     onChange={handleInputChange}
-                     type="text"
-                     name="productTitle"
-                     className="w-full py-2 px-4 bg-white border rounded text-black focus:outline-none focus:border-black"
-                  />
-               </div>
-               <div className="mb-4">
-                  <label className="text-sm font-medium mb-2 block">작품 설명:</label>
-                  <textarea
-                     value={request.productDescription}
-                     onChange={handleInputChange}
-                     name="productDescription"
-                     className="w-full py-2 px-4 bg-white border rounded text-black focus:outline-none focus:border-black"
-                  />
-               </div>
-               <div className="mb-4">
-                  <label className="text-sm font-medium mb-2 block">수량:</label>
-                  <input
-                     type="number"
-                     name="productQuantity"
-                     onChange={handleInputChange}
-                     value={request.productQuantity}
-                     className="w-full py-2 px-4 bg-white border rounded text-black focus:outline-none focus:border-black"
-                  />
-               </div>
-               <div className="mb-4">
-                  <label className="text-sm font-medium mb-2 block">가격:</label>
-                  <input
-                     type="number"
-                     name="productPrice"
-                     onChange={handleInputChange}
-                     value={request.productPrice}
-                     className="w-full py-2 px-4 bg-white border rounded text-black focus:outline-none focus:border-black"
-                  />
-               </div>
+        axios
+            .post('https://ka8d596e67406a.user-app.krampoline.com/api/artist/products', formData, {
+                headers: {
+                    Authorization: 'Bearer YOUR_ACCESS_TOKEN',
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+            .then((response) => {
+                console.log(response);
+                setUploadedFiles(response.data.files);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
-               <button
-                  type="submit"
-                  className="border border-white w-full py-2 bg-black text-white font-medium rounded transition duration-300 hover:bg-white hover:text-black"
-               >
-                  작품 등록
-               </button>
-            </form>
-         </div>
-      </div>
-   );
+    const nextSlide = () => {
+        setCurrentSlide((prevSlide) => (prevSlide + 1) % Math.ceil(files.length / 3));
+    };
+
+    const prevSlide = () => {
+        setCurrentSlide((prevSlide) => (prevSlide - 1 + Math.ceil(files.length / 3)) % Math.ceil(files.length / 3));
+    };
+
+    return (
+        <div className="bg-black min-h-screen flex items-center justify-center">
+            <div className="p-6 rounded-lg shadow-lg max-w-md w-full text-white">
+                <h2 className="text-3xl font-semibold mb-4 text-center">작품 등록 페이지</h2>
+                <form onSubmit={addProduct}>
+                    <div>
+                        <div className="mb-4">
+                            <label className="text-sm font-medium mb-2 block">파일 미리보기:</label>
+                            <div className="flex space-x-2">
+                                <div className="flex items-center">
+                                    <label
+                                        htmlFor="file"
+                                        className="cursor-pointer p-2 border rounded-md bg-white text-black"
+                                    >
+                                        <FontAwesomeIcon icon={faFile} className="mr-2 bg-white text-black" size="2x" />
+                                    </label>
+                                    <input
+                                        type="file"
+                                        id="file"
+                                        name="file"
+                                        accept=".png, .jpg, .jpeg"
+                                        onChange={handleFileChange}
+                                        className="hidden"
+                                        multiple
+                                    />
+                                </div>
+                                {files.length > 0 &&
+                                    files
+                                        .slice(currentSlide * 3, currentSlide * 3 + 3)
+                                        .map((file, index) => (
+                                            <img
+                                                key={index}
+                                                src={URL.createObjectURL(file)}
+                                                alt={`File Preview ${index}`}
+                                                className="flex-shrink-0 w-1/3 h-32 object-cover rounded"
+                                            />
+                                        ))}
+                            </div>
+                        </div>
+                        {files.length > 0 && (
+                            <div className="flex mt-2">
+                                <button
+                                    type="button" // 버튼의 타입을 button으로 변경
+                                    onClick={prevSlide}
+                                    className="flex-shrink-0 px-2 py-1 bg-black text-white rounded-l"
+                                >
+                                    이전
+                                </button>
+                                <button
+                                    type="button" // 버튼의 타입을 button으로 변경
+                                    onClick={nextSlide}
+                                    className="flex-shrink-0 px-2 py-1 bg-black text-white rounded-r"
+                                >
+                                    다음
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="mb-4">
+                        <label className="text-sm font-medium mb-2 block">작품명:</label>
+                        <input
+                            value={request.productTitle}
+                            onChange={handleInputChange}
+                            type="text"
+                            name="productTitle"
+                            className="w-full py-2 px-4 bg-white border rounded text-black focus:outline-none focus:border-black"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="text-sm font-medium mb-2 block">작품 설명:</label>
+                        <textarea
+                            value={request.productDescription}
+                            onChange={handleInputChange}
+                            name="productDescription"
+                            className="w-full py-2 px-4 bg-white border rounded text-black focus:outline-none focus:border-black"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="text-sm font-medium mb-2 block">수량:</label>
+                        <input
+                            type="number"
+                            name="productQuantity"
+                            onChange={handleInputChange}
+                            value={request.productQuantity}
+                            className="w-full py-2 px-4 bg-white border rounded text-black focus:outline-none focus:border-black"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="text-sm font-medium mb-2 block">가격:</label>
+                        <input
+                            type="number"
+                            name="productPrice"
+                            onChange={handleInputChange}
+                            value={request.productPrice}
+                            className="w-full py-2 px-4 bg-white border rounded text-black focus:outline-none focus:border-black"
+                        />
+                    </div>
+
+                    {uploadedFiles.length > 0 && (
+                        <div className="mb-4">
+                            <label className="text-sm font-medium mb-2 block">업로드된 파일 목록:</label>
+                            <ul>
+                                {uploadedFiles.map((file, index) => (
+                                    <li key={index}>{file.name}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+
+                    <button
+                        type="submit"
+                        className="border border-white w-full py-2 bg-black text-white font-medium rounded transition duration-300 hover:bg-white hover:text-black"
+                    >
+                        작품 등록
+                    </button>
+                </form>
+            </div>
+        </div>
+    );
 }
 
 export default ProductRegistrationPage;
