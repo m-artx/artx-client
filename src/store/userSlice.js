@@ -9,19 +9,22 @@ const userSlice = createSlice({
     initialState: {
         user: null,
         isLogin: false,
-        username: null,
+        userId: null,
+        userRole: null,
     },
     reducers: {
         loginUser: (state, action) => {
             state.user = action.payload;
             state.isLogin = true;
-            state.username = action.payload.username; //페이로드에서 가져오는거 잘 기억해두기
+            state.userId = action.payload.username; //페이로드에서 가져오는거 잘 기억해두기
+            state.userRole = action.payload.userRole;
             //현재 상태를 응답값으로 바꾸겠다
         },
         logoutUser: (state) => {
             state.user = null;
             state.isLogin = false;
-            state.username = null;
+            state.userId = null;
+            state.userRole = null;
         },
     },
 });

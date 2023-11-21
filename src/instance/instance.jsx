@@ -25,8 +25,6 @@ function accessToken() {
 instance.interceptors.request.use(
   async (config) => {
     const token = accessToken();
-    console.log('Request URL:', config.url);
-
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }

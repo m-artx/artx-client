@@ -29,7 +29,7 @@ export default function LoginPage() {
     //로그인 상태라면 메인페이지로 연결된다.
     useEffect(() => {
         if (isLogin) {
-            navigate('/'); 
+            // navigate('/'); 
         } else {
             
         }
