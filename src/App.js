@@ -25,6 +25,7 @@ import Addaddress from './pages/Addaddress';
 import KakaoSuccess from './pages/userPages/KakaoSuccess';
 import KakaoFail from './pages/userPages/KakaoFail';
 import CustomerCenter from './pages/CustomerCenter';
+import CustomerPersonal from "./pages/CustomerPersonal";
 
 //작가용
 import ArtistRegistrationPage from './pages/userPages/ArtistRegistrationPage';
@@ -41,6 +42,10 @@ import Test from './pages/Test';
 import NoticePage from './pages/NoticePage';
 import InquiryManagement from './pages/InquiryManagement';
 import InquiryFormPage from './pages/InquiryFormPage';
+
+//마이페이지
+import Personal from './pages/myPages/Personal';
+import createQustion from './components/shared/createQustion';
 
 function App() {
     return (
@@ -69,6 +74,7 @@ function App() {
                     <Route path="/success" element={<KakaoSuccess />} />
                     <Route path="/kakaofail" element={<KakaoFail />} />
                     <Route path="/customer" element={<CustomerCenter />} />
+
                     {/* 작가관련 페이지 */}
                     <Route path="/ArtistRegistration" element={<ArtistRegistrationPage />} />
                     <Route path="/ArtistProfile" element={<ArtistProfilePage />} />
@@ -83,6 +89,11 @@ function App() {
                     <Route path="/artx" element={<ArtxPage />} />
                     <Route path="/download" element={<DownloadPage />} />
                     <Route path="/test" element={<Test />} /> {/* 슬라이드 테스트. 임시. */}
+                    {/* 마이페이지 */}
+                    {/* 개인정보관리 */}
+                    <Route path="/personalinfo" element={<Personal />} />
+                    <Route path="/customerPersonal" element={<CustomerPersonal />} />
+                    <Route path="/createQustion" element={<createQustion />} />
                 </Route>
             </Routes>
         </div>
