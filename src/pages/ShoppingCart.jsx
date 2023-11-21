@@ -151,7 +151,7 @@ function ShoppingCart() {
                     삭제하기
                 </button>
             </div>
-            <ul className="border-solid border-t border-b border-black ml-3 bg-white text-black">
+            {/* <ul className="border-solid border-t border-b border-black ml-3 bg-white text-black">
                 <li className="flex items-center mb-2 bg-white text-black">
                     <input type="checkbox" checked={selectAll} onChange={handleToggleSelectAll} className="mr-2 ml-0" />
                     <span onClick={handleToggleSelectAll} className="bg-white text-black">
@@ -203,7 +203,7 @@ function ShoppingCart() {
                             </div>
                         </li>
                     ))}
-            </ul>
+            </ul> */}
             <div className=" items-center mt-4  p-4 flex justify-end flex-col border border-solid border-black w-60 ml-auto bg-white text-black">
                 <div className="bg-white text-black">
                     <p className="mr-4 bg-white text-black ">선택된 상품 합계+{orderTotalPrice()} 원</p>
@@ -211,7 +211,7 @@ function ShoppingCart() {
                 </div>
                 <p className="mr-4 font-bold bg-white text-black">결제 예정 금액= {orderTotalPrice() + 3000}원</p>
 
-                <button
+                {/* <button
                     onClick={() => {
                         const isAnyCheckboxChecked =
                             Array.isArray(cartItemDetails) &&
@@ -225,7 +225,7 @@ function ShoppingCart() {
                     className="bg-black text-white px-4 py-2"
                 >
                     주문하기
-                </button>
+                </button> */}
             </div>
             <Link to="art" className="bg-white text-black">
                 쇼핑 계속하기
