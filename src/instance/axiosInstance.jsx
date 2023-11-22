@@ -6,6 +6,9 @@ import { REACT_APP_ARTX_BASE_URL } from '../utils/env';
 // 서버 응답에서 401 또는 403 오류(권한 없음)가 발생하면, 토큰을 재발급 받는 로직을 실행
 // 서버 응답이 400 오류이고, "REFRESH_TOKEN_NOT_FOUND" 오류가 아닌 경우, 오류 메시지를 표시
 
+// 프로필사진 post요청등에 사용하면 엑서스토큰을 자동으로 포함시켜서 보내주는가?
+// axiosInstance를 사용해서 요청을 보낸다면 헤더에 'Bearer ${token}' 형식으로 토큰이 추가된다.
+
 import axios from 'axios';
 
 const instance = axios.create({
