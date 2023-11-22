@@ -1,4 +1,5 @@
 //axiosInstance.jsx 파일
+import { REACT_APP_ARTX_BASE_URL } from '../utils/env';
 
 // axios 요청 전에 인터셉터 이용하여 토큰유효성을 점검하고 토큰이 없으면 reissue받는다.
 // Axios 응답 인터셉터를 사용하여 서버로부터의 응답을 처리하거나 에러를 관리
@@ -8,7 +9,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: process.env.REACT_APP_ARTX_BASE_URL,
+    baseURL: REACT_APP_ARTX_BASE_URL,
     withCredentials: true,
 });
 

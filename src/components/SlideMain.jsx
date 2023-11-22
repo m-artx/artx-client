@@ -50,7 +50,7 @@ function SlideMain() {
    const [data, setData] = useState([]);
 
    useEffect(() => {
-      console.log('위치: 슬라이드메인')
+      // console.log('위치: 슬라이드메인')
 
       customAxios.get('/api/products/main?type=POPULARITY')
       // axios.get('https://ka8d596e67406a.user-app.krampoline.com/api/products/main?type=POPULARITY')

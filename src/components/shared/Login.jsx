@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../store/userSlice';
 import customAxios from '../../store/customAxios';
-import { UseSelector, useSelector } from 'react-redux/es/hooks/useSelector';
 import { useNavigate } from "react-router-dom";
 
 //로그인창 컴포넌트
@@ -23,27 +22,27 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        console.log('핸들로그인내부');
+        // console.log('핸들로그인내부');
 
         try {
             //로그인
             const response = await customAxios.post('/api/auth/login', { username, password });
             const userInfo = response.data;
-            console.log('userInfo', userInfo);
 
-            console.log('로그인성공');
+            // console.log('로그인.jsx 성공');
             // 로그인에 성공해서 userInfo에 accessToken이 있다면
             if (userInfo.accessToken && userInfo.accessToken.value) {
                 localStorage.setItem('accessToken', userInfo.accessToken.value);
                 localStorage.setItem('username', username);
+                // localStorage.setItem('userRole', userInfo.userRole.value);
+
 
                 setMessage('* 로그인 성공!');
-                console.log('accessToken:' + localStorage.getItem('accessToken'));
-                console.log('username:' + localStorage.getItem('username'));
+                // console.log('accessToken:' + localStorage.getItem('accessToken'));
+                // console.log('username:' + localStorage.getItem('username'));
 
                 dispatch(
                     loginUser({
-                        token: userInfo.accessToken.value,
                         userId: userInfo.userId,
                         userRole: userInfo.userRole,
                     }),

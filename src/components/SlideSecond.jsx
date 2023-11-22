@@ -17,11 +17,11 @@ const [data, setData] = useState([]);
       customAxios.get('/api/products/main?type=POPULARITY')
       .then((response) =>{
          setData(response.data);
-         console.log('카테고리슬라이더내부 리스폰스성공')
+        //  console.log('카테고리슬라이더내부 리스폰스성공')
       })
       .catch((error) => {
          console.error('Error:',error);
-         console.log('카테고리슬라이더내부 에러')
+        //  console.log('카테고리슬라이더내부 에러')
 
       })
    }, [])
