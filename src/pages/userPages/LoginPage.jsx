@@ -1,7 +1,7 @@
-import React, {  useEffect } from 'react';
-import { useSelector } from 'react-redux'; 
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Login from "../../components/shared/Login";
+import Login from '../../components/shared/Login';
 
 // 아이디와 비번을 입력받는다
 // 아이디와 비밀번호 서버에 있는지 확인하고 각각의 값이 일치하는지 확인한다
@@ -24,18 +24,16 @@ import Login from "../../components/shared/Login";
 
 export default function LoginPage() {
     const navigate = useNavigate();
-    const isLogin = useSelector((state) => state.user.isLogin); 
+    const isLogin = useSelector((state) => state.user.isLogin);
 
     //로그인 상태라면 메인페이지로 연결된다.
     useEffect(() => {
         if (isLogin) {
-            // navigate('/'); 
+            navigate('/');
         } else {
-            
+            navigate('/login');
         }
-
     }, [isLogin, navigate]);
-
 
     return (
         <div className="flex justify-center items-center w-[1300px] p-10">

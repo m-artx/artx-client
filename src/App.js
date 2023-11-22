@@ -44,8 +44,9 @@ import InquiryManagement from './pages/InquiryManagement';
 import InquiryFormPage from './pages/InquiryFormPage';
 
 //마이페이지
-import Personal from './pages/myPages/Personal';
-import createQustion from './components/shared/createQustion';
+import PersonalInfo from './pages/myPages/PersonalInfo';
+import PersonalQA from './pages/myPages/PersonalQA'
+import Post from "./components/shared/Post";
 
 function App() {
     return (
@@ -91,9 +92,13 @@ function App() {
                     <Route path="/test" element={<Test />} /> {/* 슬라이드 테스트. 임시. */}
                     {/* 마이페이지 */}
                     {/* 개인정보관리 */}
-                    <Route path="/personalinfo" element={<Personal />} />
+                    <Route path="/personalinfo" element={<PersonalInfo />} />
                     <Route path="/customerPersonal" element={<CustomerPersonal />} />
-                    <Route path="/createQustion" element={<createQustion />} />
+
+                    {/* 문의경로 */}
+                    <Route path="/porsonalQA" element={<PersonalQA />} />
+                    <Route path="/porsonalQA/:postId" element={<Post />} />
+
                 </Route>
             </Routes>
         </div>

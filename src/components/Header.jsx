@@ -5,29 +5,50 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser, loginUser } from '../store/userSlice';
 import instance from '../instance/instance';
 
+
 //로그인 후 유저롤이 USER일때, ARTIST일때, ADMIN일때 상단 메뉴가 다 달라야한다.
+//드롭다운 경로 수정하고 고투페이지 필요한지, navigate('/')
+//로그인이 되어있다면 로그인을 한 상태로 , 첫 로그인이라면 리덕스에 저장이 되고, 그상태에서 새로고침이라면...
+
 
 function Header() {
     const navigate = useNavigate();
     const [dropdownVisibility, setDropdownVisibility] = React.useState(false);
     const { isLogin, userId, userRole } = useSelector((state) => state.user);
     const dispatch = useDispatch();
-    const localUsername = localStorage.getItem('username')
-    console.log('localUsername', localUsername)
-    console.log('userRole', userRole)
+    const localUsername = localStorage.getItem('username');
+    console.log('localUsername', localUsername);
+    console.log('userRole', userRole);
+    console.log('userId', userId);
 
-    // const data = customAxios.get('/api/users/user1')
-    // console.log(data)
-
-
+    //모든 요청에 instance해라 거기서 엑세스 토큰을 가지고있다!
     //토큰확인을 항상 처리해야하는지?
 
     async function fetchUserData() {
         try {
-            const response = await instance.get(`/api/users/${localUsername}`)
-            const userData = response.data;
-        } catch(error) {
-            console.log('헤더 팻치데이터: 사용자 장보를 가져올 수 없음', error)
+            // Here, you should use the token to authenticate the request
+            const token = localStorage.getItem('accessToken');
+            console.log('펫치유저데이터내부')
+            if (!token) {
+                console.error('토큰없음');
+                return;
+            }
+
+            const response = await instance.get(`/api/users/${userId}`);
+            const userInfo = response.data;
+            console.log('userInfo', userInfo);
+
+            dispatch(
+                loginUser({
+                    token: userInfo.accessToken.value, // Ensure this data structure aligns with your API response
+                    userId: userInfo.userId,
+                    userRole: userInfo.userRole,
+                }),
+            );
+
+        } catch (error) {
+            console.error('사용자정보검색오류', error);
+            // Optionally handle the error, e.g., dispatch a logout action if the token is invalid
         }
     }
 
@@ -42,7 +63,7 @@ function Header() {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('username');
         dispatch(logoutUser());
-        navigate('/');
+        navigate('/login');
     };
 
     // 페이지 이동 함수
@@ -123,10 +144,8 @@ function Header() {
         );
     };
 
-
     const renderCentralMenu = () => {
         if (isLogin) {
-            // If the user is logged in, show different menu items based on userRole
             switch (userRole) {
                 case 'USER':
                     return (
@@ -187,11 +206,10 @@ function Header() {
     };
 
     return (
-        <div className=" w-screen max-w-[1300px] border border-red-400">
+        <div className=" ">
             {/* 작가센터, 관리자센터, 마이페이지 */}
-            <div className="absolute flex w-screen h-[25px] max-w-[1300px] justify-between border text-gray-500">
-
-            <div className="flex border justify-end items-center ">
+            <div className="absolute flex  h-[25px]  justify-between w-screen max-w-[1300px] border text-gray-500">
+                <div className="flex border justify-end items-center ">
                     <Link to="/Artist">
                         <div className="px-4">작가센터</div>
                     </Link>
@@ -224,11 +242,7 @@ function Header() {
                         </>
                     ) : null}
                 </div> */}
-                <div className="flex border">
-                    {/* {renderCentralMenu()} */}
-
-
-                </div>
+                {/* <div className="flex border">{renderCentralMenu()}</div> */}
             </div>
             {/* 기존 메뉴들 */}
             <div className="flex items-center border w-screen max-w-[1300px] h-[140px]">

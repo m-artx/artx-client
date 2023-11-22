@@ -4,11 +4,16 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 // 비동기 액션을 위한 thunk 생성
-export const fetchCartData = createAsyncThunk('cart/fetchCartData', async (cartId) => {
+export const fetchCartData = createAsyncThunk('cart/fetchCartData', async (cartId, { getState }) => {
     try {
-        const response = await axios.get(`https://ka8d596e67406a.user-app.krampoline.com/api/cart`);
+        const accessToken = localStorage.getItem('accessToken');
+        const response = await axios.get(`https://ka8d596e67406a.user-app.krampoline.com/api/cart`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
 
-        return response.data.cartItemDetails;
+        return response.data.cartProductDetails;
     } catch (error) {
         throw error;
     }
@@ -18,7 +23,9 @@ export const fetchCartData = createAsyncThunk('cart/fetchCartData', async (cartI
 const cartSlice = createSlice({
     name: 'cart',
     initialState: {
-        cartItemDetails: [],
+        cartProductDetails: {
+            content: [],
+        },
         selectedItems: [
             {
                 productId: '',
@@ -71,8 +78,8 @@ const cartSlice = createSlice({
             console.log('Received newCartItemDetails:', newCartItemDetails);
 
             if (Array.isArray(newCartItemDetails)) {
-                state.cartItemDetails = newCartItemDetails;
-                console.log('Updated cartItemDetails:', state.cartItemDetails);
+                state.cartProductDetails = newCartItemDetails;
+                console.log('Updated cartItemDetails:', state.cartProductDetails);
             } else {
                 console.error('Invalid cartItemDetails type. Expected an array.');
             }
@@ -90,7 +97,7 @@ const cartSlice = createSlice({
         toggleSelectAll: (state) => {
             // state.cartItemDetails가 배열이 아닌 경우 초기화
             const availableProducts = Array.isArray(state.cartItemDetails)
-                ? state.cartItemDetails.filter((item) => item.productQuantity > 0)
+                ? state.cartProductDetails.filter((item) => item.productQuantity > 0)
                 : [];
 
             // 전체 선택 상태 변경
@@ -117,17 +124,16 @@ const cartSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder
-            .addCase(fetchCartData.pending, (state) => {
-                state.status = 'loading';
-            })
-            .addCase(fetchCartData.fulfilled, (state, action) => {
-                state.status = 'succeeded';
-                state.cartItemDetails = action.payload.cartItemDetails;
-            })
-            .addCase(fetchCartData.rejected, (state) => {
-                state.status = 'failed';
-            });
+        builder.addCase(fetchCartData.fulfilled, (state, action) => {
+            // API 응답에서 필요한 데이터 추출
+            const cartProductDetails = action.payload;
+            const content = cartProductDetails.content;
+
+            // cartProductDetails를 업데이트
+            state.cartProductDetails = {
+                content,
+            };
+        });
     },
 });
 

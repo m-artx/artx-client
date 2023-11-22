@@ -5,7 +5,6 @@ import { faFile, faTimes, faAngleLeft, faAngleRight } from '@fortawesome/free-so
 
 function ProductRegistrationPage() {
     const [request, setRequest] = useState({
-        userId: 'dd877036-b45e-4e13-8563-e985ab8cd9b2',
         productCategory: 'PAINT',
         productTitle: '',
         productDescription: '',
@@ -15,7 +14,6 @@ function ProductRegistrationPage() {
     const [files, setFiles] = useState([]);
     const [uploadedFiles, setUploadedFiles] = useState([]);
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [inputValue, setInputValue] = useState('');
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -33,28 +31,25 @@ function ProductRegistrationPage() {
     const addProduct = (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
-        for (let i = 0; i < files.length; i++) {
-            formData.append('files', files[i]);
-        }
-
-        const requestJson = JSON.stringify({
-            userId: request.userId,
+        const requestJson = {
             productCategory: request.productCategory,
             productTitle: request.productTitle,
             productDescription: request.productDescription,
             productStockQuantity: request.productQuantity,
             productPrice: request.productPrice,
-        });
+        };
 
-        const requestBlob = new Blob([requestJson], { type: 'application/json' });
-        formData.append('request', requestBlob);
+        const payload = {
+            files: files.map((file) => file.name), // Assuming you want to send file names
+            request: requestJson,
+        };
 
+        const accessToken = localStorage.getItem('accessToken');
         axios
-            .post('https://ka8d596e67406a.user-app.krampoline.com/api/artist/products', formData, {
+            .post('https://ka8d596e67406a.user-app.krampoline.com/api/artist/products', payload, {
                 headers: {
-                    Authorization: 'Bearer YOUR_ACCESS_TOKEN',
-                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
                 },
             })
             .then((response) => {
@@ -73,11 +68,13 @@ function ProductRegistrationPage() {
     const prevSlide = () => {
         setCurrentSlide((prevSlide) => (prevSlide - 1 + Math.ceil(files.length / 3)) % Math.ceil(files.length / 3));
     };
+
     const handleRemoveFile = (index) => {
         const newFiles = [...files];
         newFiles.splice(index + currentSlide * 3, 1);
         setFiles(newFiles);
     };
+
     return (
         <div className="bg-black min-h-screen flex items-center justify-center">
             <div className="p-6 rounded-lg shadow-lg max-w-md w-full text-white">
@@ -89,7 +86,7 @@ function ProductRegistrationPage() {
                             <div className="flex space-x-2">
                                 <div className="flex items-center">
                                     <button
-                                        type="button" // 버튼의 타입을 button으로 변경
+                                        type="button"
                                         onClick={prevSlide}
                                         className="flex-shrink-0 px-2 py-1 bg-black text-white rounded-l"
                                     >
@@ -119,7 +116,6 @@ function ProductRegistrationPage() {
                                     files.slice(currentSlide * 3, currentSlide * 3 + 3).map((file, index) => (
                                         <div key={index} className="relative">
                                             <img
-                                                key={index}
                                                 src={URL.createObjectURL(file)}
                                                 alt={`File Preview ${index}`}
                                                 className="flex-shrink-0 w-1/1 h-32 object-cover rounded"
@@ -127,14 +123,14 @@ function ProductRegistrationPage() {
                                             <button
                                                 type="button"
                                                 onClick={() => handleRemoveFile(index)}
-                                                className="absolute top-0 right-0 p-2  text-white rounded-full "
+                                                className="absolute top-0 right-0 p-2 text-white rounded-full "
                                             >
                                                 <FontAwesomeIcon icon={faTimes} className="bg-transparent text-white" />
                                             </button>
                                         </div>
                                     ))}
                                 <button
-                                    type="button" // 버튼의 타입을 button으로 변경
+                                    type="button"
                                     onClick={nextSlide}
                                     className="flex-shrink-0 px-2 py-1 bg-black text-white rounded-r"
                                 >

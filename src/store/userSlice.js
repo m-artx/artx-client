@@ -16,7 +16,7 @@ const userSlice = createSlice({
         loginUser: (state, action) => {
             state.user = action.payload;
             state.isLogin = true;
-            state.userId = action.payload.username; //페이로드에서 가져오는거 잘 기억해두기
+            state.userId = action.payload.userId; //페이로드에서 가져오는거 잘 기억해두기
             state.userRole = action.payload.userRole;
             //현재 상태를 응답값으로 바꾸겠다
         },

@@ -14,7 +14,7 @@ import {
 
 function ShoppingCart() {
     // 초기 장바구니 상태
-    const cartItemDetails = useSelector((state) => state.cart.cartItemDetails);
+    const cartProductDetails = useSelector((state) => state.cart.cartItemDetails) || [];
     const cartId = 25; // 가져오려는 장바구니 ID
     const selectedItems = useSelector((state) => state.cart.selectedItems);
     const selectAll = useSelector((state) => state.cart.selectAll);
@@ -31,19 +31,15 @@ function ShoppingCart() {
 
     //배열에 안담아진다..
     useEffect(() => {
-        console.log(cartItemDetails);
-    }, [cartItemDetails]);
-    useEffect(() => {
         dispatch(fetchCartData(cartId));
-        //console.log(cartItemDetails);
     }, []);
-
     const increaseQuantity = (productId) => {
         // API 요청을 보내어 서버에서 수량을 증가시킴
         axios
             .patch(`https://ka8d596e67406a.user-app.krampoline.com/api/carts/${cartId}/products/${productId}/increase`)
             .then((response) => {
-                const updatedCart = cartItemDetails.map((item) => {
+                const updatedCart = cartProductDetails.content.map((item) => {
+                    // 수정된 부분
                     if (item.productId === productId) {
                         return { ...item, cartProductQuantity: item.cartProductQuantity + 1 };
                     }
@@ -58,11 +54,12 @@ function ShoppingCart() {
                 alert('수량 증가 중 오류가 발생했습니다.');
             });
     };
-    if (Array.isArray(cartItemDetails)) {
-        console.log(cartItemDetails);
+    if (Array.isArray(cartProductDetails)) {
+        console.log(cartProductDetails);
     } else {
-        console.log(cartItemDetails);
+        console.log(cartProductDetails);
     }
+    console.log('cartItemDetails:', cartProductDetails);
     const decreaseQuantity = (productId) => {
         // API 요청을 보내어 서버에서 수량을 감소시킴
         axios
@@ -102,7 +99,7 @@ function ShoppingCart() {
             const confirmDelete = window.confirm('선택한 상품을 삭제하시겠습니까?');
 
             if (confirmDelete) {
-                const updatedCart = cartItemDetails.filter((item) => !selectedItems.includes(item.productId));
+                const updatedCart = cartProductDetails.filter((item) => !selectedItems.includes(item.productId));
                 dispatch(setCartItemDetails(updatedCart));
                 // setSelectedItems([]); // 선택된 항목을 초기화
             }
@@ -114,8 +111,8 @@ function ShoppingCart() {
     // 선택된 상품 합계 계산 함수
     const orderTotalPrice = () => {
         let total = 0;
-        if (cartItemDetails && Array.isArray(cartItemDetails)) {
-            for (const item of cartItemDetails) {
+        if (cartProductDetails && Array.isArray(cartProductDetails)) {
+            for (const item of cartProductDetails) {
                 if (selectedItems?.includes(item.productId)) {
                     total += item.productPrice * item.cartProductQuantity;
                 }
@@ -130,7 +127,7 @@ function ShoppingCart() {
             alert('주문할 상품을 선택해주세요.');
         } else {
             // 선택된 상품의 정보를 다음 페이지로 전달하고 이동
-            const selectedProducts = cartItemDetails.filter((item) => selectedItems.includes(item.productId));
+            const selectedProducts = cartProductDetails.filter((item) => selectedItems.includes(item.productId));
             navigate(`/order`, { state: { selectedProducts } });
         }
     };
