@@ -8,7 +8,7 @@ function CategorySlider() {
    const [data, setData] = useState([]);
 
    useEffect(() => {
-      customAxios.get('/api/products/categories')
+      customAxios.get('/api/categories')
       .then((response) =>{
          setData(response.data);
          console.log('카테고리슬라이더내부 리스폰스성공')

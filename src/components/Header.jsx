@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import Dropdown from './Dropdown';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser, loginUser } from '../store/userSlice';
-import instance from '../instance/instance';
+import axiosInstance from '../instance/axiosInstance';
 
 
 //로그인 후 유저롤이 USER일때, ARTIST일때, ADMIN일때 상단 메뉴가 다 달라야한다.
@@ -15,6 +15,7 @@ function Header() {
     const navigate = useNavigate();
     const [dropdownVisibility, setDropdownVisibility] = React.useState(false);
     const { isLogin, userId, userRole } = useSelector((state) => state.user);
+    const userInfo = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const localUsername = localStorage.getItem('username');
     console.log('localUsername', localUsername);
@@ -26,16 +27,8 @@ function Header() {
 
     async function fetchUserData() {
         try {
-            // Here, you should use the token to authenticate the request
-            const token = localStorage.getItem('accessToken');
             console.log('펫치유저데이터내부')
-            if (!token) {
-                console.error('토큰없음');
-                return;
-            }
-
-            const response = await instance.get(`/api/users/${userId}`);
-            const userInfo = response.data;
+           
             console.log('userInfo', userInfo);
 
             dispatch(
@@ -51,6 +44,14 @@ function Header() {
             // Optionally handle the error, e.g., dispatch a logout action if the token is invalid
         }
     }
+
+    // useEffect(() => {
+    //     const token = localStorage.getItem('accessToken');
+    
+    //     if (token) {
+    //        fetchUserData();
+    //     }
+    // }, []);
 
     useEffect(() => {
         if (isLogin) {

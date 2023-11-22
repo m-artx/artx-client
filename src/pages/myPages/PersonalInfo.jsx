@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'; //디스패치로 저장하고 셀렉터로 가져온다
-import instance from '../../instance/instance';
+import axiosInstance from '../../instance/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -42,55 +42,39 @@ function PersonalInfo() {
 
     // 이미지 저장
     const handleFileChange = async (e) => {
-        const selectedFile = e.target.files[0];
-        if (selectedFile) {
-            const formData = new FormData();
-            formData.append('file', selectedFile); // 'file' is the key expected by your API
-
-            try {
-                const token = localStorage.getItem('accessToken');
-                if (!token) {
-                    console.error('No token found');
-                    return;
-                }
-
-                const config = {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        'Content-Type': 'multipart/form-data', // This might be necessary depending on your server setup
-                    },
-                };
-
-                const res = await customAxios.post(`/api/mypage/image`, formData, config);
-                console.log('res', res.data);
-                // setImageUrl(res.data.image); 
-            } catch (error) {
-                console.error('Error uploading image', error);
-            }
-        }
+        // const selectedFile = e.target.files[0];
+        // if (selectedFile) {
+        //     const formData = new FormData();
+        //     formData.append('file', selectedFile); // 'file' is the key expected by your API
+        //     //인터셉터를 사용하면 토큰을 보내지 않아도 된다.
+        //     try {
+        //         const res = await axiosInstance.post(`/api/mypage/image`, formData);
+        //         console.log('res', res.data.userProfileImage);
+        //         // setImageUrl(res.data.image);
+        //     } catch (error) {
+        //         console.error('Error uploading image', error);
+        //     }
+        // }
     };
 
     //저장된 이미지가 자동으로 안불러와지는거같아서 불러오는 파일을 만들어버림
     const fetchProfileInfo = async () => {
-        try {
-            const token = localStorage.getItem('accessToken');
-            if (!token) {
-                console.error('No token found');
-                return;
-            }
+        // try {
+        //     const token = localStorage.getItem('accessToken');
+        //     if (!token) {
+        //         console.error('No token found');
+        //         return;
+        //     }
 
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            };
-
-            const res = await customAxios.get(`/api/mypage`, config);
-            console.log('겟res',res.data)
-            setImageUrl('https://ka8d596e67406a.user-app.krampoline.com/api/images/051f678b-6d3b-4b7d-9fa7-15ce5c74a965_6.jpg'); // Adjust based on actual response structure
-        } catch (error) {
-            console.error('Error fetching profile', error);
-        }
+        //     const res = await axiosInstance.get(`/api/mypage`);
+        //     console.log('겟res', res.data);
+        //     setImageUrl(
+        //         imageUrl
+        //         // 'https://ka8d596e67406a.user-app.krampoline.com/api/images/051f678b-6d3b-4b7d-9fa7-15ce5c74a965_6.jpg'
+        //     ); // Adjust based on actual response structure
+        // } catch (error) {
+        //     console.error('Error fetching profile', error);
+        // }
     };
 
     useEffect(() => {
