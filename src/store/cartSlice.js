@@ -95,18 +95,16 @@ const cartSlice = createSlice({
             }
         },
         toggleSelectAll: (state) => {
-            // state.cartProductDetails가 배열이 아닌 경우 초기화
-            const availableProducts = Array.isArray(state.cartProductDetails)
-                ? state.cartProductDetails.filter((item) => item.productQuantity > 0)
-                : [];
-
             // 전체 선택 상태 변경
             state.selectAll = !state.selectAll;
 
             // 선택된 상품 업데이트
-            state.selectedItems = state.selectAll ? availableProducts.map((item) => item.productId) : [];
+            state.selectedItems = state.selectAll
+                ? state.cartProductDetails.content
+                      .filter((item) => item.productQuantity > 0)
+                      .map((item) => item.productId)
+                : [];
         },
-
         decreaseQuantity: (state, action) => {
             // 여기에 감소 로직 추가
         },

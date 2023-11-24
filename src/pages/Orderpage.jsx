@@ -25,29 +25,31 @@ export default function OrderPage() {
             [name]: value,
         });
     };
-    const orderId = '';
+    const orderId = '1';
     const [storedAddressInfo, setStoredAddressInfo] = useState(null);
 
     // 주문하기 버튼 클릭 시 실행되는 함수
-    const handleOrder = (produtId) => {
+    const handleOrder = () => {
         // 주문 정보 구성
         const orderData = {
             orderProductDetails: selectedProducts.map((product) => ({
-                productId: 1,
-                productQuantity: 2,
+                productId: product.productId,
+                productQuantity: product.cartProductQuantity,
             })),
             orderDeliveryDetail: {
-                deliveryId: '',
-                deliveryReceiver: '',
-                deliveryReceiverPhoneNumber: '',
-                deliveryReceiverAddress: '',
-                deliveryReceiverAddressDetail: '',
-                deliveryTrackingNumber: '',
+                deliveryId: 'ads',
+                deliveryReceiver: 'dsa',
+                deliveryReceiverPhoneNumber: 'das',
+                deliveryReceiverAddress: 'dsa',
+                deliveryReceiverAddressDetail: 'dsa',
+                deliveryTrackingNumber: 'dsa',
                 deliveryFee: 0,
                 deliveryStatus: 'DELIVERY_CREATED',
             },
         };
+
         const isInputEmpty = Object.values(deliveryInfo).some((value) => value.trim() === '');
+
         // axios를 사용하여 서버에 주문 요청
         const accessToken = localStorage.getItem('accessToken');
         axios
@@ -60,6 +62,8 @@ export default function OrderPage() {
             .then((response) => {
                 console.log('주문 성공:', response.data);
                 window.open(response.data.next_redirect_pc_url, '_blank');
+                const orderCompleteUrl = '/success'; // 주문 완료 페이지의 경로
+                window.location.href = orderCompleteUrl;
             })
             .catch((error) => {
                 // 주문 실패 시 수행할 작업
@@ -74,7 +78,7 @@ export default function OrderPage() {
         };
 
         axios
-            .patch(`https://ka8d596e67406a.user-app.krampoline.com/api/orders/${orderId}/cancel`, cancelOrderData, {
+            .delete(`https://ka8d596e67406a.user-app.krampoline.com/api/orders/${orderId}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     accept: '*/*',
@@ -90,19 +94,6 @@ export default function OrderPage() {
                 console.error('주문 취소 실패:', error);
             });
     };
-    useEffect(() => {
-        // 로컬 스토리지에서 addressInfo를 가져옴
-        const storedData = localStorage.getItem('addressInfo');
-
-        // 가져온 데이터가 있다면 파싱하여 state에 설정
-        if (storedData) {
-            const parsedData = JSON.parse(storedData);
-            setStoredAddressInfo(parsedData);
-        }
-
-        // 페이지 로드 시 자동으로 주소 정보 표시
-        displayAddressInfo();
-    }, []); // 빈 의존성 배열로 한 번만 실행되도록 설정
 
     // storedAddressInfo를 사용하여 원하는 작업 수행
     const displayAddressInfo = () => {

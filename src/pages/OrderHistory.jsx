@@ -34,7 +34,7 @@ function OrderHistory() {
                     const orderDetails = order[orderDate];
 
                     return (
-                        <li key={orderDetails.orderId} className="bg-white text-black">
+                        <li key={orderDetails.orderId} className="bg-white text-white">
                             <span className="font-bold">{orderDetails.username}</span>
                             <div>
                                 <p>주문일자: {orderDetails.orderCreatedAt}</p>

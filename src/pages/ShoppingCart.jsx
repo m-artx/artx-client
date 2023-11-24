@@ -130,9 +130,9 @@ function ShoppingCart() {
     // 선택된 상품 합계 계산 함수
     const orderTotalPrice = () => {
         let total = 0;
-        if (cartProductDetails && Array.isArray(cartProductDetails)) {
-            for (const item of cartProductDetails) {
-                if (selectedItems?.includes(item.productId)) {
+        if (cartProductDetails && Array.isArray(cartProductDetails.content)) {
+            for (const item of cartProductDetails.content) {
+                if (selectedItems.includes(item.productId)) {
                     total += item.productPrice * item.cartProductQuantity;
                 }
             }

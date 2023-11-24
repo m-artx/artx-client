@@ -107,19 +107,19 @@ function ProductDetailPage() {
         // 결제 정보 구성
         const accessToken = localStorage.getItem('accessToken');
         const orderData = {
-            orderDetails: [
+            orderProductDetails: [
                 {
-                    productId: 1,
+                    productId: productId,
                     productQuantity: 1, // 주문 수량을 1로 설정하거나 필요에 따라 조절
                 },
             ],
             orderDeliveryDetail: {
-                deliveryId: '',
-                deliveryReceiver: '',
-                deliveryReceiverPhoneNumber: '',
-                deliveryReceiverAddress: '',
-                deliveryReceiverAddressDetail: '',
-                deliveryTrackingNumber: '',
+                deliveryId: 'das',
+                deliveryReceiver: 'das',
+                deliveryReceiverPhoneNumber: 'sad',
+                deliveryReceiverAddress: 'asd',
+                deliveryReceiverAddressDetail: 'asd',
+                deliveryTrackingNumber: 'da',
                 deliveryFee: 0,
                 deliveryStatus: 'DELIVERY_CREATED',
             },
