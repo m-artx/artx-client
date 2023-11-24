@@ -25,7 +25,7 @@ import Addaddress from './pages/Addaddress';
 import KakaoSuccess from './pages/userPages/KakaoSuccess';
 import KakaoFail from './pages/userPages/KakaoFail';
 import CustomerCenter from './pages/CustomerCenter';
-import CustomerPersonal from "./pages/CustomerPersonal";
+import CustomerPersonal from './pages/CustomerPersonal';
 
 //작가용
 import ArtistRegistrationPage from './pages/userPages/ArtistRegistrationPage';
@@ -45,8 +45,9 @@ import InquiryFormPage from './pages/InquiryFormPage';
 
 //마이페이지
 import PersonalInfo from './pages/myPages/PersonalInfo';
-import PersonalQA from './pages/myPages/PersonalQA'
-import Post from "./components/shared/Post";
+import PersonalQA from './pages/myPages/PersonalQA';
+import Post from './components/shared/Post';
+import ArtistDelivery from './pages/ArtistDelivery';
 
 function App() {
     return (
@@ -75,13 +76,13 @@ function App() {
                     <Route path="/success" element={<KakaoSuccess />} />
                     <Route path="/kakaofail" element={<KakaoFail />} />
                     <Route path="/customer" element={<CustomerCenter />} />
-
                     {/* 작가관련 페이지 */}
                     <Route path="/ArtistRegistration" element={<ArtistRegistrationPage />} />
                     <Route path="/ArtistProfile" element={<ArtistProfilePage />} />
                     <Route path="/Artist" element={<ArtistsPage />} />
                     <Route path="/inquirymanagement" element={<InquiryManagement />} />
                     <Route path="/inquiry" element={<InquiryFormPage />} />
+                    <Route path="/artistdelivery" element={<ArtistDelivery />} />
                     {/* 관리자 페이지 */}
                     <Route path="/admin" element={<AdminPage />} />
                     <Route path="/notice" element={<NoticePage />} />
@@ -94,11 +95,9 @@ function App() {
                     {/* 개인정보관리 */}
                     <Route path="/personalinfo" element={<PersonalInfo />} />
                     <Route path="/customerPersonal" element={<CustomerPersonal />} />
-
                     {/* 문의경로 */}
                     <Route path="/porsonalQA" element={<PersonalQA />} />
                     <Route path="/porsonalQA/:postId" element={<Post />} />
-
                 </Route>
             </Routes>
         </div>

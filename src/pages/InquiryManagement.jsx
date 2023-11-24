@@ -23,15 +23,15 @@ export default function InquiryManagement() {
     };
 
     return (
-        <div className="max-w-2xl mx-auto mt-8 p-6 bg-white rounded-md shadow-md bg-white text-black">
+        <div className="max-w-2xl mx-auto mt-8 p-6 bg-white rounded-md shadow-md text-black">
             <h1 className="text-3xl font-bold mb-4 bg-white text-black">문의내역</h1>
             {formData.map((data, index) => (
                 <div key={index} className="mb-4 bg-white text-black">
                     <h2 className="text-xl font-semibold bg-white text-black">{data.title}</h2>
-                    <p className="text-gray-600 bg-white text-black">{data.message}</p>
+                    <p className="bg-white text-black">{data.message}</p>
                     {data.file && (
                         <div className="mt-2 ">
-                            <p className="text-gray-700 bg-white text-black">첨부 파일: {data.file}</p>
+                            <p className=" bg-white text-black">첨부 파일: {data.file}</p>
                         </div>
                     )}
                     <button
