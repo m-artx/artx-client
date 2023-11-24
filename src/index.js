@@ -7,6 +7,10 @@ import { Provider } from 'react-redux';
 import store from './store/store'; // 여기서 store를 import 해야 함
 export * from "./utils/env";
 
+
+
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>

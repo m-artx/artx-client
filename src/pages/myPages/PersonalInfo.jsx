@@ -7,6 +7,8 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import customAxios from '../../store/customAxios';
 import axios from 'axios';
 import MyPageDataFetcher from '../../components/shared/MyPageDataFetcher';
+import { REACT_APP_ARTX_BASE_URL } from '../../utils/env';
+
 
 // 개인정보관리
 // 이미지를 저장하면 서버로 전송된다
@@ -64,9 +66,13 @@ function PersonalInfo() {
 
     console.log('userData', userData);
 
-    const [imageUrl, setImageUrl] = useState(
-        'https://mblogthumb-phinf.pstatic.net/MjAyMDExMDFfMTgy/MDAxNjA0MjI4ODc1NDMw.Ex906Mv9nnPEZGCh4SREknadZvzMO8LyDzGOHMKPdwAg.ZAmE6pU5lhEdeOUsPdxg8-gOuZrq_ipJ5VhqaViubI4g.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_%ED%95%98%EB%8A%98%EC%83%89.jpg?type=w800'
-    );
+
+    //리액트 useState 내에서 연산자를 직접사용할수 없다. 외부에서 계산한 뒤 이를 인수로 전달해야한다.
+    const defaultImage = 'https://mblogthumb-phinf.pstatic.net/MjAyMDExMDFfMTgy/MDAxNjA0MjI4ODc1NDMw.Ex906Mv9nnPEZGCh4SREknadZvzMO8LyDzGOHMKPdwAg.ZAmE6pU5lhEdeOUsPdxg8-gOuZrq_ipJ5VhqaViubI4g.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_%ED%95%98%EB%8A%98%EC%83%89.jpg?type=w800'
+    const initialImageUrl = `${userData.userProfileImage}?${Date.now()}` || defaultImage
+    const [imageUrl, setImageUrl] = useState(initialImageUrl);
+    console.log('userData프로필사진', userData.userProfileImage);
+
 
     const handleImageClick = () => {
         fileInputRef.current.click();
@@ -88,8 +94,12 @@ function PersonalInfo() {
                 const res = await customAxios.post(`/api/mypage/image`, formData, config);
                 if (res.status === 200) {
                     console.log('이미지서버저장성공', res.data);
-                    setImageUrl(userData.userProfileImage);
-                    console.log('바로안되나?',userData.userProfileImage)
+                    const updateUserData = await MyPageDataFetcher();
+                    if(updateUserData) {
+                        console.log('업데이트이미지', updateUserData);
+                        setUserData(updateUserData)
+                        setImageUrl(updateUserData.userProfileImage);
+                    } 
 
                 } else {
                     console.error('반응은있는데 이미지저장실패:', res.status);
@@ -100,6 +110,7 @@ function PersonalInfo() {
             }
         }
     };
+
 
     //화면 글자변경 함수
     const handleTextChange = (e, field) => {
@@ -124,10 +135,11 @@ function PersonalInfo() {
                 <div className="flex justify-center bg-white">
                     <div className="flex justify-center items-center border w-[200px] flex-col mx-auto my-4 bg-white ">
                         <div className="p-2 relative bg-white">
-                            프로필 사진
+                            프로필 사진                          
+                            
                             <img
                                 className="w-14 h-14 m-2 rounded-full object-cover bg-gray-400"
-                                src={imageUrl}
+                                src={userData.userProfileImage}
                                 alt="Profile"
                                 onClick={handleImageClick}
                             />

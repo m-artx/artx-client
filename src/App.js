@@ -48,6 +48,8 @@ import PersonalInfo from './pages/myPages/PersonalInfo';
 import PersonalQA from './pages/myPages/PersonalQA'
 import Post from "./components/shared/Post";
 
+
+
 function App() {
     return (
         <div>
