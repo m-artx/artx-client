@@ -5,14 +5,15 @@ import axiosInstance from '../../instance/axiosInstance';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../../store/userSlice';
 import MoModal from '../../components/shared/MoModal';
-import PasswordChanger from '../myPages/PasswordChanger'
-//이거왜안불러와지는거야
-// import NewPassword  from '../../components/logics/NewPassword';
+import PasswordChangerModal from '../myPages/PasswordChangerModal';
+import SignOutModal from '../myPages/SignOutModal';
 
 
-// 개인정보관리 : 변경버튼 활성화 빼고는 제작됨
-// 비밀번호변경 : 모달창 예정
-//  주문/배송정보 : 더미구현 완료
+// 페이지 구조
+
+// 개인정보관리 : 페이지로 연결. 변경버튼 활성화 빼고는 제작됨
+// 비밀번호변경 : 모달창 완료.
+// 주문/배송정보 : 더미구현 완료
 // 배송지관리 : 모달창 예정
 // 고객센터 : 더미구현.. 재영님 요청중 게시글 클릭 api등.. 와이어프레임 7번페이지 참고해서 레이아웃잡기
 //  로그아웃 : 완료
@@ -25,23 +26,26 @@ function MyPage() {
     const [userData, setUserData] = useState(null); // 사용자 데이터 상태
     const localUsername = localStorage.getItem('username');
     console.log(isLogin, userRole);
+    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+    const [isSignOutModalOpen, setIsSignOutModalOpen] = useState(false);
 
-    //모달핸들러
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const openModal = () => {
-        setIsModalOpen(true);
-        console.log('모달열기');
+    //모달 오픈클로즈 함수를 하나로 쓰면 한 버튼을 클릭하면 두개가 다 열린다.
+    //패스워드초기화 모달
+    const openPasswordModal = () => {
+        setIsPasswordModalOpen(true);
+    };
+    const closePasswordModal = () => {
+        setIsPasswordModalOpen(false);
+    };
+    //회원탈퇴 모달
+    const openSignOutModal = () => {
+        setIsSignOutModalOpen(true);
+    };
+    const closeSignOutModal = () => {
+        setIsSignOutModalOpen(false);
     };
 
-    const closeModal = () => {
-        setIsModalOpen(false);
-        console.log('모달닫기');
-    };
 
-    //비밀번호 초기화 함수
-
-
-    
     const goToPage = (path) => {
         //슬래시를 넣으면 절대경로가 됨, mypage/personal이 아니라 바로 personal로 연결은 아래처럼
         navigate('/' + path);
@@ -62,36 +66,10 @@ function MyPage() {
                 <button className=" bg-white text-black py-2 mt-4 border" onClick={() => goToPage('personalinfo')}>
                     개인정보관리
                 </button>
-                <button className=" bg-white text-black py-2 mt-4 border" onClick={openModal}>
+                <button className=" bg-white text-black py-2 mt-4 border" onClick={openPasswordModal}>
                     비밀번호 변경
                 </button>
-                {isModalOpen && (
-                    <MoModal
-                        isOpen={isModalOpen}
-                        onClose={closeModal}
-                        className="modal w-1/2" // Add a custom class for the modal container
-                        overlayClassName="modal-overlay" // Add a custom class for the modal overlay
-                        contentLabel="Change Password Modal"
-                    >
-                        <div className="bg-white">
-                            <div className="bg-white">새로 사용할 비밀번호를 입력해주세요.</div>
-                            <input
-                                type="password"
-                                className="w-full px-3 py-2 border rounded mb-4 bg-white"
-                                placeholder="New Password"
-                            />
-
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded  ">
-                                비밀번호 변경
-                            </button>
-                            <button
-                                onClick={closeModal}
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded  "
-                            >
-                            </button>
-                        </div>
-                    </MoModal>
-                )}
+                {isPasswordModalOpen && <PasswordChangerModal isOpen={isPasswordModalOpen} onClose={() => closePasswordModal(false)} />}
 
                 <button className=" bg-white text-black py-2 mt-4 border" onClick={() => goToPage('orderhistory')}>
                     주문/배송정보
@@ -106,9 +84,10 @@ function MyPage() {
                     로그아웃
                 </button>
 
-                <button className=" bg-white text-black py-2 mt-4 border" onClick={() => handleLogout()}>
+                <button className=" bg-white text-black py-2 mt-4 border" onClick={openSignOutModal}>
                     회원탈퇴
                 </button>
+                {isSignOutModalOpen && <SignOutModal isOpen={openSignOutModal} onClose={() => closeSignOutModal(false)} />}
             </div>
         </div>
     );

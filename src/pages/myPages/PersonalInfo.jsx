@@ -79,37 +79,57 @@ function PersonalInfo() {
     };
 
     // 이미지 저장 1. customAxios 사용, 토큰을 같이보내보기. 성공!
+    // const handleFileChange = async (e) => {
+    //     const selectedFile = e.target.files[0];
+    //     if (selectedFile) {
+    //         const formData = new FormData();
+
+    //         formData.append('file', selectedFile);
+    //         const token = localStorage.getItem('accessToken');
+    //         const config = {
+    //             headers: { Authorization: `Bearer ${token}` },
+    //         };
+
+    //         try {
+    //             const res = await customAxios.post(`/api/mypage/image`, formData, config);
+    //             if (res.status === 200) {
+    //                 console.log('이미지서버저장성공', res.data);
+    //                 const updateUserData = await MyPageDataFetcher();
+    //                 if(updateUserData) {
+    //                     console.log('업데이트이미지', updateUserData);
+    //                     setUserData(updateUserData)
+    //                     setImageUrl(updateUserData.userProfileImage);
+    //                 } 
+
+    //             } else {
+    //                 console.error('반응은있는데 이미지저장실패:', res.status);
+    //             }
+
+    //         } catch (error) {
+    //             console.error('이미지서버저장실패', error);
+    //         }
+    //     }
+    // };
+
+    // 이미지 저장 2. axiosInstance을 사용, 헤더에 있는 토큰을 같이보내보기. CORS에러남..
     const handleFileChange = async (e) => {
         const selectedFile = e.target.files[0];
         if (selectedFile) {
             const formData = new FormData();
-
             formData.append('file', selectedFile);
-            const token = localStorage.getItem('accessToken');
-            const config = {
-                headers: { Authorization: `Bearer ${token}` },
-            };
-
+            //인터셉터를 사용하면 토큰을 보내지 않아도 된다.?
             try {
-                const res = await customAxios.post(`/api/mypage/image`, formData, config);
-                if (res.status === 200) {
-                    console.log('이미지서버저장성공', res.data);
-                    const updateUserData = await MyPageDataFetcher();
-                    if(updateUserData) {
-                        console.log('업데이트이미지', updateUserData);
-                        setUserData(updateUserData)
-                        setImageUrl(updateUserData.userProfileImage);
-                    } 
-
-                } else {
-                    console.error('반응은있는데 이미지저장실패:', res.status);
+                const res = await axiosInstance.post(`/api/mypage/image`, formData);
+                if (res.data) { // Assuming 'imageUrl' is the key in response
+                    console.log('이미지 서버저장성공', res.data);
                 }
-
             } catch (error) {
-                console.error('이미지서버저장실패', error);
+                console.error('Error uploading image:', error);
             }
         }
     };
+
+
 
 
     //화면 글자변경 함수
