@@ -4,7 +4,6 @@ import ProductRegistrationPage from './ProductRegistrationPage';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-
 function ArtistsPage() {
     const navigate = useNavigate();
 
@@ -27,21 +26,23 @@ function ArtistsPage() {
                 </Link>
             </div>
             <div className="mb-8 border-b border-gray-300 pb-4">
-                <h2 className="text-2xl font-bold mb-4">주문관리</h2>
+                <h2 className="text-2xl font-bold mb-4">작가 주문관리</h2>
                 <ul className="list-disc pl-4">
-                    <li>배송관리</li>
+                    <Link to="/artistdelivery">
+                        <li>배송관리</li>
+                    </Link>
                     <li>작가페이지 관리 및 공지</li>
                     <li>커미션 안내 작성 및 커미션 현황</li>
                 </ul>
             </div>
-            <div className="mb-8 border-b border-gray-300 pb-4">
+            {/* <div className="mb-8 border-b border-gray-300 pb-4">
                 <Link to="/inquirymanagement">
                     <h2 className="text-2xl font-bold mb-4">문의관리</h2>
                 </Link>
-            </div>
-            <div className="mb-8">
+            </div> */}
+            {/* <div className="mb-8">
                 <h2 className="text-2xl font-bold mb-4">후기모음</h2>
-            </div>
+            </div> */}
         </div>
     );
 }

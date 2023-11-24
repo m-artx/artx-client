@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -26,25 +26,35 @@ export default function OrderPage() {
         });
     };
     const orderId = '';
+    const [storedAddressInfo, setStoredAddressInfo] = useState(null);
 
     // 주문하기 버튼 클릭 시 실행되는 함수
     const handleOrder = (produtId) => {
         // 주문 정보 구성
         const orderData = {
-            userId: '29efc8ca-d618-44bd-b67b-29ede70ce3c9',
-            orderDetails: selectedProducts.map((product) => ({
-                productId: product.productId,
-                productQuantity: 1,
+            orderProductDetails: selectedProducts.map((product) => ({
+                productId: 1,
+                productQuantity: 2,
             })),
-            deliveryDetail,
+            orderDeliveryDetail: {
+                deliveryId: '',
+                deliveryReceiver: '',
+                deliveryReceiverPhoneNumber: '',
+                deliveryReceiverAddress: '',
+                deliveryReceiverAddressDetail: '',
+                deliveryTrackingNumber: '',
+                deliveryFee: 0,
+                deliveryStatus: 'DELIVERY_CREATED',
+            },
         };
         const isInputEmpty = Object.values(deliveryInfo).some((value) => value.trim() === '');
         // axios를 사용하여 서버에 주문 요청
+        const accessToken = localStorage.getItem('accessToken');
         axios
-            .post(`http://ka8d596e67406a.user-app.krampoline.com/api/orders`, orderData, {
+            .post(`https://ka8d596e67406a.user-app.krampoline.com/api/orders`, orderData, {
                 headers: {
+                    Authorization: `Bearer ${accessToken}`,
                     'Content-Type': 'application/json',
-                    accept: '*/*',
                 },
             })
             .then((response) => {
@@ -64,7 +74,7 @@ export default function OrderPage() {
         };
 
         axios
-            .patch(`http://ka8d596e67406a.user-app.krampoline.com/api/orders/${orderId}/cancel`, cancelOrderData, {
+            .patch(`https://ka8d596e67406a.user-app.krampoline.com/api/orders/${orderId}/cancel`, cancelOrderData, {
                 headers: {
                     'Content-Type': 'application/json',
                     accept: '*/*',
@@ -80,7 +90,36 @@ export default function OrderPage() {
                 console.error('주문 취소 실패:', error);
             });
     };
+    useEffect(() => {
+        // 로컬 스토리지에서 addressInfo를 가져옴
+        const storedData = localStorage.getItem('addressInfo');
 
+        // 가져온 데이터가 있다면 파싱하여 state에 설정
+        if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            setStoredAddressInfo(parsedData);
+        }
+
+        // 페이지 로드 시 자동으로 주소 정보 표시
+        displayAddressInfo();
+    }, []); // 빈 의존성 배열로 한 번만 실행되도록 설정
+
+    // storedAddressInfo를 사용하여 원하는 작업 수행
+    const displayAddressInfo = () => {
+        if (storedAddressInfo) {
+            return (
+                <div>
+                    <p>이름: {storedAddressInfo.name}</p>
+                    <p>전화번호: {storedAddressInfo.phoneNumber}</p>
+                    <p>우편번호: {storedAddressInfo.zipcode}</p>
+                    <p>주소: {storedAddressInfo.address}</p>
+                    <p>상세주소: {storedAddressInfo.address2}</p>
+                </div>
+            );
+        } else {
+            return <p>저장된 주소 정보가 없습니다.</p>;
+        }
+    };
     return (
         <div className="text-white border p-8">
             <div className="mb-8 border-b pb-4">
@@ -128,6 +167,7 @@ export default function OrderPage() {
                         value={deliveryInfo.deliveryReceiver}
                         onChange={handleInputChange}
                     />
+                    {/* {displayAddressInfo()} */}
                 </div>
             </div>
             <div className="mb-8 border-b pb-4">

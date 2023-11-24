@@ -6,15 +6,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     toggleItemSelection,
     toggleSelectAll,
-    setCartItemDetails,
+    setCartProductDetails,
     fetchCartData,
     setOrderDetails,
+    selectedItems,
 } from '../store/cartSlice';
 //use param사용해야하는지? cartId 어떻게 가져오는지 고민하기
 
 function ShoppingCart() {
     // 초기 장바구니 상태
-    const cartItemDetails = useSelector((state) => state.cart.cartItemDetails);
+    const cartProductDetails = useSelector((state) => state.cart.cartProductDetails) || [];
     const cartId = 25; // 가져오려는 장바구니 ID
     const selectedItems = useSelector((state) => state.cart.selectedItems);
     const selectAll = useSelector((state) => state.cart.selectAll);
@@ -31,26 +32,30 @@ function ShoppingCart() {
 
     //배열에 안담아진다..
     useEffect(() => {
-        console.log(cartItemDetails);
-    }, [cartItemDetails]);
-    useEffect(() => {
         dispatch(fetchCartData(cartId));
-        //console.log(cartItemDetails);
     }, []);
 
     const increaseQuantity = (productId) => {
         // API 요청을 보내어 서버에서 수량을 증가시킴
+        const accessToken = localStorage.getItem('accessToken');
+        const request = { productId };
         axios
-            .patch(`https://ka8d596e67406a.user-app.krampoline.com/api/carts/${cartId}/products/${productId}/increase`)
+            .patch(`https://ka8d596e67406a.user-app.krampoline.com/api/cart/increase`, request, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                },
+            })
             .then((response) => {
-                const updatedCart = cartItemDetails.map((item) => {
+                const updatedCart = cartProductDetails.content.map((item) => {
+                    // 수정된 부분
                     if (item.productId === productId) {
                         return { ...item, cartProductQuantity: item.cartProductQuantity + 1 };
                     }
 
                     return { ...item };
                 });
-                dispatch(setCartItemDetails(updatedCart));
+                dispatch(setCartProductDetails(updatedCart));
                 console.log(updatedCart);
             })
 
@@ -58,18 +63,27 @@ function ShoppingCart() {
                 alert('수량 증가 중 오류가 발생했습니다.');
             });
     };
-    if (Array.isArray(cartItemDetails)) {
-        console.log(cartItemDetails);
+    if (Array.isArray(cartProductDetails)) {
+        console.log(cartProductDetails);
     } else {
-        console.log(cartItemDetails);
+        console.log(cartProductDetails);
     }
+    console.log('cartProductDetails:', cartProductDetails);
+
     const decreaseQuantity = (productId) => {
         // API 요청을 보내어 서버에서 수량을 감소시킴
+        const accessToken = localStorage.getItem('accessToken');
+        const request = { productId };
         axios
-            .patch(`https://ka8d596e67406a.user-app.krampoline.com/api/carts/${cartId}/products/${productId}/decrease`)
+            .patch(`https://ka8d596e67406a.user-app.krampoline.com/api/cart/decrease`, request, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                },
+            })
             .then((response) => {
-                setCartItemDetails((prevcartItemDetails) => {
-                    const updatedCart = prevcartItemDetails.map((item) => {
+                setCartProductDetails((prevcartProductDetails) => {
+                    const updatedCart = prevcartProductDetails.map((item) => {
                         if (item.productId === productId && item.cartProductQuantity > 1) {
                             return { ...item, cartProductQuantity: item.cartProductQuantity - 1 };
                         }
@@ -102,8 +116,10 @@ function ShoppingCart() {
             const confirmDelete = window.confirm('선택한 상품을 삭제하시겠습니까?');
 
             if (confirmDelete) {
-                const updatedCart = cartItemDetails.filter((item) => !selectedItems.includes(item.productId));
-                dispatch(setCartItemDetails(updatedCart));
+                const updatedCart = cartProductDetails.content.filter(
+                    (item) => !selectedItems.includes(item.productId)
+                );
+                dispatch(setCartProductDetails(updatedCart));
                 // setSelectedItems([]); // 선택된 항목을 초기화
             }
         }
@@ -114,8 +130,8 @@ function ShoppingCart() {
     // 선택된 상품 합계 계산 함수
     const orderTotalPrice = () => {
         let total = 0;
-        if (cartItemDetails && Array.isArray(cartItemDetails)) {
-            for (const item of cartItemDetails) {
+        if (cartProductDetails && Array.isArray(cartProductDetails)) {
+            for (const item of cartProductDetails) {
                 if (selectedItems?.includes(item.productId)) {
                     total += item.productPrice * item.cartProductQuantity;
                 }
@@ -130,7 +146,9 @@ function ShoppingCart() {
             alert('주문할 상품을 선택해주세요.');
         } else {
             // 선택된 상품의 정보를 다음 페이지로 전달하고 이동
-            const selectedProducts = cartItemDetails.filter((item) => selectedItems.includes(item.productId));
+            const selectedProducts = cartProductDetails.content.filter((item) =>
+                selectedItems.includes(item.productId)
+            );
             navigate(`/order`, { state: { selectedProducts } });
         }
     };
@@ -151,16 +169,15 @@ function ShoppingCart() {
                     삭제하기
                 </button>
             </div>
-            {/* <ul className="border-solid border-t border-b border-black ml-3 bg-white text-black">
+            <ul className="border-solid border-t border-b border-black ml-3 bg-white text-black">
                 <li className="flex items-center mb-2 bg-white text-black">
                     <input type="checkbox" checked={selectAll} onChange={handleToggleSelectAll} className="mr-2 ml-0" />
                     <span onClick={handleToggleSelectAll} className="bg-white text-black">
                         전체 선택
                     </span>
                 </li>
-                {console.log('aa', cartItemDetails)}
-                {Array.isArray(cartItemDetails) &&
-                    cartItemDetails.map((item) => (
+                {Array.isArray(cartProductDetails.content) &&
+                    cartProductDetails.content.map((item) => (
                         <li key={item.productId} className="flex items-center mb-2 bg-white text-black">
                             <input
                                 type="checkbox"
@@ -203,7 +220,7 @@ function ShoppingCart() {
                             </div>
                         </li>
                     ))}
-            </ul> */}
+            </ul>
             <div className=" items-center mt-4  p-4 flex justify-end flex-col border border-solid border-black w-60 ml-auto bg-white text-black">
                 <div className="bg-white text-black">
                     <p className="mr-4 bg-white text-black ">선택된 상품 합계+{orderTotalPrice()} 원</p>
@@ -211,11 +228,11 @@ function ShoppingCart() {
                 </div>
                 <p className="mr-4 font-bold bg-white text-black">결제 예정 금액= {orderTotalPrice() + 3000}원</p>
 
-                {/* <button
+                <button
                     onClick={() => {
                         const isAnyCheckboxChecked =
-                            Array.isArray(cartItemDetails) &&
-                            cartItemDetails.some((item) => selectedItems.includes(item.productId));
+                            Array.isArray(cartProductDetails.content) &&
+                            cartProductDetails.content.some((item) => selectedItems.includes(item.productId));
                         if (isAnyCheckboxChecked) {
                             orderSelectedItems();
                         } else {
@@ -225,7 +242,7 @@ function ShoppingCart() {
                     className="bg-black text-white px-4 py-2"
                 >
                     주문하기
-                </button> */}
+                </button>
             </div>
             <Link to="art" className="bg-white text-black">
                 쇼핑 계속하기

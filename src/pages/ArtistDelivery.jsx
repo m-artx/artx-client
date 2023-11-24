@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import instance from '../store/customAxios';
 
-function OrderHistory() {
+function ArtistDelivery() {
     const [orderData, setOrderData] = useState([]);
 
     useEffect(() => {
@@ -48,4 +48,4 @@ function OrderHistory() {
     );
 }
 
-export default OrderHistory;
+export default ArtistDelivery;
