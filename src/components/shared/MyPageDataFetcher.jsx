@@ -1,54 +1,28 @@
-import React, { useEffect, useState } from 'react';
+// MyPageDataFetcher.js
 import customAxios from '../../store/customAxios';
 
-const MyPageDataFetcher = ({fetchedData}) => {
-    const [myPageData, setMyPageData] = useState(null);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const fetchMyPageData = async () => {
-            
-            try {
-                const accessToken = localStorage.getItem('accessToken');
-                if (!accessToken) {
-                    console.log("No Fetch My Page Data access token");
-                    return;
-                }
-
-                const config = {
-                    headers: { 'Authorization': `Bearer ${accessToken}` }
-                };
-
-                const res = await customAxios.get(`/api/mypage`, config);
-                if (res.data) {
-                    setMyPageData(res.data);
-                    fetchedData(res.data); // Call the callback function with the data
-                }
-            } catch (error) {
-                console.error('Fetch My Page Data Error', error);
-                setError(error);
-            }
-            
-        };
-
-        fetchMyPageData();
-    }, [fetchedData]);
-
-    if (error) {
-        return <div>Error fetching data: {error.message}</div>;
+const MyPageDataFetcher = async () => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+        console.log("No Fetch My Page Data access token");
+        return null;
     }
 
-    if (!myPageData) {
-        return <div>Loading...</div>;
-    }
+    const config = {
+        headers: { 'Authorization': `Bearer ${accessToken}` }
+    };
 
-    return (
-        <div>
-            {/* Render your My Page data here */}
-            <h1>My Page Data</h1>
-            {/* Example: <p>{myPageData.someField}</p> */}
-        </div>
-    );
+    try {
+        const response = await customAxios.get(`/api/mypage`, config);
+        if (response.data) {
+            // Directly return the fetched data
+            return response.data;
+        }
+    } catch (error) {
+        console.error('Error fetching my page data', error);
+        // Handle the error appropriately
+        throw error;
+    }
 };
 
 export default MyPageDataFetcher;

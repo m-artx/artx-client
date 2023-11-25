@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useHistory, useNavigate } from 'react-router-dom';
 
+
 const AddressComponent = ({ updateShippingAddress }) => {
     const [isMounted, setIsMounted] = useState(true);
     const navigate = useNavigate();
+
     useEffect(() => {
         const loadDaumPostcodeScript = () => {
             const script = document.createElement('script');
@@ -13,22 +15,26 @@ const AddressComponent = ({ updateShippingAddress }) => {
             document.head.appendChild(script);
 
             script.onload = () => {
+
                 // 컴포넌트가 마운트된 상태에서만 이벤트 리스너 추가
                 if (isMounted) {
                     document.getElementById('zipcode').addEventListener('click', handleZipcodeClick);
                 }
+
             };
         };
 
         loadDaumPostcodeScript();
 
         return () => {
+
             // 컴포넌트가 언마운트될 때 isMounted 상태 변경
             setIsMounted(false);
 
             // 컴포넌트가 마운트된 상태에서만 이벤트 리스너 제거
         };
     }, [isMounted]);
+
 
     const handleZipcodeClick = () => {
         new window.daum.Postcode({
@@ -39,13 +45,17 @@ const AddressComponent = ({ updateShippingAddress }) => {
         }).open();
     };
 
+
     const handleSaveClick = async () => {
         const addressData = {
+
+
             name: document.getElementById('name').value,
             phoneNumber: document.getElementById('phoneNumber').value,
             zipcode: document.getElementById('zipcode').value,
             address: document.getElementById('address').value,
             address2: document.querySelector('input[name=address2]').value,
+
             if(isMounted) {
                 updateShippingAddress(addressData);
             },
@@ -69,6 +79,7 @@ const AddressComponent = ({ updateShippingAddress }) => {
         } catch (error) {
             console.error('Error adding shipping address:', error);
         }
+
     };
 
     return (
@@ -78,9 +89,11 @@ const AddressComponent = ({ updateShippingAddress }) => {
             <input type="text" id="zipcode" placeholder="우편번호" />
             <input type="text" id="address" placeholder="주소" readOnly />
             <input type="text" name="address2" placeholder="상세주소" />
+
             <Link to="/mypageaddress">
                 <button onClick={handleSaveClick}>저장하기</button>
             </Link>
+
         </div>
     );
 };

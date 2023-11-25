@@ -3,13 +3,11 @@ import { useNavigate, Link } from 'react-router-dom';
 import Dropdown from './Dropdown';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser, loginUser } from '../store/userSlice';
-import instance from '../instance/instance';
-
+import MyPageDataFetcher from './shared/MyPageDataFetcher';
 
 //로그인 후 유저롤이 USER일때, ARTIST일때, ADMIN일때 상단 메뉴가 다 달라야한다.
 //드롭다운 경로 수정하고 고투페이지 필요한지, navigate('/')
 //로그인이 되어있다면 로그인을 한 상태로 , 첫 로그인이라면 리덕스에 저장이 되고, 그상태에서 새로고침이라면...
-
 
 function Header() {
     const navigate = useNavigate();
@@ -17,46 +15,34 @@ function Header() {
     const { isLogin, userId, userRole } = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const localUsername = localStorage.getItem('username');
-    console.log('localUsername', localUsername);
-    console.log('userRole', userRole);
-    console.log('userId', userId);
-
-    //모든 요청에 instance해라 거기서 엑세스 토큰을 가지고있다!
-    //토큰확인을 항상 처리해야하는지?
-
-    async function fetchUserData() {
-        try {
-            // Here, you should use the token to authenticate the request
-            const token = localStorage.getItem('accessToken');
-            console.log('펫치유저데이터내부')
-            if (!token) {
-                console.error('토큰없음');
-                return;
-            }
-
-            const response = await instance.get(`/api/users/${userId}`);
-            const userInfo = response.data;
-            console.log('userInfo', userInfo);
-
-            dispatch(
-                loginUser({
-                    token: userInfo.accessToken.value, // Ensure this data structure aligns with your API response
-                    userId: userInfo.userId,
-                    userRole: userInfo.userRole,
-                }),
-            );
-
-        } catch (error) {
-            console.error('사용자정보검색오류', error);
-            // Optionally handle the error, e.g., dispatch a logout action if the token is invalid
-        }
-    }
 
     useEffect(() => {
-        if (isLogin) {
-           fetchUserData();
-        }
-    }, [isLogin]);
+        const fetchData = async () => {
+            try {
+                const data = await MyPageDataFetcher();
+                if (data) {
+                    const userInfo = data;
+                    // console.log('data', data);
+                    // console.log('userInfo', userInfo);
+                    dispatch(
+                        loginUser({
+                            userId: userInfo.userId,
+                            userRole: userInfo.userRole,
+                        })
+                    );
+                }
+            } catch (error) {
+                // Handle error
+                console.error('Failed to fetch data', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+
+        console.log('userId', userId);
+        console.log('userRole', userRole);
 
 
     const handleLogout = () => {

@@ -10,7 +10,6 @@ const userSlice = createSlice({
         user: null,
         isLogin: false,
         userId: null,
-        userRole: null,
     },
     reducers: {
         loginUser: (state, action) => {
