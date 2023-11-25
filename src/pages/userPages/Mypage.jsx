@@ -21,7 +21,6 @@ function MyPage() {
 
     console.log(isLogin, userRole);
 
-
     const goToPage = (path) => {
         //슬래시를 넣으면 절대경로가 됨, mypage/personal이 아니라 바로 personal로 연결은 아래처럼
         navigate('/' + path);
@@ -48,7 +47,7 @@ function MyPage() {
                 <button className=" bg-white text-black py-2 mt-4 border" onClick={() => goToPage('orderhistory')}>
                     주문/배송정보
                 </button>
-                <button className=" bg-white text-black py-2 mt-4 border" onClick={() => goToPage('addaddress')}>
+                <button className=" bg-white text-black py-2 mt-4 border" onClick={() => goToPage('mypageaddress')}>
                     배송지관리
                 </button>
                 <button className=" bg-white text-black py-2 mt-4 border" onClick={() => goToPage('porsonalQA')}>
