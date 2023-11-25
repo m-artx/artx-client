@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
-
-export default function ShippingInfo() {
+export default function MyPageAddress() {
     const [storedAddressInfo, setStoredAddressInfo] = useState(null);
 
     useEffect(() => {
-
         const fetchData = async () => {
             const accessToken = localStorage.getItem('accessToken');
             try {
@@ -84,7 +81,6 @@ export default function ShippingInfo() {
                             </li>
                         ))}
                     </ul>
-
                 </div>
             );
         } else {
@@ -97,9 +93,7 @@ export default function ShippingInfo() {
             <Link to="/addaddress" className="mb-4 block">
                 <h2 className="bg-white text-black">배송지 추가하기</h2>
             </Link>
-
             {renderAddressList()} {/* 주소 목록을 렌더링하는 함수 호출 */}
-
         </div>
     );
 }

@@ -31,7 +31,11 @@ function ArtistsPage() {
                     <Link to="/artistdelivery">
                         <li>배송관리</li>
                     </Link>
-                    <li>작가페이지 관리 및 공지</li>
+
+                    <Link to="/ArtistProfile">
+                        <li>작가페이지 관리 및 공지</li>
+                    </Link>
+
                     <li>커미션 안내 작성 및 커미션 현황</li>
                 </ul>
             </div>

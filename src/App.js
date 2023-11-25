@@ -49,6 +49,7 @@ import PersonalQA from './pages/myPages/PersonalQA';
 import Post from './components/shared/Post';
 import ArtistDelivery from './pages/ArtistDelivery';
 
+import MyPageAddress from './pages/MyPageAddress';
 
 
 function App() {
@@ -97,6 +98,9 @@ function App() {
                     {/* 개인정보관리 */}
                     <Route path="/personalinfo" element={<PersonalInfo />} />
                     <Route path="/customerPersonal" element={<CustomerPersonal />} />
+
+                    <Route path="/mypageaddress" element={<MyPageAddress />} />
+
                     {/* 문의경로 */}
                     <Route path="/porsonalQA" element={<PersonalQA />} />
                     <Route path="/porsonalQA/:postId" element={<Post />} />
