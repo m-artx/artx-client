@@ -49,6 +49,8 @@ import PersonalQA from './pages/myPages/PersonalQA';
 import Post from './components/shared/Post';
 import ArtistDelivery from './pages/ArtistDelivery';
 
+
+
 function App() {
     return (
         <div>

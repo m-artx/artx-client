@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import InputBox from '../../components/shared/InputBox';
 import Button1 from '../../components/shared/Button1';
 import customAxios from '../../store/customAxios';
-import Modal from '../../components/shared/Modal';
 
 //재영님이 메일은 문자열식?으로 반환되야한다고 한것같음
 

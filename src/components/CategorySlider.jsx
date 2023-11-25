@@ -8,19 +8,19 @@ function CategorySlider() {
    const [data, setData] = useState([]);
 
    useEffect(() => {
-      customAxios.get('/api/products/categories')
+      customAxios.get('/api/categories')
       .then((response) =>{
          setData(response.data);
-         console.log('카테고리슬라이더내부 리스폰스성공')
+         // console.log('카테고리슬라이더내부 리스폰스성공')
       })
       .catch((error) => {
          console.error('Error:',error);
-         console.log('카테고리슬라이더내부 에러')
+         // console.log('카테고리슬라이더내부 에러')
 
       })
    }, [])
 
-   console.log('카테고리이미지데이터' + data.length);
+   // console.log('카테고리이미지데이터' + data.length);
    const navigate = useNavigate();
 
    const goToCategory = (path) => {

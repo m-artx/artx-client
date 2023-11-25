@@ -1,21 +1,29 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'; //디스패치로 저장하고 셀렉터로 가져온다
-import instance from '../../instance/instance';
+import axiosInstance from '../../instance/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import customAxios from '../../store/customAxios';
-import axios from 'axios';
+import MyPageDataFetcher from '../../components/shared/MyPageDataFetcher';
 
-// 개인정보관리
-// 이미지를 저장하면 서버로 전송된다
-// 이미지를 보여줄때 서버에서 가져온다
-
-const Label = ({ text }) => {
-    return <label className="bg-white w-20 px-2 border-b">{text}</label>;
+const Label = ({ text, value }) => {
+    return (
+        <label className="bg-white w-20 px-2 border-b" value={value}>
+            {text}
+        </label>
+    );
 };
-const Input = ({ type }) => {
-    return <input className=" bg-white w-[150px] focus:outline-none px-4 border-b" type={type}></input>;
+const Input = ({ type, value, onChange, disable }) => {
+    return (
+        <input
+            className=" bg-white w-[150px] focus:outline-none px-4 border-b"
+            type={type}
+            value={value}
+            onChange={onChange}
+            disable={disable}
+        ></input>
+    );
 };
 const Button = ({ text }) => {
     return <button className=" bg-white w-13 px-4 mx-4 border italic rounded-sm hover:bg-gray-800 ">{text}</button>;
@@ -25,78 +33,100 @@ const Div = ({ children }) => {
     return <div className=" pl-10 flex justyfy-start h-6 m-4 bg-white">{children}</div>;
 };
 
-function PersonalInfo() {
-    const localUsername = localStorage.getItem('username');
-    const userInfo = useSelector((state) => state.user);
-    const navigate = useNavigate();
-    // const profileImage = instance.post(`/api/users/{${userInfo.userId}}/image`)
-    const fileInputRef = useRef(null);
+  //내정보변경일단보류
+    // const handleButtonClick = async(newText) => {
+    //     try {
+    //         const response = await axiosInstance.post('/update-endpoint', { newText });
+    //         console.log('Server updated with new text:', response.data);
+    //     } catch (error) {
+    //         console.error('Error updating server:', error);
+    //     }
+    // }
 
-    const [imageUrl, setImageUrl] = useState(
-        'https://mblogthumb-phinf.pstatic.net/MjAyMDExMDFfMTgy/MDAxNjA0MjI4ODc1NDMw.Ex906Mv9nnPEZGCh4SREknadZvzMO8LyDzGOHMKPdwAg.ZAmE6pU5lhEdeOUsPdxg8-gOuZrq_ipJ5VhqaViubI4g.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_%ED%95%98%EB%8A%98%EC%83%89.jpg?type=w800'
-    );
+
+// 펑션시작
+// 이미지만따로받아오면되는데 팻치데이터로 전체데이터가 유즈이펙트로다받아와져서 좀 비효율적임
+
+function PersonalInfo() {
+    const navigate = useNavigate();
+    const fileInputRef = useRef(null);
+    const [userData, setUserData] = useState({});
+    //유저데이터가 바뀌면 유즈이펙트 다시실행. 이미지를 다시가져오기위함
+    const [fetchTrigger, setFetchTrigger] = useState(0);
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await MyPageDataFetcher();
+                if (data) {                    
+                    setUserData(data);
+                } else {
+                    console.log('유저데이터 팻치이상, no error');
+
+                }
+            } catch (error) {
+                // Handle error
+                console.error('유저데이터 팻치이상', error);
+            }
+        };
+
+        fetchData();
+    }, [fetchTrigger]);
+
+ 
+
+    //리액트 useState 내에서 연산자를 직접사용할수 없다. 외부에서 계산한 뒤 이를 인수로 전달해야한다.
 
     const handleImageClick = () => {
         fileInputRef.current.click();
     };
+
+
+  
 
     // 이미지 저장
     const handleFileChange = async (e) => {
         const selectedFile = e.target.files[0];
         if (selectedFile) {
             const formData = new FormData();
-            formData.append('file', selectedFile); // 'file' is the key expected by your API
-
+            formData.append('file', selectedFile);
+            console.log('클릭함수, 변경전이미지', userData.userProfileImage);
             try {
-                const token = localStorage.getItem('accessToken');
-                if (!token) {
-                    console.error('No token found');
-                    return;
+                const res = await axiosInstance.post(`/api/mypage/image`, formData);
+                if (res) {
+                    console.log('이미지 서버저장성공', res);                  
+                    setFetchTrigger(prev => !prev);
+                    setUserData(res);//값을 바로받는모양이다 그래서 res.data를 하면 오류가남
+
+                } else {
+                    console.log('핸들파일함수 서버이상, no error');
+                    // if (res.status === 200) {
+                    //     console.log('Image upload successful');
+                    // } else {
+                    //     console.error('Unexpected response structure:', res);
+                    // }
                 }
-
-                const config = {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        'Content-Type': 'multipart/form-data', // This might be necessary depending on your server setup
-                    },
-                };
-
-                const res = await customAxios.post(`/api/mypage/image`, formData, config);
-                console.log('res', res.data);
-                // setImageUrl(res.data.image); 
             } catch (error) {
-                console.error('Error uploading image', error);
+                console.error('핸들파일함수 서버이상', error);
             }
         }
     };
+    
+ //이미지가 없으면 기본 프로필사진을 넣어주는 코드
+ const defaultImage =
+ 'https://mblogthumb-phinf.pstatic.net/MjAyMDExMDFfMTgy/MDAxNjA0MjI4ODc1NDMw.Ex906Mv9nnPEZGCh4SREknadZvzMO8LyDzGOHMKPdwAg.ZAmE6pU5lhEdeOUsPdxg8-gOuZrq_ipJ5VhqaViubI4g.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_%ED%95%98%EB%8A%98%EC%83%89.jpg?type=w800';
+const imageUrl = `${userData.userProfileImage}`|| defaultImage;
 
-    //저장된 이미지가 자동으로 안불러와지는거같아서 불러오는 파일을 만들어버림
-    const fetchProfileInfo = async () => {
-        try {
-            const token = localStorage.getItem('accessToken');
-            if (!token) {
-                console.error('No token found');
-                return;
-            }
+    
 
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            };
-
-            const res = await customAxios.get(`/api/mypage`, config);
-            console.log('겟res',res.data)
-            setImageUrl('https://ka8d596e67406a.user-app.krampoline.com/api/images/051f678b-6d3b-4b7d-9fa7-15ce5c74a965_6.jpg'); // Adjust based on actual response structure
-        } catch (error) {
-            console.error('Error fetching profile', error);
-        }
+    //화면 글자변경 함수
+    const handleTextChange = (e, field) => {
+        setUserData({ ...userData, [field]: e.target.value });
     };
 
-    useEffect(() => {
-        fetchProfileInfo();
-    }, []); // Run on component mount
 
+    
     return (
         <div className="bg-white text-black w-[1000px] flex justify-center pb-20">
             <div className="w-[440px] bg-white">
@@ -123,26 +153,24 @@ function PersonalInfo() {
                 <div className="bg-white ml-6">
                     <Div>
                         <Label text="아이디" />
-                        <Input type="text" />
-                    </Div>
-                    <Div>
-                        <Label text="이름" />
-                        <Input type="text" />
-                        <Button text="변경" />
+                        {/* <Input type="text" disable value={userData.username || ''} /> */}
+                        <div type="text" className=" bg-white w-[150px] focus:outline-none px-4 border-b">
+                            {userData.username || ''}
+                        </div>
                     </Div>
                     <Div>
                         <Label text="이메일" />
-                        <Input type="text" />
+                        <Input type="text" value={userData.userEmail || ''} onChange={handleTextChange} />
                         <Button text="변경" />
                     </Div>
                     <Div>
                         <Label text="닉네임" />
-                        <Input type="text" />
+                        <Input type="text" value={userData.userNickname || ''} onChange={handleTextChange} />
                         <Button text="변경" />
                     </Div>
                     <Div>
                         <Label text="전화번호" />
-                        <Input type="text" />
+                        <Input type="text" value={userData.userPhoneNumber || ''} onChange={handleTextChange} />
                         <Button text="변경" />
                     </Div>
                 </div>
@@ -155,8 +183,13 @@ function PersonalInfo() {
                         <textarea
                             type="text"
                             className="w-[230px] focus:outline-none px-2 border-b resize-none bg-white"
+                            value={userData.userIntroduction || ''} //내용없으면 빈문자열처리
+                            onChange={(e) => handleTextChange(e, 'userIntroduction')}
                         ></textarea>
-                        <Button text="변경" />
+                        <Button
+                            text="변경"
+                            // onClick={handleSaveChanges}
+                        />
                     </Div>
                 </div>
             </div>
