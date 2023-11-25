@@ -69,7 +69,7 @@ function MyPage() {
                 <button className=" bg-white text-black py-2 mt-4 border" onClick={openPasswordModal}>
                     비밀번호 변경
                 </button>
-                {isPasswordModalOpen && <PasswordChangerModal isOpen={isPasswordModalOpen} onClose={() => closePasswordModal(false)} />}
+                {isPasswordModalOpen && <PasswordChangerModal className="w-1/2" isOpen={isPasswordModalOpen} onClose={() => closePasswordModal(false)} />}
 
                 <button className=" bg-white text-black py-2 mt-4 border" onClick={() => goToPage('orderhistory')}>
                     주문/배송정보

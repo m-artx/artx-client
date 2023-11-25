@@ -16,7 +16,7 @@ import axios from 'axios';
 //인스턴스만듬
 const instance = axios.create({
     baseURL: REACT_APP_ARTX_BASE_URL,
-    withCredentials: false, //
+    withCredentials: false,
 });
 
 function accessToken() {
