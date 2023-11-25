@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import instance from '../store/customAxios';
 
-function OrderHistory() {
+function ArtistDelivery() {
     const [orderData, setOrderData] = useState([]);
 
     useEffect(() => {
@@ -34,7 +34,7 @@ function OrderHistory() {
                     const orderDetails = order[orderDate];
 
                     return (
-                        <li key={orderDetails.orderId} className="bg-white text-white">
+                        <li key={orderDetails.orderId} className="bg-white text-black">
                             <span className="font-bold">{orderDetails.username}</span>
                             <div>
                                 <p>주문일자: {orderDetails.orderCreatedAt}</p>
@@ -48,4 +48,4 @@ function OrderHistory() {
     );
 }
 
-export default OrderHistory;
+export default ArtistDelivery;

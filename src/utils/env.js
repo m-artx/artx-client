@@ -6,7 +6,7 @@ export const REACT_APP_ARTX_BASE_URL = 'https://ka8d596e67406a.user-app.krampoli
 //  export const  REACT_APP_ARTX_BASE_URL = "http://64.110.89.251:8081/api/"
 //  export const  REACT_APP_ARTX_BASE_URL = "https://api.github.com/users/"
 
-
+export const REACT_APP_CHANNEL_TALK_KEY = 'b1185398-74c5-4825-9926-8dadd57b29df'
 // 카테고리별 크램폴린 api
 // https://ka8d596e67406a.user-app.krampoline.com/api/products?category=PAINT 
 // 카테고리만해도되고 제목에 해도 되고 타입은 유저&작가명 이런식

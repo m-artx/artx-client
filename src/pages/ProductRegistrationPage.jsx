@@ -5,17 +5,16 @@ import { faFile } from '@fortawesome/free-solid-svg-icons';
 
 function ProductRegistrationPage() {
     const [request, setRequest] = useState({
-        userId: 'dd877036-b45e-4e13-8563-e985ab8cd9b2',
-        productCategory: 'PAINT',
+        productCategory: '1',
         productTitle: '',
         productDescription: '',
-        productQuantity: 0,
-        productPrice: 0,
+        productStockQuantity: '',
+        productPrice: '',
+        productImages: [], // 변경된 부분
     });
     const [files, setFiles] = useState([]);
-    const [uploadedFiles, setUploadedFiles] = useState([]);
+    const [uploadedProduct, setUploadedProduct] = useState(null);
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [inputValue, setInputValue] = useState('');
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -25,45 +24,62 @@ function ProductRegistrationPage() {
         }));
     };
 
-    const handleFileChange = (e) => {
+    const handleFileChange = async (e) => {
         const selectedFiles = e.target.files;
-        setFiles((prevFiles) => [...prevFiles, ...selectedFiles]);
+
+        // 여기서 파일 선택 이벤트가 발생할 때 바로 서버에 요청을 보내도록 처리
+        await uploadImages(selectedFiles);
     };
 
-    const addProduct = (e) => {
+    const uploadImages = async (selectedFiles) => {
+        for (let i = 0; i < selectedFiles.length; i++) {
+            const formData = new FormData();
+            formData.append('file', selectedFiles[i]);
+            const accessToken = localStorage.getItem('accessToken');
+            try {
+                const response = await axios.post(
+                    `https://ka8d596e67406a.user-app.krampoline.com/api/permission-request/image`,
+                    formData,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    }
+                );
+
+                const imageUrl = response.data;
+
+                console.log(imageUrl, '?');
+                setFiles([...files, imageUrl]);
+            } catch (error) {
+                console.error('Error uploading image:', error);
+            }
+        }
+    };
+
+    const addProduct = async (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
-        for (let i = 0; i < files.length; i++) {
-            formData.append('files', files[i]);
+        request.productImages = files;
+
+        const accessToken = localStorage.getItem('accessToken');
+        try {
+            const response = await axios.post(
+                'https://ka8d596e67406a.user-app.krampoline.com/api/artist/products',
+                request,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+            console.log(response);
+            // setUploadedFiles(response.data.files);
+        } catch (error) {
+            console.log(error);
         }
-
-        const requestJson = JSON.stringify({
-            userId: request.userId,
-            productCategory: request.productCategory,
-            productTitle: request.productTitle,
-            productDescription: request.productDescription,
-            productStockQuantity: request.productQuantity,
-            productPrice: request.productPrice,
-        });
-
-        const requestBlob = new Blob([requestJson], { type: 'application/json' });
-        formData.append('request', requestBlob);
-
-        axios
-            .post('https://ka8d596e67406a.user-app.krampoline.com/api/artist/products', formData, {
-                headers: {
-                    Authorization: 'Bearer YOUR_ACCESS_TOKEN',
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
-            .then((response) => {
-                console.log(response);
-                setUploadedFiles(response.data.files);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
     };
 
     const nextSlide = () => {
@@ -81,7 +97,6 @@ function ProductRegistrationPage() {
                 <form onSubmit={addProduct}>
                     <div>
                         <div className="mb-4">
-                            <label className="text-sm font-medium mb-2 block">파일 미리보기:</label>
                             <div className="flex space-x-2">
                                 <div className="flex items-center">
                                     <label
@@ -93,7 +108,7 @@ function ProductRegistrationPage() {
                                     <input
                                         type="file"
                                         id="file"
-                                        name="file"
+                                        name="files"
                                         accept=".png, .jpg, .jpeg"
                                         onChange={handleFileChange}
                                         className="hidden"
@@ -103,10 +118,10 @@ function ProductRegistrationPage() {
                                 {files.length > 0 &&
                                     files
                                         .slice(currentSlide * 3, currentSlide * 3 + 3)
-                                        .map((file, index) => (
+                                        .map((url, index) => (
                                             <img
                                                 key={index}
-                                                src={URL.createObjectURL(file)}
+                                                src={url}
                                                 alt={`File Preview ${index}`}
                                                 className="flex-shrink-0 w-1/3 h-32 object-cover rounded"
                                             />
@@ -156,9 +171,9 @@ function ProductRegistrationPage() {
                         <label className="text-sm font-medium mb-2 block">수량:</label>
                         <input
                             type="number"
-                            name="productQuantity"
+                            name="productStockQuantity"
                             onChange={handleInputChange}
-                            value={request.productQuantity}
+                            value={request.productStockQuantity}
                             className="w-full py-2 px-4 bg-white border rounded text-black focus:outline-none focus:border-black"
                         />
                     </div>
@@ -173,14 +188,10 @@ function ProductRegistrationPage() {
                         />
                     </div>
 
-                    {uploadedFiles.length > 0 && (
+                    {uploadedProduct && (
                         <div className="mb-4">
-                            <label className="text-sm font-medium mb-2 block">업로드된 파일 목록:</label>
-                            <ul>
-                                {uploadedFiles.map((file, index) => (
-                                    <li key={index}>{file.name}</li>
-                                ))}
-                            </ul>
+                            <label className="text-sm font-medium mb-2 block">업로드된 작품 정보:</label>
+                            <p>{uploadedProduct.message}</p>
                         </div>
                     )}
 

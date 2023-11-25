@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 import axios from 'axios';
-import { setDeliveryDetail } from '../store/cartSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 // 제품 상세페이지
 // api 컴포넌트 사용해서 바꿔보자
 
@@ -12,16 +11,20 @@ function ProductDetailPage() {
     const [productData, setProductData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const cartId = 25;
-    const dispatch = useDispatch();
-    const deliveryDetail = useSelector((state) => state.cart.deliveryDetail);
+    // const dispatch = useDispatch();
+    const orderDeliveryDetail = useSelector((state) => state.cart.orderDeliveryDetail);
 
     useEffect(() => {
         async function fetchData() {
+            const accessToken = localStorage.getItem('accessToken');
             setIsLoading(true); // 데이터 로딩 시작
             try {
-                const response = await axios.get(
-                    `http://ka8d596e67406a.user-app.krampoline.com/api/products/${productId}`
-                );
+                const response = await axios.get(`https://ka8d596e67406a.user-app.krampoline.com/api/orders`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
                 const prodData = response.data;
                 console.log(prodData);
 
@@ -54,28 +57,31 @@ function ProductDetailPage() {
 
     const handleAddToCart = async (e) => {
         e.preventDefault(); // 기본 폼 제출 동작 방지
+        const accessToken = localStorage.getItem('accessToken');
+        const productIdToAdd = productData.productId; // 실제로 카트에 추가할 상품의 ID
+
         try {
             // 상품을 카트에 추가하는 요청을 보냅니다.
             await axios.post(
-                `https://ka8d596e67406a.user-app.krampoline.com/api/carts/${cartId}/products/${productId}`,
+                `https://ka8d596e67406a.user-app.krampoline.com/api/cart`,
                 {
-                    cartId: 25,
-                    productId: productData.productId,
+                    productId: productId,
                 },
                 {
-                    withCredentials: false,
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                    },
                 }
             );
 
             // 성공 시 메시지를 표시하거나 다른 작업을 수행할 수 있습니다.
-
             alert('상품이 카트에 추가되었습니다.');
         } catch (error) {
             console.error('Error adding product to cart:', error);
             // 실패 시에 대한 처리를 추가할 수 있습니다.
         }
     };
-
     // 제품 이미지가 배열이 아닐 경우를 대비해 배열로 변환합니다.
     const ensuredImages = Array.isArray(productData.productImages)
         ? productData.productImages
@@ -99,23 +105,33 @@ function ProductDetailPage() {
 
     const handlePay = () => {
         // 결제 정보 구성
+        const accessToken = localStorage.getItem('accessToken');
         const orderData = {
-            userId: '29efc8ca-d618-44bd-b67b-29ede70ce3c9',
-            orderDetails: [
+            orderProductDetails: [
                 {
-                    productId: productData.productId,
-                    productQuantity: 1, // 주문 수량, 원하는 수량으로 변경 가능
+                    productId: productId,
+                    productQuantity: 1, // 주문 수량을 1로 설정하거나 필요에 따라 조절
                 },
             ],
-            deliveryDetail,
+            orderDeliveryDetail: {
+                deliveryId: 'das',
+                deliveryReceiver: 'das',
+                deliveryReceiverPhoneNumber: 'sad',
+                deliveryReceiverAddress: 'asd',
+                deliveryReceiverAddressDetail: 'asd',
+                deliveryTrackingNumber: 'da',
+                deliveryFee: 0,
+                deliveryStatus: 'DELIVERY_CREATED',
+            },
         };
 
         axios
             .post(`https://ka8d596e67406a.user-app.krampoline.com/api/orders`, orderData, {
                 headers: {
+                    Authorization: `Bearer ${accessToken}`,
                     'Content-Type': 'application/json',
-                    accept: '*/*',
                 },
+                withCredentials: false,
             })
             .then((response) => {
                 console.log('주문 성공:', response.data);
@@ -123,11 +139,12 @@ function ProductDetailPage() {
             })
             .catch((error) => {
                 console.error('주문 실패:', error);
+                console.error('에러 응답:', error.response); // 에러 응답 출력
 
                 // 실패 시에도 API에 요청을 보낼 수 있도록 여기서 추가적인 API 호출을 수행
                 // 예시: 실패 정보를 서버에 기록하는 API 호출
                 axios
-                    .post('https://example.com/api/log-order-failure', {
+                    .post('https://example.com/api/orders', {
                         error: error.message,
                         orderData,
                     })
@@ -140,7 +157,7 @@ function ProductDetailPage() {
 
                 // 여기서 페이지 이동 코드를 추가
                 // 예시: 실패 페이지로 이동
-                window.location.href = '/kakaofail';
+                // window.location.href = '/kakaofail';
             });
     };
     return (
