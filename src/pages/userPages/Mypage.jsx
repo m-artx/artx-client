@@ -29,6 +29,7 @@ function MyPage() {
     const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
     const [isSignOutModalOpen, setIsSignOutModalOpen] = useState(false);
 
+
     //모달 오픈클로즈 함수를 하나로 쓰면 한 버튼을 클릭하면 두개가 다 열린다.
     //패스워드초기화 모달
     const openPasswordModal = () => {
@@ -74,7 +75,7 @@ function MyPage() {
                 <button className=" bg-white text-black py-2 mt-4 border" onClick={() => goToPage('orderhistory')}>
                     주문/배송정보
                 </button>
-                <button className=" bg-white text-black py-2 mt-4 border" onClick={() => goToPage('addaddress')}>
+                <button className=" bg-white text-black py-2 mt-4 border" onClick={() => goToPage('mypageaddress')}>
                     배송지관리
                 </button>
                 <button className=" bg-white text-black py-2 mt-4 border" onClick={() => goToPage('porsonalQA')}>

@@ -55,7 +55,9 @@ function ShoppingCart() {
 
                     return { ...item };
                 });
-                dispatch(setCartProductDetails(updatedCart));
+
+                dispatch(fetchCartData(cartId)); // 장바구니 데이터를 업데이트
+
                 console.log(updatedCart);
             })
 
@@ -93,6 +95,7 @@ function ShoppingCart() {
                     console.log(updatedCart);
                     return updatedCart;
                 });
+                dispatch(fetchCartData(cartId)); // 장바구니 데이터를 업데이트
             })
             .catch((error) => {
                 alert('수량 감소 중 오류가 발생했습니다.');

@@ -1,6 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Link, useHistory, useNavigate } from 'react-router-dom';
 
-const AddressComponent = () => {
+
+const AddressComponent = ({ updateShippingAddress }) => {
+    const [isMounted, setIsMounted] = useState(true);
+
+    const navigate = useNavigate();
+
     useEffect(() => {
         const loadDaumPostcodeScript = () => {
             const script = document.createElement('script');
@@ -9,16 +16,26 @@ const AddressComponent = () => {
             document.head.appendChild(script);
 
             script.onload = () => {
-                document.getElementById('zipcode').addEventListener('click', handleZipcodeClick);
+
+                // 컴포넌트가 마운트된 상태에서만 이벤트 리스너 추가
+                if (isMounted) {
+                    document.getElementById('zipcode').addEventListener('click', handleZipcodeClick);
+                }
+
             };
         };
 
         loadDaumPostcodeScript();
 
         return () => {
-            document.getElementById('zipcode').removeEventListener('click', handleZipcodeClick);
+
+            // 컴포넌트가 언마운트될 때 isMounted 상태 변경
+            setIsMounted(false);
+
+            // 컴포넌트가 마운트된 상태에서만 이벤트 리스너 제거
         };
-    }, []);
+    }, [isMounted]);
+
 
     const handleZipcodeClick = () => {
         new window.daum.Postcode({
@@ -29,21 +46,42 @@ const AddressComponent = () => {
         }).open();
     };
 
-    const handleSaveClick = () => {
-        // 주소 정보를 로컬 스토리지에 저장
-        const addressInfo = {
+
+    const handleSaveClick = async () => {
+        const addressData = {
+
             name: document.getElementById('name').value,
             phoneNumber: document.getElementById('phoneNumber').value,
             zipcode: document.getElementById('zipcode').value,
             address: document.getElementById('address').value,
             address2: document.querySelector('input[name=address2]').value,
+
         };
 
-        localStorage.setItem('addressInfo', JSON.stringify(addressInfo));
-        // 추가되었습니다라는 알림 창 표시
-        window.alert('주소가 추가되었습니다');
-        window.location.href = '/shippinginfo'; // 여기에 이동하고 싶은 경로를 적
-        console.log(addressInfo);
+        const accessToken = localStorage.getItem('accessToken');
+
+        try {
+            // 주소를 저장하고 배송지를 추가하는 API 호출
+
+            const response = await axios.post(
+                `https://ka8d596e67406a.user-app.krampoline.com/api/mypage/addresses`,
+                addressData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+
+
+            // API 호출이 성공한 경우, 상위 컴포넌트로 주소 정보를 전달
+            updateShippingAddress(addressData);
+            // 페이지 이동
+        } catch (error) {
+            console.error('Error adding shipping address:', error);
+        }
+        window.location.href = '/mypageaddress';
     };
 
     return (
@@ -53,7 +91,10 @@ const AddressComponent = () => {
             <input type="text" id="zipcode" placeholder="우편번호" />
             <input type="text" id="address" placeholder="주소" readOnly />
             <input type="text" name="address2" placeholder="상세주소" />
-            <button onClick={handleSaveClick}>추가하기</button>
+
+
+            <button onClick={handleSaveClick}>저장하기</button>
+
         </div>
     );
 };

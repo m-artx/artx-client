@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFile } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight, faArrowsLeftRight, faFile } from '@fortawesome/free-solid-svg-icons';
 
 function ProductRegistrationPage() {
     const [request, setRequest] = useState({
@@ -135,14 +135,14 @@ function ProductRegistrationPage() {
                                     onClick={prevSlide}
                                     className="flex-shrink-0 px-2 py-1 bg-black text-white rounded-l"
                                 >
-                                    이전
+                                    <FontAwesomeIcon icon={faArrowLeft} style={{ color: '#ffffff' }} />
                                 </button>
                                 <button
                                     type="button" // 버튼의 타입을 button으로 변경
                                     onClick={nextSlide}
                                     className="flex-shrink-0 px-2 py-1 bg-black text-white rounded-r"
                                 >
-                                    다음
+                                    <FontAwesomeIcon icon={faArrowRight} style={{ color: '#ffffff' }} />
                                 </button>
                             </div>
                         )}

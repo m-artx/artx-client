@@ -54,6 +54,7 @@ import PersonalQA from './pages/myPages/PersonalQA';
 import Post from './components/shared/Post';
 import ArtistDelivery from './pages/ArtistDelivery';
 
+import MyPageAddress from './pages/MyPageAddress';
 
 
 
@@ -86,7 +87,7 @@ function App() {
                     <Route path="/customer" element={<CustomerCenter />} />
                     {/* 작가관련 페이지 */}
                     <Route path="/ArtistRegistration" element={<ArtistRegistrationPage />} />
-                    <Route path="/ArtistProfile" element={<ArtistProfilePage />} />
+                    <Route path="/artistprofile" element={<ArtistProfilePage />} />
                     <Route path="/Artist" element={<ArtistsPage />} />
                     <Route path="/inquirymanagement" element={<InquiryManagement />} />
                     <Route path="/inquiry" element={<InquiryFormPage />} />
@@ -110,6 +111,9 @@ function App() {
                     {/* 개인정보관리 */}
                     <Route path="/personalinfo" element={<PersonalInfo />} />
                     <Route path="/customerPersonal" element={<CustomerPersonal />} />
+
+                    <Route path="/mypageaddress" element={<MyPageAddress />} />
+
                     {/* 문의경로 */}
                     <Route path="/porsonalQA" element={<PersonalQA />} />
                     <Route path="/porsonalQA/:postId" element={<Post />} />
