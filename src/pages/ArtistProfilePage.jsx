@@ -3,7 +3,9 @@ import dummyForBoard from './dummyForBoard';
 
 const ArtistProfilePage = () => {
     // 작가 정보를 받아오는 API 호출 등을 추가하세요
+
     const posts = dummyForBoard();
+
 
     return (
         <div className="bg-black min-h-screen flex items-center justify-center text-white">
@@ -16,6 +18,7 @@ const ArtistProfilePage = () => {
                 </div>
                 <h3 className="text-xl font-semibold mb-2">작가 이름</h3>
                 <p className="text-gray-500 mb-4">작가 소개 내용...</p>
+
 
                 {/* 작가의 기본 정보, 커미션 관련 링크, 문의하기 등 */}
                 <div className="mb-4">
@@ -46,6 +49,7 @@ const ArtistProfilePage = () => {
                         ))}
                     </ul>
                 </div>
+
             </div>
         </div>
     );

@@ -11,6 +11,7 @@ function ProductList() {
     let { productCategoryType } = useParams();
     let apiUrl;
 
+
     const navigate = useNavigate();
     const [data, setData] = useState([]);
 
@@ -73,6 +74,7 @@ function ProductList() {
         navigate(`/productdetail/${id}`);
     };
 
+
     return (
         <div className="w-screen border max-w-[1300px] border-blue-600 flex flex-col ">
             <div className="text-center">
@@ -85,7 +87,9 @@ function ProductList() {
                                 src={item.productRepresentativeImage}
                                 alt={`Product ${item.productName}`}
                                 className="border rounded-md object-cover"
+
                                 onClick={() => goToProductDetail(item.productId)}
+
                             />
                             <div className="flex justify-around">
                                 <p>{item.productTitle}</p>

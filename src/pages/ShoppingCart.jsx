@@ -55,7 +55,9 @@ function ShoppingCart() {
 
                     return { ...item };
                 });
+
                 dispatch(fetchCartData(cartId)); // 장바구니 데이터를 업데이트
+
                 console.log(updatedCart);
             })
 

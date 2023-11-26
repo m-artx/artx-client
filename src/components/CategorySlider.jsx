@@ -6,6 +6,7 @@ import customAxios from '../store/customAxios';
 function CategorySlider() {
     const [data, setData] = useState([]);
 
+
     useEffect(() => {
         customAxios
             .get('/api/categories')
@@ -19,6 +20,7 @@ function CategorySlider() {
             });
     }, []);
 
+
     console.log('카테고리이미지데이터' + data.length);
     const navigate = useNavigate();
 
@@ -26,6 +28,7 @@ function CategorySlider() {
         const url = `/productslist/${path}`;
         navigate(url);
     };
+
 
     return (
         <div className="flex justify-center flex-center w-[80%]">

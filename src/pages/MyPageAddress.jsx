@@ -7,6 +7,7 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 export default function MyPageAddress() {
     const [storedAddressInfo, setStoredAddressInfo] = useState(null);
 
+
     // 주소 목록을 불러오는 함수
     const fetchAddressInfo = async () => {
         const accessToken = localStorage.getItem('accessToken');
@@ -33,6 +34,7 @@ export default function MyPageAddress() {
     useEffect(() => {
         // 컴포넌트가 처음 마운트될 때 주소 목록을 불러옴
         fetchAddressInfo();
+
     }, []); // 빈 의존성 배열로 한 번만 실행되도록 설정
 
     // 주소 삭제 함수
@@ -48,10 +50,12 @@ export default function MyPageAddress() {
                     Authorization: `Bearer ${accessToken}`,
                     'Content-Type': 'application/json',
                 },
+
             });
 
             // 주소 삭제 후, 주소 목록 다시 불러오기
             fetchAddressInfo();
+
         } catch (error) {
             console.error('주소를 삭제하는 중 에러 발생:', error);
         }

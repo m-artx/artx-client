@@ -10,10 +10,10 @@ import { MdCheckCircle, MdCancel } from 'react-icons/md'; // 필요한 아이콘
 // error: 인풋 필드에 대한 에러 메시지 (유효성 검사 에러 등).
 // placeholder
 // onDuplicateCheck 중복 체크 함수 넣기
-// isDuplicateChecking 중복 체크 결과값이 '완료'라면 글씨만 파란색으로, '중복확인'이라면 파란색 border로 바꿔준다
+// isDuplicateChecking 중복 체크 결과값이 '완료'라면 글씨만 파란색으로, 아니라면 파란색 border로 바꿔준다
 
 function InputBox({ label, name, type, value, onChange, error, placeholder, onDuplicateCheck, isDuplicateChecking }) {
-    const errorMessageStyle = error === '완료' ? 'text-blue-500' : 'text-red-300';
+    const errorMessageStyle = error === '완료' ? 'text-blue-500' : 'text-red-500';
 
     return (
         <div className="mb- bg-white w-[300px]">
@@ -33,18 +33,20 @@ function InputBox({ label, name, type, value, onChange, error, placeholder, onDu
                     autoComplete="new-password" // 경고해제용
                 />
                 {/* 중복체크박스 부분 */}
-                <div className="relative ml-2">
-                    {onDuplicateCheck && (
+                {/* 듀플리케잇부분이 있다면 그 뒤를 실행 */}
+
+                {onDuplicateCheck && (
+                    <div className="relative">
                         <button
-                        className={`absolute top-[-10px] right-5 w-14 text-xs rounded ${
-                            isDuplicateChecking === '완료' ? 'text-blue-600' : 'text-white bg-blue-600'
-                        }`}
-                        onClick={() => onDuplicateCheck(name)} // 여기를 수정
-                    >
-                        {isDuplicateChecking === '완료' ? '완료' : '중복확인'}{' '}
-                    </button>
-                    )}
-                </div>
+                            className={`absolute top-[-10px] right-3 w-14 text-xs rounded ${
+                                isDuplicateChecking === '완료' ? 'text-blue-600' : 'text-white bg-blue-600'
+                            }`}
+                            onClick={() => onDuplicateCheck(name)} // 여기를 수정
+                        >
+                            {isDuplicateChecking === '완료' ? '완료' : '중복확인'}{' '}
+                        </button>
+                    </div>
+                )}
             </div>
             {/* 에러메시지 표시 */}
             {error && <p className={`bg-white ${errorMessageStyle} text-xs mt-1 px-2`}>{error}</p>}{' '}

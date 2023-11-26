@@ -11,7 +11,9 @@ const ArtistRegistrationPage = () => {
         title: '', // 기존 작가 번호 필드
         content: '',
         permissionImages: '',
+
         role: 'ARTIST', // 새로운 휴대폰 번호 필드 추가
+
 
         // 추가적인 필드들을 필요에 따라 추가하세요
     });
@@ -25,7 +27,9 @@ const ArtistRegistrationPage = () => {
             title: formData.title,
             content: formData.content,
             permissionImages: files,
+
             role: 'ARTIST',
+
         };
         console.log('3');
 

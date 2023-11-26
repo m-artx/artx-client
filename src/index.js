@@ -11,6 +11,10 @@ import { REACT_APP_CHANNEL_TALK_KEY } from './utils/env';
 
 export * from "./utils/env";
 
+
+
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const pk = REACT_APP_CHANNEL_TALK_KEY

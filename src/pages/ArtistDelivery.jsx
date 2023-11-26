@@ -26,7 +26,9 @@ function ArtistDelivery() {
 
     return (
         <div className="bg-white text-black w-screen">
+
             <h1 className="flex justify-center text-5xl bg-white text-black">배송관리</h1>
+
 
             <ul>
                 {orderData.map((order) => {
@@ -34,11 +36,13 @@ function ArtistDelivery() {
                     const orderDetails = order[orderDate];
 
                     return (
+
                         <li key={orderDetails.orderId} className="bg-white text-black border border-gray-300 p-4 my-2">
                             <span className="font-bold text-black">{orderDetails.username}</span>
                             <div className="mt-2">
                                 <p className="text-gray-600 bg-white">주문일자: {orderDetails.orderCreatedAt}</p>
                                 <p className="text-lg font-semibold bg-white">{orderDetails.orderTotalAmount}원</p>
+
                             </div>
                         </li>
                     );
