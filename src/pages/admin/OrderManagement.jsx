@@ -110,7 +110,7 @@ const OrderManagement = () => {
                             <div className="flex justify-center items-center text-2xl font-bold border rounded-full w-20 h-20">
                                 {allShipments.orderSuccessCounts}
                             </div>
-                            <div>배송완료</div>
+                            <div>배송완료</div>  
                         </div>
                     </div>
                 </div>
