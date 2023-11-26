@@ -65,19 +65,19 @@ export default function MyPageAddress() {
     const renderAddressList = () => {
         if (storedAddressInfo && storedAddressInfo.addresses && storedAddressInfo.addresses.length > 0) {
             return (
-                <div>
-                    <h3 className="mb-2">배송지 목록</h3>
+                <div className='w-screen pl-10 pr-10'>
                     <ul>
                         {storedAddressInfo.addresses.map((address) => (
-                            <li key={address.addressId}>
-                                <p>주소: {address.address}</p>
-                                <p>상세주소: {address.addressDetail}</p>
+                            <li className='mb-10' key={address.addressId}>
+                                <p>{address.address}</p>
+                                <p className='mb-4'>{address.addressDetail}</p>
                                 <button onClick={() => deleteAddress(address.addressId)}>
                                     <FontAwesomeIcon icon={faTrashCan} />
                                 </button>
                             </li>
                         ))}
                     </ul>
+
                 </div>
             );
         } else {
@@ -86,9 +86,9 @@ export default function MyPageAddress() {
     };
 
     return (
-        <div className="bg-black text-white p-4">
+        <div className=" pl-10 pr-10  text-white p-4">
             <Link to="/addaddress" className="mb-4 block">
-                <h2 className="bg-white text-black">배송지 추가하기</h2>
+                <h2 style={{textAlign: 'center'}} className="text-white pb-4 border-b border-solid hover:bg-white-100">배송지 추가하기</h2>
             </Link>
             {renderAddressList()} {/* 주소 목록을 렌더링하는 함수 호출 */}
         </div>

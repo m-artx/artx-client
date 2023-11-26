@@ -10,12 +10,14 @@
 * {
     min-height: 0;
     min-width: 0;
-    background: black;
+    background: #141414;
 }
 
 body {
     display: flex;
     justify-content: center;
+    padding-bottom: 30vh;
+
 }
 
 /* 헤더 버튼용 css */
@@ -34,7 +36,6 @@ body {
     /* overflow: hidden;
     border-radius: 25px; */    
 }
-
 
 
 
@@ -106,4 +107,11 @@ body {
 .small-slide {
     /* width: 100px; 원하는 작은 크기 설정 */
     /* height: 100px; 원하는 작은 크기 설정 */
+}
+*::-webkit-scrollbar  {
+    display: none;
+}
+
+*.link {
+    cursor: pointer;
 }

@@ -160,7 +160,7 @@ function ShoppingCart() {
     // if (error) return <div>Error: {error.message}</div>;
 
     return (
-        <div className=" bg-white text-black p-4  w-[1300px]">
+        <div className=" bg-white text-black p-4 w-[1300px]">
             <h1 className="text-4xl font-bold mb-4 flex justify-center bg-white text-black ">장바구니</h1>
             <div className="flex flex-col bg-white">
                 <span className="flex justify-center bg-white text-black">장바구니-주문서 작성 및 결제-주문 확인</span>
@@ -206,16 +206,17 @@ function ShoppingCart() {
                                             수량: {item.cartProductQuantity}
                                         </p>
                                         <button
+                                            className='mr-4'
                                             onClick={() => increaseQuantity(item.productId)}
                                             disabled={item.productQuantity === 0} // 품절인 경우 비활성화
                                         >
-                                            수량증가
+                                            추가
                                         </button>
                                         <button
                                             onClick={() => decreaseQuantity(item.productId)}
                                             disabled={item.productQuantity === 0} // 품절인 경우 비활성화
                                         >
-                                            수량감소
+                                            삭제
                                         </button>
                                     </>
                                 )}

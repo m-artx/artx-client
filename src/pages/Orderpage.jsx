@@ -60,9 +60,9 @@ export default function OrderPage() {
                 },
             })
             .then((response) => {
-                console.log('주문 성공:', response.data);
-                window.open(response.data.next_redirect_pc_url, '_blank');
-                const orderCompleteUrl = '/success'; // 주문 완료 페이지의 경로
+                // console.log('주문 성공:', response.data);
+                window.open(response.data.next_redirect_pc_url, '_target');
+                const orderCompleteUrl = '/'; // 주문 완료 페이지의 경로
                 window.location.href = orderCompleteUrl;
             })
             .catch((error) => {
@@ -112,18 +112,18 @@ export default function OrderPage() {
         }
     };
     return (
-        <div className="text-white border p-8">
+        <div className="text-white p-8">
+            {/* <div className="mb-8 border-b pb-4"> */}
+                {/* <h3 className="text-2xl font-semibold mb-2">주문 고객</h3> */}
+                {/* <div className="flex flex-col space-y-2"> */}
+                    {/* <span>주문 고객 이름 {localStorage.getItem} </span> */}
+                    {/* <span>주문 고객 전화번호 </span> */}
+                {/* </div> */}
+            {/* </div> */}
             <div className="mb-8 border-b pb-4">
-                <h3 className="text-2xl font-semibold mb-2">주문 고객</h3>
-                <div className="flex flex-col space-y-2">
-                    <span>주문 고객 이름: </span>
-                    <span>주문 고객 전화번호: </span>
-                </div>
-            </div>
-            <div className="mb-8 border-b pb-4">
-                <h3 className="text-2xl font-semibold mb-2">배송 정보</h3>
+                <h3 className="text-2xl font-semibold mb-5 border-b border-solid">배송 정보</h3>
                 <Link to="/shippingInfo">
-                    <button className="bg-white text-black border border-solid border-black">배송지 변경</button>
+                    <button className="text-white mb-10">배송지 변경</button>
                 </Link>
                 <div className="flex flex-col space-y-2 ">
                     <input
@@ -161,7 +161,7 @@ export default function OrderPage() {
                     {/* {displayAddressInfo()} */}
                 </div>
             </div>
-            <div className="mb-8 border-b pb-4">
+            <div className="mb-8 pb-4">
                 <h2 className="text-3xl font-semibold mb-4">주문 작품 정보</h2>
                 {selectedProducts.map((product) => (
                     <div key={product.productId} className="flex items-center mb-4 space-x-4 text-white">

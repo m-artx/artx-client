@@ -75,14 +75,14 @@ function SlideMain() {
         <div id="slider1" className="  p-4 text-white justify-center">
             <Slider {...settings}>
                 {data.map((image, idx) => (
-                    <div key={idx}>
+                    <div  key={idx}>
                         <img
                             src={image.productRepresentativeImage}
                             alt={`ProductId ${image.productId}`}
                             className=" object-fit h-[230px] w-[180px] pr-2 rounded-3xl"
                             onClick={() => goToProductDetail(image.productId)}
                         />
-                        {image.샤싣}
+                        {image.title}
                     </div>
                 ))}
             </Slider>

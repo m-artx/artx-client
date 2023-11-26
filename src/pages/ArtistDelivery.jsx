@@ -40,9 +40,9 @@ function ArtistDelivery() {
                         <li key={orderDetails.orderId} className="bg-white text-black border border-gray-300 p-4 my-2">
                             <span className="font-bold text-black">{orderDetails.username}</span>
                             <div className="mt-2">
-                                <p className="text-gray-600 bg-white">주문일자: {orderDetails.orderCreatedAt}</p>
+                                <p className="text-gray-600 bg-white">주문 날짜: {orderDetails.orderCreatedAt}</p>
+                                <p className="text-gray-600 bg-white">주문 상태: {orderDetails.orderStatus}</p>
                                 <p className="text-lg font-semibold bg-white">{orderDetails.orderTotalAmount}원</p>
-
                             </div>
                         </li>
                     );

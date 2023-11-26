@@ -91,8 +91,8 @@ function ProductRegistrationPage() {
     };
 
     return (
-        <div className="bg-black min-h-screen flex items-center justify-center">
-            <div className="p-6 rounded-lg shadow-lg max-w-md w-full text-white">
+        <div className="min-h-screen flex items-center justify-center">
+            <div className="p-6 max-w-md w-full text-white">
                 <h2 className="text-3xl font-semibold mb-4 text-center">작품 등록 페이지</h2>
                 <form onSubmit={addProduct}>
                     <div>
@@ -133,7 +133,7 @@ function ProductRegistrationPage() {
                                 <button
                                     type="button" // 버튼의 타입을 button으로 변경
                                     onClick={prevSlide}
-                                    className="flex-shrink-0 px-2 py-1 bg-black text-white rounded-l"
+                                    className="flex-shrink-0 px-2 py-1 text-white rounded-l"
                                 >
                                     <FontAwesomeIcon icon={faArrowLeft} style={{ color: '#ffffff' }} />
                                 </button>
@@ -149,7 +149,7 @@ function ProductRegistrationPage() {
                     </div>
 
                     <div className="mb-4">
-                        <label className="text-sm font-medium mb-2 block">작품명:</label>
+                        <label className="text-sm font-medium mb-2 block">작품명</label>
                         <input
                             value={request.productTitle}
                             onChange={handleInputChange}
@@ -159,7 +159,7 @@ function ProductRegistrationPage() {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="text-sm font-medium mb-2 block">작품 설명:</label>
+                        <label className="text-sm font-medium mb-2 block">작품 설명</label>
                         <textarea
                             value={request.productDescription}
                             onChange={handleInputChange}
@@ -168,7 +168,7 @@ function ProductRegistrationPage() {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="text-sm font-medium mb-2 block">수량:</label>
+                        <label className="text-sm font-medium mb-2 block">수량</label>
                         <input
                             type="number"
                             name="productStockQuantity"
@@ -177,8 +177,8 @@ function ProductRegistrationPage() {
                             className="w-full py-2 px-4 bg-white border rounded text-black focus:outline-none focus:border-black"
                         />
                     </div>
-                    <div className="mb-4">
-                        <label className="text-sm font-medium mb-2 block">가격:</label>
+                    <div className="mb-10">
+                        <label className="text-sm font-medium mb-2 block">가격</label>
                         <input
                             type="number"
                             name="productPrice"
@@ -197,7 +197,7 @@ function ProductRegistrationPage() {
 
                     <button
                         type="submit"
-                        className="border border-white w-full py-2 bg-black text-white font-medium rounded transition duration-300 hover:bg-white hover:text-black"
+                        className="border w-full py-2 text-white font-medium rounded transition duration-300 hover:bg-white hover:text-black"
                     >
                         작품 등록
                     </button>

@@ -69,26 +69,26 @@ function MainPage() {
 
                 <div className=" w-[1300px] ">
                     <div className="  pt-2 flex flex-col justify-center items-center  ">
-                        <p className="p-3">인기작가:新作</p>
+                        <p className="p-3">인기 작가:新作</p>
                         <div className="w-[80%] h-[310px]">
                             <Slider1 />
                         </div>
                     </div>
                     <div className="  pt-2 flex flex-col justify-center items-center ">
-                        <p className="p-3 pb-8">주목할만한:作</p>
+                        <p className="p-3 pb-8">신인 작가:作</p>
                         <div className="w-[80%]  h-[310px]">
                             <Slider2 />
                         </div>
                     </div>
                     <div className=" w-[1300px]">
                         <div className="flex flex-col w-full items-center pt-2  yellow-purple-800 overflow-hidden h-[500px]  ">
-                            <p className="pt-10 pb-8">제품별 둘러보기</p>
+                            <p className="pt-10 pb-8">둘러보기</p>
                             <div className="flex w-screen justify-center mb-10 text-sm">
                                 <CategorySlider />
                             </div>
                         </div>
                     </div>
-                    <div className="pt-20 text-center text-xs p-2">ARTX studio</div>
+                    <div className="pt-20 text-center text-xs p-2 pb-5">ARTX Studio®</div>
                 </div>
             </div>
         </div>

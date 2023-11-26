@@ -18,7 +18,7 @@ const ArtistRegistrationPage = () => {
    };
 
    return (
-      <div className="bg-black min-h-screen flex items-center justify-center text-white">
+      <div className="min-h-screen flex items-center justify-center text-white">
          <div className="p-6 rounded-lg shadow-lg max-w-md w-full">
             <h2 className="text-3xl font-semibold mb-4 text-center">작가 등록</h2>
             <form onSubmit={handleSubmit}>
@@ -59,7 +59,7 @@ const ArtistRegistrationPage = () => {
                {/* 추가적인 등록 필드들을 필요에 따라 추가하세요 */}
                <button
                   type="submit"
-                  className="border border-white w-full py-2 bg-black text-white font-medium rounded transition duration-300 hover:bg-white hover:text-black"
+                  className="border border-white w-full py-2 text-white font-medium rounded transition duration-300 hover:bg-white hover:text-black"
                >
                   작가 등록
                </button>

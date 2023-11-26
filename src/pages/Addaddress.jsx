@@ -85,14 +85,12 @@ const AddressComponent = ({ updateShippingAddress }) => {
     };
 
     return (
-        <div>
-            <input type="text" id="name" placeholder="이름" />
-            <input type="text" id="phoneNumber" placeholder="전화번호" />
-            <input type="text" id="zipcode" placeholder="우편번호" />
-            <input type="text" id="address" placeholder="주소" readOnly />
-            <input type="text" name="address2" placeholder="상세주소" />
-
-
+        <div className='border-b border-solid mb-10 pb-2'>
+            <input className='mr-5' type="text" id="name" placeholder="이름" />
+            <input className='mr-5' type="text" id="phoneNumber" placeholder="전화번호" />
+            <input className='mr-5' type="text" id="zipcode" placeholder="우편번호" />
+            <input className='mr-5' type="text" id="address" placeholder="주소" readOnly />
+            <input className='mr-5' type="text" name="address2" placeholder="상세주소" />
             <button onClick={handleSaveClick}>저장하기</button>
 
         </div>

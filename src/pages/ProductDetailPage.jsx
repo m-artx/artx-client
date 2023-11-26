@@ -206,13 +206,13 @@ function ProductDetailPage() {
                                         Cart
                                     </button>
                                     <button
-                                        className="py-2.5 px-5 m-2  mb-0 text-sm text-gray-900 bg-yellow-200 rounded-lg   dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700"
+                                        className="py-2.5 px-5 m-2  mb-0 text-sm text-gray-900 bg-yellow-400 rounded-lg  dark:bg-yellow-400 dark:text-black-400 dark:border-gray-600 dark:hover:bg-gray-700 "
                                         onClick={handlePay}
                                     >
-                                        kakao pay
+                                        Kakao Pay
                                     </button>
                                     <p className="text-sm w-[300px]  text-center">
-                                        [product code:{productData.productId}]
+                                        {/* [product code:{productData.productId}] */}
                                     </p>
                                 </div>
                             </div>

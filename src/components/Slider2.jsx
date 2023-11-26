@@ -41,7 +41,7 @@ const Slider2 = () => {
         slidesToShow: 10,
         autoplay: true,
         autoplaySpeed: 0,
-        speed: 4000,
+        speed: 2000,
         cssEase: 'linear',
         infinite: true,
         focusOnSelect: false,

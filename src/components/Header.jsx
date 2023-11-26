@@ -70,15 +70,15 @@ function Header() {
         return (
             <div className="flex justify-center text-lg text-center w-[400px]  ">
                 <button className="" onClick={() => goToPage('/')}>
-                    홈 화면
+                    홈
                 </button>
 
                 <div
-                    className="px-9 relative flex justify-center items-center text-center" // relative 위치를 준 이유는 Dropdown을 버튼에 대해 절대적 위치로 배치하기 위함입니다
+                    className=" px-9 relative flex justify-center items-center text-center" // relative 위치를 준 이유는 Dropdown을 버튼에 대해 절대적 위치로 배치하기 위함입니다
                     onMouseEnter={showDropdown}
                     onMouseLeave={hideDropdown}
                 >
-                    <button onClick={() => goToPage('productslist/ALL')} className=" pl-4">
+                    <button  onClick={() => goToPage('productslist/ALL')} className=" pl-4">
                         작품관
                     </button>
                     {dropdownVisibility && (

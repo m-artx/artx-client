@@ -71,7 +71,7 @@ export default function ShippingInfo() {
     const renderAddressList = () => {
         if (storedAddressInfo && storedAddressInfo.addresses && storedAddressInfo.addresses.length > 0) {
             return (
-                <div>
+                <div className='w-screen pl-10 pr-10'>
                     <h3 className="mb-2">배송지 목록</h3>
                     <ul>
                         {storedAddressInfo.addresses.map((address) => (
@@ -93,13 +93,12 @@ export default function ShippingInfo() {
     };
 
     return (
-        <div className="bg-black text-white p-4">
+        <div className=" pl-10 pr-10  text-white p-4">
             <Link to="/addaddress" className="mb-4 block">
-                <h2 className="bg-white text-black">배송지 추가하기</h2>
+                <h2 style={{textAlign: 'center'}} className="text-white pb-4 border-b border-solid hover:bg-white-100">배송지 추가하기</h2>
             </Link>
 
             {renderAddressList()} {/* 주소 목록을 렌더링하는 함수 호출 */}
-
         </div>
     );
 }

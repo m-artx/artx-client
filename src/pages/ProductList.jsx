@@ -47,6 +47,7 @@ function ProductList() {
         };
 
         fetchData();
+        setCurrentPage(1);
     }, [apiUrl]);
     // 페이지네이션용
     const itemsPerPage = 8; // 한페이지당 이미지숫자
@@ -71,7 +72,6 @@ function ProductList() {
         setCurrentPage((currentPage) => (currentPage > 1 ? currentPage - 1 : totalPages));
     };
 
-
     const pageNumbers = [];
 
     for (let i = 1; i <= totalPages; i++) {
@@ -90,6 +90,7 @@ function ProductList() {
         navigate(`/productdetail/${id}`);
     };
 
+
     return (
         <div className="w-screen  max-w-[1300px] -blue-600 flex flex-col ">
             <div className="text-center">
@@ -98,16 +99,17 @@ function ProductList() {
                 <section className=" -red-600 flex flex-wrap justify-center p-3">
                     {currentItems.map((item, index) => (
                         <div key={index} className=" w-[200px] h-[300px] flex flex-col m-8 mt-10 ">
-                            <img
-                                src={item.productRepresentativeImage}
-                                alt={`Product ${item.productName}`}
-                                className=" rounded-md object-cover [200px] h-[300px] "
-                                onClick={() => goToProductDetail(item.productId)}
-                            />
-                            <div className="flex justify-around border-b border-gray-700 py-2 mx-1">
-                                <p>{item.productTitle}</p>
-                                <p>{item.productPrice.toLocaleString()} </p>
-                            </div>
+                                
+                                <img
+                                    src={item.productRepresentativeImage}
+                                    alt={`Product ${item.productName}`}
+                                    className=" rounded-md object-cover [200px] h-[300px] "
+                                    onClick={() => goToProductDetail(item.productId)}
+                                />
+                                <div className="flex justify-around border-b border-gray-700 py-2 mx-1">
+                                    <p>{item.productTitle}</p>
+                                    <p>{item.productPrice.toLocaleString()} </p>
+                                </div>
                         </div>
                     ))}
                 </section>
