@@ -48,6 +48,21 @@ css는 테일윈드이다.
 (공지사항 목록 게시판, 등록과 삭제 버튼 구현)
 
     
+- api내용
+- 파일이름 .jsx
+- 세부사항
+- 주의사항
+1. 답변의 근거와 가정을 설명하세요. 선택한 사항을 설명하고 잠재적인 제한 사항이나 엣지 케이스를 설명하세요
+2. css는 테일윈드이다. 
+3. 제공된 API를 참고하여 코딩을 해라.
+4. 컴포넌트를 좀 더 세분화 하거나 따로 jsx파일로 분리를 하는게 좋은 경우 알려주도록 한다.
+5. 각각의 경로는 다음과 같아
+ <Route path="/artistmanagement" element={<ArtistManagement/>} />
+                    <Route path="/announcementmanagement" element={<AnnouncementManagement />} />
+                    <Route path="/ordermanagement" element={<OrderManagement/>} />
+                    <Route path="/shippingmanagement" element={<ShippingManagement />} />
+                    <Route path="/usermanagement" element={<UserManagement/>} />
+
 
 
 api내역

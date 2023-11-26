@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../instance/axiosInstance';
 
-//미완부분
-//유저롤 변경 후 post할 api가 있는지?
-
 const UserManagement = () => {
     const [users, setUsers] = useState([]);
     const [allUsers, setAllUsers] = useState([]); // 전체 사용자 목록을 저장하는 상태
@@ -12,102 +9,92 @@ const UserManagement = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [newUsersCount, setNewUsersCount] = useState(0);
     const [newArtistsCount, setNewArtistsCount] = useState(0);
-    const usersPerPage = 10; // Number of users per page
+    const usersPerPage = 5; // 페이지 당 사용자 수
 
+    //유저목록 가져오는 함수
     const fetchUsers = async () => {
         try {
             const response = await axiosInstance.get(`/api/admin/users`);
             const fetchedUsers = response.data.content;
+            console.log(fetchedUsers)
+            setAllUsers(fetchedUsers);
             setTotalPages(Math.ceil(fetchedUsers.length / usersPerPage));
-            filterAndPaginateUsers(fetchedUsers, searchTerm, 1);
+            filterAndPaginateUsers('', 1); // Display the first page of users
         } catch (error) {
             console.error('Error:', error);
         }
     };
 
-    const filterAndPaginateUsers = (users, searchTerm, page) => {
-        const filteredUsers = searchTerm
-            ? users.filter(user => user.username.toLowerCase().includes(searchTerm.toLowerCase()))
-            : users;
+    //유저목록 검색
+    const filterAndPaginateUsers = (term, page) => {
+        const filteredUsers = term
+            ? allUsers.filter((user) => user.username.toLowerCase().includes(term.toLowerCase()))
+            : allUsers;
         const startIndex = (page - 1) * usersPerPage;
         const paginatedUsers = filteredUsers.slice(startIndex, startIndex + usersPerPage);
+    
         setUsers(paginatedUsers);
+        setTotalPages(Math.ceil(filteredUsers.length / usersPerPage));
     };
 
-
-
-    // 사용자 목록 필터링 함수
-    const filterUsers = (users, page) => {
-        const filtered = searchTerm
-            ? users.filter((user) => user.username.toLowerCase().includes(searchTerm.toLowerCase()))
-            : users;
-        paginateUsers(filtered, page);
-        setTotalPages(Math.ceil(filtered.length / usersPerPage)); // Calculate total pages
-    };
-
-
-
+    //신규 사용자 업데이트
     const fetchNewUsersCount = () => {
         const today = new Date().toISOString().split('T')[0];
 
         axiosInstance
             .get(`/api/admin/statistics/orders/daily-user-count?date=${today}`)
             .then((response) => {
-                console.log(response.data); // 응답 확인을 위한 로그
                 setNewUsersCount(response.data.newUserCounts);
                 setNewArtistsCount(response.data.newArtistCounts);
-                filterUsers(); // Apply filter after setting all users
             })
             .catch((error) => {
                 console.error('Error:', error);
-                // 오류 발생 시 적절한 처리
             });
     };
 
-  useEffect(() => {
+    //최초 마운트시 자동으로 전체유저 화면에 띄움
+    useEffect(() => {
         fetchUsers();
-    }, []);
+    }, [] );
 
+    //검색창 누르면 유저목록을 다시가져옴
+    useEffect(() => {
+        if (searchTerm) {
+            filterAndPaginateUsers(searchTerm, 1);
+        } else {
+            // If search term is empty, show the first page of all users
+            filterAndPaginateUsers('', 1);
+        }
+    }, [searchTerm]); // Depend only on searchTerm
+    
+    //신규사용지 및 신규 아티스트 호출
     useEffect(() => {
         fetchNewUsersCount();
     }, []);
 
-     useEffect(() => {
-        fetchUsers(); // Refetch users when the search term changes
-    }, [searchTerm]);
-
-
-    // Paginate users
-    const paginateUsers = (users, page) => {
-        const startIndex = (page - 1) * usersPerPage;
-        const paginatedUsers = users.slice(startIndex, startIndex + usersPerPage);
-        setUsers(paginatedUsers);
-    };
-
-    // 인풋창함수
+    //검색필드 변경
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
     };
 
-    // 검색버튼 함수
+    //검색버튼 누르면 호출
     const handleSearch = () => {
-        // 검색 버튼을 누를 때만 필터링을 다시 실행
-        fetchUsers();
+        filterAndPaginateUsers(searchTerm, 1);
+        setCurrentPage(1); // Ensure currentPage is set back to 1 when searching
     };
+    
 
-    //변경사항 저장하기 함수
-    //api작업필요
+    //페이지네이션
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
-        filterUsers(allUsers, pageNumber); // Update displayed users based on page number
+        filterAndPaginateUsers(searchTerm, pageNumber);
     };
 
-    const handleRoleChange = (userId, newRole) => {
-        // 역할 변경 로직
-    };
-
+    //사용자 역할변경
+    const handleRoleChange = (userId, newRole) => {};
+    //저장버튼
     const handleSaveChanges = () => {
-        // 변경 사항 저장 로직
+        alert('저장이 완료되었습니다.')
     };
 
     return (
@@ -139,10 +126,10 @@ const UserManagement = () => {
                             placeholder="아이디로 검색"
                             value={searchTerm}
                             onChange={handleSearchChange} // Updated to use handleSearchChange
-                            className="border p-2 flex-grow mr-2"
+                            className="border-b border-t border-l p-2 flex-grow "
                         />
-                        <button onClick={handleSearch} className="border p-2">
-                            🔍
+                        <button onClick={handleSearch} className="border-b border-t border-r bg-gray-500 p-2">
+                            검색
                         </button>
                     </div>
                 </div>
@@ -153,12 +140,12 @@ const UserManagement = () => {
                     <div className="flex justify-evenly border py-2 pl-2 font-bold">
                         <span className="w-16 ">아이디</span>
                         <span className="w-16 ">닉네임</span>
-                        <spanc className="w-[150px] ">이메일</spanc>
+                        <span className="w-[150px] ">이메일</span>
                         <span className="w-20 ">현재상태</span>
                     </div>
                     <div className="border">
                         {users.map((user) => (
-                            <div key={user.id} className="flex justify-evenly border-b py-2">
+                            <div key={user.userId} className="flex justify-evenly border-b py-2">
                                 <span className="w-16 ">{user.username}</span>
                                 <span className="w-16 ">{user.userNickname}</span>
                                 <span className="w-[150px] ">{user.userEmail}</span>
