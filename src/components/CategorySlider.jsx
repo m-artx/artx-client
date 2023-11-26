@@ -6,7 +6,6 @@ import customAxios from '../store/customAxios';
 function CategorySlider() {
     const [data, setData] = useState([]);
 
-
     useEffect(() => {
         customAxios
             .get('/api/categories')
@@ -20,7 +19,6 @@ function CategorySlider() {
             });
     }, []);
 
-
     console.log('카테고리이미지데이터' + data.length);
     const navigate = useNavigate();
 
@@ -29,21 +27,35 @@ function CategorySlider() {
         navigate(url);
     };
 
+    const getImageUrl = (category) => {
+        switch (category) {
+            case 'ETC':
+                return 'https://ticketimage.interpark.com/EdailyNews/E_PS15040700439.jpg'; // Replace with your ART image path
+            case 'PAINT':
+                return 'https://dvqlxo2m2q99q.cloudfront.net/000_clients/698901/page/another-day-12x10-6-hr-12-8-23-b26fea.jpg'; // Replace with your PAINT image path
+            case 'CERAMIC':
+                return 'https://sellerocean.com/files/attach/images/181/462/876/005/afbc2ffa5589936a743fd1defb8584f8.jpg'; // Replace with your CERAMIC image path
+            default:
+                return category.productCategoryRepresentativeImage;
+        }
+    };
 
     return (
         <div className="flex justify-center flex-center w-[80%]">
             {data.map((item, idx) => (
-                <div key={idx} className="flex border py-4 px-10 ">
-                    <div className="">
+                <div key={idx} className="flex py-4 px-10 ">
+                    <div>
                         <img
-                            src={`${item.productCategoryRepresentativeImage}`}
-                            className="object-cover h-[200px] w-[200px] rounded-sm "
+                            src={getImageUrl(item.productCategory)}
+                            className="object-cover h-[250px] w-[250px] rounded-sm "
                             alt=""
-                            onClick={() => goToCategory(item.productCategoryType)}
+                            onClick={() => goToCategory(item.productCategory)}
                         />
-                        <div>
-                            <p>{item.productCategoryType}</p>
-                            <p>{item.productCategoryDescription}</p>
+                        <div className="flex items-center justify-center flex-col">
+                            <p className="text-center py-2">{item.productCategory}</p>
+                            <p className="w-[175px] text-center">
+                                {item.productCategoryDescription}
+                            </p>
                         </div>
                     </div>
                 </div>

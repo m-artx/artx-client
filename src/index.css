@@ -8,168 +8,102 @@
 @import '~slick-carousel/slick/slick-theme.css';
 
 * {
-   min-height: 0;
-   min-width: 0;
-   background: black;
+    min-height: 0;
+    min-width: 0;
+    background: black;
 }
 
 body {
-   display: flex;
-   justify-content: center;
-}
-
-.slick-slider {
-   height: auto;
+    display: flex;
+    justify-content: center;
 }
 
 /* 헤더 버튼용 css */
 .nav-link {
-   @apply text-sm text-center;
+    @apply text-sm text-center;
 }
+
+#slider1 .slick-list {
+    /* 부모 */
+    height: 270px;
+}
+
+#slider1 .slick-slide > div {
+    /* 자식 안에 div */
+    margin: 10px;
+    /* overflow: hidden;
+    border-radius: 25px; */    
+}
+
+
+
+
+
+/* //slick slide에는 overflow가 걸려 있어 */
+/* 
+#slider1 .slick-slider {
+    width: 100%;
+    background-color: transparent;
+    .slick-track {
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap;
+        height: 200px;
+        justify-content: center;
+    }
+    .slick-slide {
+        float: none;
+        display: inline-block;
+        vertical-align: middle;
+        padding: 0px 0px;
+        margin: 10px;
+        background-color: white;
+        transition: all 0.3s ease;
+        height: auto;
+        text-align: center;
+        &.slick-current,
+        &.slick-center {
+            background: linear-gradient(45deg, rgb(246, 146, 89), rgb(241, 105, 117));
+            padding: 30px 0px;
+            //margin: 50px 0px;
+        }
+    }
+} 
+
+
+
+ #slider1.slick-prev,
+#slider1.slick-next {
+    z-index: 10;
+    top: 0px;
+    background-color: transparent;
+}
+#slider1.slick-prev {
+    left: 10px;
+}
+#slider1.slick-next {
+    right: 10px;
+}
+
+.slick-slide {
+    padding-right: 20px;
+}  */
 
 .slick-slide > div {
-   /* display: grid; */
+    /* display: grid; */
 
-   /* height:100px; */
-   /* padding: 0px; */
+    /* height:100px; */
+    /* padding: 0px; */
 }
-
-.slick-slide > div:nth-child(1) {
-   /* margin-left: 0; */
-}
-
-.slick-list {
-   /* margin-right: -30px; */
-}
-
-/* SlideforMain.jsx */
-/* 슬라이드박스 조절 위한 css처리 */
-/*
-
-.slick-track{
-  height:auto;
-  display:flex;
-  justify-content:center;
-  align-items: center;
-}
-
-.slick-slider {
-  height: 150px;
-}
-
-.slide img {
-  border: 1px red solid;
-  height: 150px;
-  max-height: 200px;
-  margin: 0;
-  object-fit: cover;
-  border-radius: 1em;
-
-}
-
-
-.slide {
-  border: 1px yellow solid;
-  transfrom: scale(0.6);
-  transition: transform 300ms ease-in-out;
-  opacity: 0.2;
-}
-
-.adjacentSlide {
-  transform: scale(0.8);
-  opacity: 0.7;
-}
-
-.activeSlide {
-  transform: scale(1);
-  opacity: 1;
-  display:flex;
-  align-items:center;
-}
-
-
-
-
-.arrow svg {
-  transition: color 300ms;
-}
-.arrow svg:hover {
-  color: white;
-}
-
-
-
-/* .slick-slide > div {
-  display: grid;
-  place-items: center;
-  width: 80%;
-  margin-top: 50px;
-  margin: auto;
-  height: 500px;
-  padding: 0px;
-  background: red;
-} */
-
-/*  드루와 */
-
-/* .carousel {
-  padding: 5rem;
-  width: 100%;
-  margin: auto;
-}
-
-.slides {
-}
-
-.box {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  border-radius: 15px;
-  padding: 10px;
-}
-
-.slick-track.slick-track-less-than-slidesToShow {
-  margin: 0;
-}
-
-/* .slick-slider {
-} */
-
-/* .slick-tracl {
-  
-}
-
-.right {
-  right: -5%;
-  top: 0%;
-}
-
-.left {
-  left: -5%;
-  bottom: 0%;
-}
-.arrow {
-  font-size: 30px;
-  position: absolute;
-  curcer: pointer;
-  z-index: 10;
-}
-
-.slick-track{
-  height:auto;
-  display:flex;
-
-} */
 
 /* 중간 크기 슬라이드 스타일 */
 .medium-slide {
-   /* width: 200px; 원하는 중간 크기 설정 */
-   /* height: 200px; 원하는 중간 크기 설정 */
+    /* width: 200px; 원하는 중간 크기 설정 */
+    /* height: 200px; 원하는 중간 크기 설정 */
 }
 
 /* 작은 크기 슬라이드 스타일 */
 .small-slide {
-   /* width: 100px; 원하는 작은 크기 설정 */
-   /* height: 100px; 원하는 작은 크기 설정 */
+    /* width: 100px; 원하는 작은 크기 설정 */
+    /* height: 100px; 원하는 작은 크기 설정 */
 }

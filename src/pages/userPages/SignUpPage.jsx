@@ -292,7 +292,7 @@ export default function SignUpPage() {
     };
 
     return (
-        <div className="bg-white text-black justify-center items-center w-[1000px] ">
+        <div className="bg-white text-black justify-center items-center w-[1300px] ">
             <form
                 className="flex items-center flex-col h-auto p-4 bg-white shadow-md text-black "
                 onSubmit={handleSubmit}

@@ -5,7 +5,7 @@ import React from 'react';
 
 const Dropdown = (props) => {
   // return <article>{props.visibility && props.children} </article>;
-  return <article className="absolute flex justify-center text-center pt-5">{props.children}</article>;
+  return <article className="absolute flex justify-center text-center pt-8 ml-4">{props.children}</article>;
 
 };
 

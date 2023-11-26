@@ -70,6 +70,8 @@ function App() {
                     <Route path="/productpage" element={<ProductPage />} />
                     <Route path="/productdetail/:productId" element={<ProductDetailPage />} />
                     <Route path="/ProductRegistration" element={<ProductRegistrationPage />} />
+                    <Route path="/productslist/:productCategory" element={<ProductList />} />
+                    <Route path="/productslist/" element={<ProductList />} />
                     {/* 유저 페이지 */}
                     <Route path="/signup" element={<SignUpPage />} />
                     <Route path="/login" element={<LoginPage />} />
@@ -103,7 +105,6 @@ function App() {
                     <Route path="/usermanagement" element={<UserManagement/>} />
 
                     {/* 현재 사용하지 않는 페이지 */}
-                    <Route path="/productslist/:productCategoryType" element={<ProductList />} />
                     <Route path="/artx" element={<ArtxPage />} />
                     <Route path="/download" element={<DownloadPage />} />
                     <Route path="/test" element={<Test />} /> {/* 슬라이드 테스트. 임시. */}
