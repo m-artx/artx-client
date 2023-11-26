@@ -34,6 +34,11 @@ import ArtistsPage from './pages/ArtistsPage';
 
 //관리자용
 import AdminPage from './pages/AdminPage';
+import ArtistManagement from './pages/admin/ArtistManagement';
+import OrderManagement from './pages/admin/OrderManagement';
+import ShippingManagement from './pages/admin/ShippingManagement';
+import UserManagement from './pages/admin/UserManagement';
+import AnnouncementManagement from './pages/admin/AnnouncementManagement';
 
 //아직 사용하지 않는 페이지
 import DownloadPage from './pages/DownloadPage';
@@ -48,6 +53,7 @@ import PersonalInfo from './pages/myPages/PersonalInfo';
 import PersonalQA from './pages/myPages/PersonalQA';
 import Post from './components/shared/Post';
 import ArtistDelivery from './pages/ArtistDelivery';
+
 
 
 
@@ -88,6 +94,13 @@ function App() {
                     {/* 관리자 페이지 */}
                     <Route path="/admin" element={<AdminPage />} />
                     <Route path="/notice" element={<NoticePage />} />
+                    
+                    <Route path="/artistmanagement" element={<ArtistManagement/>} />
+                    <Route path="/announcementmanagement" element={<AnnouncementManagement />} />
+                    <Route path="/ordermanagement" element={<OrderManagement/>} />
+                    <Route path="/shippingmanagement" element={<ShippingManagement />} />
+                    <Route path="/usermanagement" element={<UserManagement/>} />
+
                     {/* 현재 사용하지 않는 페이지 */}
                     <Route path="/productslist/:productCategoryType" element={<ProductList />} />
                     <Route path="/artx" element={<ArtxPage />} />
@@ -100,6 +113,7 @@ function App() {
                     {/* 문의경로 */}
                     <Route path="/porsonalQA" element={<PersonalQA />} />
                     <Route path="/porsonalQA/:postId" element={<Post />} />
+                    
                 </Route>
             </Routes>
         </div>

@@ -1,16 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { MdCheckCircle, MdCancel } from 'react-icons/md'; // 필요한 아이콘을 import합니다.
-
-//  각종 정보 입력 Input으로 다음과 같은 props를 포함한다
-// label: 인풋 필드의 레이블 텍스트.
-// name: 인풋 필드의 이름.
-// type: 인풋 필드의 타입 (예: 'text', 'password', 'email' 등).
-// value: 인풋 필드의 현재 값.
-// onChange: 인풋 필드의 값이 변경될 때 호출되는 함수.
-// error: 인풋 필드에 대한 에러 메시지 (유효성 검사 에러 등).
-// placeholder
-// onDuplicateCheck 중복 체크 함수 넣기
-// isDuplicateChecking 중복 체크 결과값이 '완료'라면 글씨만 파란색으로, '중복확인'이라면 파란색 border로 바꿔준다
 
 function InputBox({ label, name, type, value, onChange, error, placeholder, onDuplicateCheck, isDuplicateChecking }) {
     const errorMessageStyle = error === '완료' ? 'text-blue-500' : 'text-red-300';

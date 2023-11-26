@@ -1,26 +1,36 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+
+
 
 function AdminPage() {
+    const navigate = useNavigate();
+
+    const goToPage = (path) => {
+        navigate('/' + path);
+    };
     return (
-        <div className="container mx-auto p-8">
-            <div className="mb-8 border-b border-gray-300 pb-4">
-                <h2 className="text-2xl font-bold mb-4">작가관리</h2>
-                {/* 작가 관리 컴포넌트 추가 */}
-            </div>
-            <div className="mb-8 border-b border-gray-300 pb-4">
-                <h2 className="text-2xl font-bold mb-4">메인화면 관리</h2>
-                {/* 메인화면 관리 컴포넌트 추가 */}
-            </div>
-            <div className="mb-8 border-b border-gray-300 pb-4">
-                <h2 className="text-2xl font-bold mb-4">공지사항 작성 및 관리</h2>
-                {/* 공지사항 작성 및 관리 컴포넌트 추가 */}
-            </div>
-            <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-4">기타 운영사항</h2>
-                {/* 기타 운영사항 컴포넌트 추가 */}
+        <div className="bg-white text-black shadow-lg w-[1000px] pb-20 flex flex-col">
+            <h1 className="text-center border text-3xl bg-white text-black">관리자센터</h1>
+            <div className="mb-4 bg-white w-[300px] text-black flex flex-col justify-center mx-auto">
+                <button className="bg-white text-black py-2 mt-4 border" onClick={() => goToPage('artistmanagement')}>
+                    작가전환관리
+                </button>
+                <button className="bg-white text-black py-2 mt-4 border" onClick={() => goToPage('ordermanagement')}>
+                    주문관리
+                </button>
+                <button className="bg-white text-black py-2 mt-4 border" onClick={() => goToPage('shippingmanagement')}>
+                    배송관리
+                </button>
+                <button className="bg-white text-black py-2 mt-4 border" onClick={() => goToPage('usermanagement')}>
+                    회원관리
+                </button>
+                <button className="bg-white text-black py-2 mt-4 border" onClick={() => goToPage('announcementmanagement')}>
+                    공지사항 관리
+                </button>
             </div>
         </div>
     );
 }
-
 export default AdminPage;
