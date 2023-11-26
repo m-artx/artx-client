@@ -81,7 +81,7 @@ function App() {
                     <Route path="/customer" element={<CustomerCenter />} />
                     {/* 작가관련 페이지 */}
                     <Route path="/ArtistRegistration" element={<ArtistRegistrationPage />} />
-                    <Route path="/ArtistProfile" element={<ArtistProfilePage />} />
+                    <Route path="/artistprofile" element={<ArtistProfilePage />} />
                     <Route path="/Artist" element={<ArtistsPage />} />
                     <Route path="/inquirymanagement" element={<InquiryManagement />} />
                     <Route path="/inquiry" element={<InquiryFormPage />} />

@@ -29,6 +29,7 @@ function MyPage() {
     const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
     const [isSignOutModalOpen, setIsSignOutModalOpen] = useState(false);
 
+
     //모달 오픈클로즈 함수를 하나로 쓰면 한 버튼을 클릭하면 두개가 다 열린다.
     //패스워드초기화 모달
     const openPasswordModal = () => {
@@ -44,6 +45,7 @@ function MyPage() {
     const closeSignOutModal = () => {
         setIsSignOutModalOpen(false);
     };
+
 
     const goToPage = (path) => {
         //슬래시를 넣으면 절대경로가 됨, mypage/personal이 아니라 바로 personal로 연결은 아래처럼

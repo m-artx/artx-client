@@ -1,42 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Search from '../components/shared/Search';
 import useApiLoader from '../instance/useApiLoader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+import instance from '../instance/instance';
 
 function ProductList() {
     let { productCategoryType } = useParams();
     let apiUrl;
+
+
     const navigate = useNavigate();
+    const [data, setData] = useState([]);
 
     // productCategoryType에 따라 apiUrl 변경
-    if (`productCategoryType === 'PAINT'`) {
+    if (productCategoryType === 'PAINT') {
         apiUrl = '/api/products?category=PAINT&type=USER';
     } else if (productCategoryType === 'CERAMIC') {
         apiUrl = '/api/products?category=CERAMIC&type=USER';
     } else if (productCategoryType === 'ETC') {
-        apiUrl = '/api/products?category=CERAMIC&type=USER';
+        apiUrl = '/api/products?category=ETC&type=USER';
     } else if (productCategoryType === 'ALL') {
         apiUrl = '/api/products?category=ALL&type=USER';
     }
 
-    // useApiLoader 사용하기
-    const { data: apiData, loading, error } = useApiLoader(apiUrl);
+    // 데이터 로딩 훅
+    // const { data: apiData, loading, error } = useApiLoader(apiUrl);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    `http://ka8d596e67406a.user-app.krampoline.com/api/products?category=${productCategoryType}&page=0&size=1`
+                );
+                setData(response.data.content);
+            } catch (error) {
+                console.error('API 호출 오류:', error);
+            }
+        };
+
+        fetchData();
+    }, [apiUrl]);
     // 페이지네이션용
     const itemsPerPage = 8; // 한페이지당 이미지숫자
     const [currentPage, setCurrentPage] = useState(1); // 현재페이지
 
-    // 데이터나누는부분
-    const totalPages = apiData ? Math.ceil(apiData.content.length / itemsPerPage) : 0;
+    // 데이터 나누는 부분
+    const totalPages = data ? Math.ceil(data.length / itemsPerPage) : 0;
 
-    // 인덱스계산부분
+    // 인덱스 계산부분
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
     // 인덱스 자름
-    const currentItems = apiData && apiData.content ? apiData.content.slice(indexOfFirstItem, indexOfLastItem) : [];
+    // const currentItems = data && data.content ? data.content.slice(indexOfFirstItem, indexOfLastItem) : [];
+    const currentItems = data ? data.slice(indexOfFirstItem, indexOfLastItem) : [];
 
     // 페이지 앞뒤버튼 함수들
     const nextPage = () => {
@@ -47,12 +67,13 @@ function ProductList() {
     };
 
     // 데이터 로딩상태 메시지
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error.message}</div>;
+    // if (loading) return <div>Loading...</div>;
+    // if (error) return <div>Error: {error.message}</div>;
 
-    const GoToProductDetail = (id) => {
+    const goToProductDetail = (id) => {
         navigate(`/productdetail/${id}`);
     };
+
 
     return (
         <div className="w-screen border max-w-[1300px] border-blue-600 flex flex-col ">
@@ -66,7 +87,9 @@ function ProductList() {
                                 src={item.productRepresentativeImage}
                                 alt={`Product ${item.productName}`}
                                 className="border rounded-md object-cover"
-                                onClick={() => GoToProductDetail(item.productId)}
+
+                                onClick={() => goToProductDetail(item.productId)}
+
                             />
                             <div className="flex justify-around">
                                 <p>{item.productTitle}</p>

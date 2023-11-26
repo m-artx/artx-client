@@ -5,17 +5,58 @@ const ArtistProfilePage = () => {
     // 작가 정보를 받아오는 API 호출 등을 추가하세요
     const posts = dummyForBoard();
 
-    return (
-        <div className="bg-black min-h-screen flex items-center justify-center text-white">
-            <div className="p-6 rounded-lg shadow-lg max-w-md w-full">
-                {/* 작가 정보를 표시하는 부분 */}
-                <h2 className="text-3xl font-semibold mb-4 text-center">작가 소개</h2>
-                <div className="mb-4">
-                    {/* 작가 이미지 */}
-                    <img src="작가이미지URL" alt="작가이름" className="w-full h-64 object-cover rounded" />
-                </div>
-                <h3 className="text-xl font-semibold mb-2">작가 이름</h3>
-                <p className="text-gray-500 mb-4">작가 소개 내용...</p>
+
+function dummyForBoard() {
+    const posts = [
+        {
+            postId: 0,
+            userId: 'dddd1',
+            title: 'Lorem Ipsum Post 1',
+            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            username: 'John Doe',
+            publicationDate: '2023-11-15',
+            commentsCount: 0,
+        },
+        {
+            postId: 2,
+            userId: 'dddd2',
+            title: 'Lorem Ipsum Post 2',
+            content: 'Nulla facilisi. Fusce ut nisi nec odio dapibus blandit.',
+            username: 'Jane Smith',
+            publicationDate: '2023-11-14',
+            commentsCount: 8,
+        },
+        // {
+        //     postId: 3,
+        //     userId: 'dddd1',
+        //     title: 'Lorem Ipsum Post 3',
+        //     content: 'Suspendisse potenti. In in urna a libero lacinia suscipit.',
+        //     username: 'David Johnson',
+        //     publicationDate: '2023-11-13',
+        //     commentsCount: 12,
+        // },
+        // {
+        //     postId: 4,
+        //     userId: 'dddd2',
+        //     title: 'Lorem Ipsum Post 4',
+        //     content: 'Nulla facilisi. Fusce ut nisi nec odio dapibus blandit.',
+        //     username: 'Jane Smith',
+        //     publicationDate: '2023-11-14',
+        //     commentsCount: 8,
+        // },
+        // {
+        //     postId: 5,
+        //     userId: 'dddd1',
+        //     title: 'Lorem Ipsum Post 5',
+        //     content: 'Suspendisse potenti. In in urna a libero lacinia suscipit.',
+        //     username: 'David Johnson',
+        //     publicationDate: '2023-11-13',
+        //     commentsCount: 12,
+        // },
+    ];
+    return posts;
+}
+
 
                 <div>
                     {/* 기본정보.. 채현님 와이어프레임 참고 */}

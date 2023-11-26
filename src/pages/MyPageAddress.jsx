@@ -7,34 +7,34 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 export default function MyPageAddress() {
     const [storedAddressInfo, setStoredAddressInfo] = useState(null);
 
+
+    // 주소 목록을 불러오는 함수
+    const fetchAddressInfo = async () => {
+        const accessToken = localStorage.getItem('accessToken');
+        try {
+            // API 호출
+            const response = await axios.get(`https://ka8d596e67406a.user-app.krampoline.com/api/mypage/addresses`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                },
+                addressId: 0,
+            });
+
+            // API 응답에서 주소 정보 추출
+            const addressInfo = response.data;
+
+            // 주소 정보를 상태에 설정
+            setStoredAddressInfo(addressInfo);
+        } catch (error) {
+            console.error('Error fetching address info:', error);
+        }
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            const accessToken = localStorage.getItem('accessToken');
-            try {
-                // API 호출
-                const response = await axios.get(
-                    `https://ka8d596e67406a.user-app.krampoline.com/api/mypage/addresses`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${accessToken}`,
-                            'Content-Type': 'application/json',
-                        },
-                        addressId: 0,
-                    }
-                );
+        // 컴포넌트가 처음 마운트될 때 주소 목록을 불러옴
+        fetchAddressInfo();
 
-                // API 응답에서 주소 정보 추출
-                const addressInfo = response.data;
-
-                // 주소 정보를 상태에 설정
-                setStoredAddressInfo(addressInfo);
-            } catch (error) {
-                console.error('Error fetching address info:', error);
-            }
-        };
-
-        // fetchData 함수 호출
-        fetchData();
     }, []); // 빈 의존성 배열로 한 번만 실행되도록 설정
 
     // 주소 삭제 함수
@@ -50,20 +50,17 @@ export default function MyPageAddress() {
                     Authorization: `Bearer ${accessToken}`,
                     'Content-Type': 'application/json',
                 },
-                //  params: {
-                //      addressId: addressId,
-                //  },
+
             });
 
-            // 주소 삭제 후, 상태 업데이트
-            setStoredAddressInfo((prevInfo) => ({
-                ...prevInfo,
-                addresses: prevInfo.addresses.filter((address) => address.addressId !== addressId),
-            }));
+            // 주소 삭제 후, 주소 목록 다시 불러오기
+            fetchAddressInfo();
+
         } catch (error) {
             console.error('주소를 삭제하는 중 에러 발생:', error);
         }
     };
+
     // 주소 목록을 렌더링하는 함수
     const renderAddressList = () => {
         if (storedAddressInfo && storedAddressInfo.addresses && storedAddressInfo.addresses.length > 0) {

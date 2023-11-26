@@ -43,7 +43,6 @@ function OrderHistory() {
                                 <p className="text-gray-600 bg-white">주문일자: {orderDetails.orderCreatedAt}</p>
                                 <p className="text-lg font-semibold bg-white">{orderDetails.orderTotalAmount}원</p>
 
-
                             </div>
                         </li>
                     );
