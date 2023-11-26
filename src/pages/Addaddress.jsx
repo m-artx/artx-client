@@ -4,6 +4,7 @@ import { Link, useHistory, useNavigate } from 'react-router-dom';
 
 const AddressComponent = ({ updateShippingAddress }) => {
     const [isMounted, setIsMounted] = useState(true);
+
     const navigate = useNavigate();
     useEffect(() => {
         const loadDaumPostcodeScript = () => {
@@ -46,13 +47,12 @@ const AddressComponent = ({ updateShippingAddress }) => {
             zipcode: document.getElementById('zipcode').value,
             address: document.getElementById('address').value,
             address2: document.querySelector('input[name=address2]').value,
-            if(isMounted) {
-                updateShippingAddress(addressData);
-            },
         };
+
         const accessToken = localStorage.getItem('accessToken');
+
         try {
-            // 여기에 주소를 저장하고 배송지를 추가하는 API 호출 코드를 추가합니다.
+            // 주소를 저장하고 배송지를 추가하는 API 호출
             const response = await axios.post(
                 `https://ka8d596e67406a.user-app.krampoline.com/api/mypage/addresses`,
                 addressData,
@@ -64,13 +64,14 @@ const AddressComponent = ({ updateShippingAddress }) => {
                 }
             );
 
-            // API 호출이 성공한 경우, 상위 컴포넌트로 주소 정보를 전달합니다.
+            // API 호출이 성공한 경우, 상위 컴포넌트로 주소 정보를 전달
             updateShippingAddress(addressData);
+            // 페이지 이동
         } catch (error) {
             console.error('Error adding shipping address:', error);
         }
+        window.location.href = '/mypageaddress';
     };
-
     return (
         <div>
             <input type="text" id="name" placeholder="이름" />
@@ -78,9 +79,8 @@ const AddressComponent = ({ updateShippingAddress }) => {
             <input type="text" id="zipcode" placeholder="우편번호" />
             <input type="text" id="address" placeholder="주소" readOnly />
             <input type="text" name="address2" placeholder="상세주소" />
-            <Link to="/mypageaddress">
-                <button onClick={handleSaveClick}>저장하기</button>
-            </Link>
+
+            <button onClick={handleSaveClick}>저장하기</button>
         </div>
     );
 };
