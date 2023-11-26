@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 // import Search from '../components/shared/Search';
-import SlideMain from '../components/SlideMain';
-import SlideSecond from '../components/SlideSecond';
+import Slider1 from '../components/Slider1';
+import Slider2 from '../components/Slider2';
 import CategorySlider from '../components/CategorySlider';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux'; //디스패치로 저장하고 셀렉터로 가져온다
@@ -10,13 +10,15 @@ import { useSelector } from 'react-redux'; //디스패치로 저장하고 셀렉
 function MainPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [data, setData] = useState([]);
-    // const userInfo = useSelector((state) => state.cart);    
+    // const userInfo = useSelector((state) => state.cart);
     const navigate = useNavigate();
 
     //현재상태만알려준다
     // console.log(userInfo);
 
-    let { productCategoryType } = useParams();
+    let { productCategory } = useParams();
+
+
     let apiUrl;
     useEffect(() => {
         if (searchTerm.trim() === '') {
@@ -28,11 +30,14 @@ function MainPage() {
 
     const searchData = async (searchTerm) => {
         try {
-            const response = await Axios.get(`https://ka8d596e67406a.user-app.krampoline.com/api/products/search`, {
-                params: {
-                    searchTerm: searchTerm,
-                },
-            });
+            const response = await Axios.get(
+                `https://ka8d596e67406a.user-app.krampoline.com/api/products/search`,
+                {
+                    params: {
+                        searchTerm: searchTerm,
+                    },
+                }
+            );
             setData(response.data.productTitle);
         } catch (error) {
             console.error('데이터를 가져오는 중 오류 발생:', error);
@@ -46,8 +51,8 @@ function MainPage() {
     };
 
     return (
-        <div className="flex items-center flex-col border-4 max-w-[1300px] ">
-            <div className="flex flex-col items-center justify-center border border-blue-700 max-w-[1300px] h-[1000px]">
+        <div className="flex items-center flex-col  max-w-[1300px] text-[18px]">
+            <div className="flex flex-col items-center justify-center  -blue-700 max-w-[1300px] ">
                 {/* <div className="h-[100px]">
                <Search onChange={handleSearch} />
             </div> */}
@@ -62,28 +67,28 @@ function MainPage() {
                     ))}
                 </div>
 
-                <div className="flex flex-col w-[1300px] h-screen">
-                    <div className=" flex-1 border bg-slate-400 pt-2 flex flex-col items-center overflow-hidden">
+                <div className=" w-[1300px] ">
+                    <div className="  pt-2 flex flex-col justify-center items-center  ">
                         <p className="p-3">인기작가:新作</p>
-                        <div className="w-[80%] flex-1">
-                            <SlideMain />
+                        <div className="w-[80%] h-[310px]">
+                            <Slider1 />
                         </div>
                     </div>
-                    <div className="flex-1 border bg-slate-400 pt-2 flex flex-col items-center overflow-hidden">
-                        <p className="p-3">주목할만한:作</p>
-                        <div className="w-[80%] flex-1">
-                            <SlideSecond />
+                    <div className="  pt-2 flex flex-col justify-center items-center ">
+                        <p className="p-3 pb-8">주목할만한:作</p>
+                        <div className="w-[80%]  h-[310px]">
+                            <Slider2 />
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div className="flex w-[1300px]">
-                <div className="flex flex-col w-full items-center pt-2 border yellow-purple-800 overflow-hidden h-[380px]">
-                    <p className="p-3">둘러보기</p>
-                    <div className="flex border w-screen justify-center">
-                        <CategorySlider />
+                    <div className=" w-[1300px]">
+                        <div className="flex flex-col w-full items-center pt-2  yellow-purple-800 overflow-hidden h-[500px]  ">
+                            <p className="pt-10 pb-8">제품별 둘러보기</p>
+                            <div className="flex w-screen justify-center mb-10 text-sm">
+                                <CategorySlider />
+                            </div>
+                        </div>
                     </div>
+                    <div className="pt-20 text-center text-xs p-2">ARTX studio</div>
                 </div>
             </div>
         </div>

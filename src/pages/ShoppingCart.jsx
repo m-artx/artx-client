@@ -22,13 +22,12 @@ function ShoppingCart() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    // 데이터 url 세팅
-    // const apiUrl = `${process.env.REACT_APP_artx_prod_cart}/${cartId}`;
-    // console.log('apiUrl : ', apiUrl);
+    const { isLogin } = useSelector((state) => state.user);
+    if (!isLogin){
+        alert('회원 전용 서비스 입니다.')
+    }
 
-    //useApiliader로 데이터 받아오기
-    // const apiData = useApiLoader(apiUrl);
-    // console.log('apiData : ', apiData);
+
 
     //배열에 안담아진다..
     useEffect(() => {

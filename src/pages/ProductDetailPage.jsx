@@ -3,14 +3,23 @@ import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import customAxios from '../store/customAxios';
+
 // 제품 상세페이지
 // api 컴포넌트 사용해서 바꿔보자
+
+// productCreatedAt: '2023-11-26T12:31:27.30324';
+// productId: 8;
+// productLink: 'https://ka8d596e67406a.user-app.krampoline.com/api/products/8';
+// productPrice: 45000;
+// productRepresentativeImage: 'https://ka8d596e67406a.user-app.krampoline.com/api/images/product_7af8b447-2f84-4c33-aa92-6328d0fd8adc_Rectangle_717.png';
+// productStockQuantity: 100;
+// productTitle: '마더';
 
 function ProductDetailPage() {
     let { productId } = useParams();
     const [productData, setProductData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const cartId = 25;
     // const dispatch = useDispatch();
     const orderDeliveryDetail = useSelector((state) => state.cart.orderDeliveryDetail);
 
@@ -19,13 +28,9 @@ function ProductDetailPage() {
             const accessToken = localStorage.getItem('accessToken');
             setIsLoading(true); // 데이터 로딩 시작
             try {
-                const response = await axios.get(`https://ka8d596e67406a.user-app.krampoline.com/api/orders`, {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                        'Content-Type': 'application/json',
-                    },
-                });
-                const prodData = response.data;
+                const response = await customAxios.get(`/api/products/${productId}`);
+
+                const prodData = response.data.productReadSummaryResponse;
                 console.log(prodData);
 
                 // 데이터가 배열로 오는 경우, 해당 productId를 가진 제품을 찾습니다.
@@ -83,9 +88,10 @@ function ProductDetailPage() {
         }
     };
     // 제품 이미지가 배열이 아닐 경우를 대비해 배열로 변환합니다.
-    const ensuredImages = Array.isArray(productData.productImages)
-        ? productData.productImages
-        : [productData.productImages];
+    const ensuredImages = Array.isArray(productData.productRepresentativeImage)
+        ? productData.productRepresentativeImage
+        : [productData.productRepresentativeImage];
+
     if (isLoading) {
         return <div>Loading...</div>;
     }
@@ -163,49 +169,53 @@ function ProductDetailPage() {
     return (
         <div className="flex w-full max-w-[1500px]">
             {/* 이미지 슬라이더 */}
-            <div className="flex pl-20 border w-full h-full">
-                <div className="p-20 border">
-                    <Slider className="max-w-[600px] max-h-[600px] p-auto" {...settings}>
-                        {ensuredImages.map((url, index) => (
-                            <div key={index}>
-                                <img className="max-w-[600px] max-h-[600px] " src={url} alt="Product" />
-                            </div>
-                        ))}
-                    </Slider>
+            <div className="flex   w-full h-full " >
+                <div className="p-10  mr-[100px]">
+                    <div>
+                        <img
+                            className="max-w-[600px] max-h-[600px]"
+                            src={productData.productRepresentativeImage}
+                            alt="Product"
+                        />
+                    </div>
                 </div>
 
                 {/*  */}
-                <div className="flex-1 flex justify-center items-center pb-20 border border-red-800 text-gray-400">
+                <div className="flex-1 flex justify-center items-center  mt-10 text-gray-300">
                     {productData && (
-                        <div className="flex flex-col">
-                            <div className="flex text-center">
-                                <p className="w-[300px] border">&lt; {productData.productTitle} &gt;</p>
+                        <div className="flex flex-col justify-center w-[300px] ">
+                            <div className="flex flex-col justify-center items-center text-center py-2">
+                                <p className=" px-4"> '{productData.productTitle} '</p>
                             </div>
-                            <div className="flex flex-col text-center">
-                                <p className="w-[300px] border"> 작가이름 api </p>
-                                <div className="w-[300px] border p-2">
-                                    <p className=""> {productData.productDescription} </p>
-                                    {/* <p className="">ex 유화 1200*1000</p> */}
+                            <div className="py-2 flex flex-col justify-center items-center text-center">
+                                <p className="px-4 pb-4"> 이무명 </p>
+                                <div className="py-5 border flex flex-col justify-center items-center text-center">
+                                    <p className="italic px-4"> " 가로 200mm, 세로 50mm ,</p>
+                                    <p className="italic px-4"> oil painting "</p>
                                 </div>
                             </div>
-                            <div className="flex flex-col text-center pt-5">
-                                <p className="w-[300px] border">price '{productData.productPrice}' </p>
+                            <div className="py-2 flex flex-col justify-center items-center text-center">
+                                <p className="p-4">
+                                    price {productData.productPrice.toLocaleString()}{' '}
+                                </p>
                                 <div className="">
                                     <button
                                         onClick={handleAddToCart}
-                                        className="w-[110px] py-2.5 px-5 m-2 text-sm text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700"
+                                        className="w-[110px] py-2.5 px-5 m-2 mb-0 text-sm text-gray-900 bg-white rounded-lg   dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700"
                                     >
                                         Cart
                                     </button>
                                     <button
-                                        className="py-2.5 px-5 m-2 text-sm text-gray-900 bg-yellow-200 rounded-lg border border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700"
+                                        className="py-2.5 px-5 m-2  mb-0 text-sm text-gray-900 bg-yellow-200 rounded-lg   dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700"
                                         onClick={handlePay}
                                     >
                                         kakao pay
                                     </button>
+                                    <p className="text-sm w-[300px]  text-center">
+                                        [product code:{productData.productId}]
+                                    </p>
                                 </div>
                             </div>
-                            <p className="text-sm w-[300px] text-center">[product code:{productData.productId}]</p>
                         </div>
                     )}
                 </div>
