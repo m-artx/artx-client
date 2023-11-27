@@ -6,6 +6,7 @@ import Slider2 from '../components/Slider2';
 import CategorySlider from '../components/CategorySlider';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux'; //디스패치로 저장하고 셀렉터로 가져온다
+import Footer from "../components/Footer";
 
 function MainPage() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -17,7 +18,6 @@ function MainPage() {
     // console.log(userInfo);
 
     let { productCategory } = useParams();
-
 
     let apiUrl;
     useEffect(() => {
@@ -53,20 +53,6 @@ function MainPage() {
     return (
         <div className="flex items-center flex-col  max-w-[1300px] text-[18px]">
             <div className="flex flex-col items-center justify-center  -blue-700 max-w-[1300px] ">
-                {/* <div className="h-[100px]">
-               <Search onChange={handleSearch} />
-            </div> */}
-
-                <div className="w-[80%] flex-1">
-                    {data.map((item) => (
-                        <div key={item.productId}>
-                            <div>상품명: {item.productTitle}</div>
-                            <div>가격: {item.productPrice}</div>
-                            <img src={item.productRepresentativeImage} alt={item.productTitle} />
-                        </div>
-                    ))}
-                </div>
-
                 <div className=" w-[1300px] ">
                     <div className="  pt-2 flex flex-col justify-center items-center  ">
                         <p className="p-3">인기 작가:新作</p>
@@ -88,7 +74,7 @@ function MainPage() {
                             </div>
                         </div>
                     </div>
-                    <div className="pt-20 text-center text-xs p-2 pb-5">ARTX Studio®</div>
+                    <Footer/>
                 </div>
             </div>
         </div>

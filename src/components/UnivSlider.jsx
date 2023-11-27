@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
-import { useNavigate } from 'react-router-dom';
 
 //현재기능, 배열의 값을 맵으로 돌려서 div로 만들고 bg이미지로 리턴한다.
 {
@@ -14,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 function UnivSlider({ slides }) {
   console.log('슬라이드 내부 콘솔');
   const [currentIndex, setCurrentIndex] = useState(0);
-  const navigate = useNavigate();
 
   if (!slides || !slides.productImageUrl || !Array.isArray(slides.productImageUrl)) {
     console.log('슬라이드 데이터가 없을 경우 들어오는 if문 : ' + {slides});

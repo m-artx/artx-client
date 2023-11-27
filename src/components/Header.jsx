@@ -147,8 +147,11 @@ function Header() {
         if (isLogin) {
             switch (userRole) {
                 case 'USER':
-                    return;
-                case 'ARTIST':
+                    return (
+                        <div>
+                            
+                        </div>
+                    );                case 'ARTIST':
                     return (
                         <div>
                             <Link to="/artist">

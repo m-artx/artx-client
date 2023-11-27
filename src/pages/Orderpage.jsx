@@ -67,7 +67,8 @@ export default function OrderPage() {
             })
             .catch((error) => {
                 // 주문 실패 시 수행할 작업
-                console.error('주문 실패:', error);
+                console.error('주문 실패:', error);                
+
             });
     };
     // 주문 취소 버튼 클릭 시 실행되는 함수
