@@ -95,7 +95,7 @@ function ProductList() {
         <div className="w-screen  max-w-[1300px] -blue-600 flex flex-col ">
             <div className="text-center">
                 <div className="text-3xl sm:text-8xl font-medium ">{productCategory}</div>
-                <Search />
+                {/* <Search /> */}
                 <section className=" -red-600 flex flex-wrap justify-center p-3">
                     {currentItems.map((item, index) => (
                         <div key={index} className=" w-[200px] h-[300px] flex flex-col m-8 mt-10 ">

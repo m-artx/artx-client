@@ -241,7 +241,7 @@ function ShoppingCart() {
                     ))}
             </ul>
             {/* 배송비박스 */}
-            <div className=" items-center mt-4  p-4 flex justify-end flex-col border border-solid border-black w-60 ml-auto bg-white text-black text-center">
+            <div className=" items-center mt-4  p-4 flex justify-end flex-col border border-solid border-black w-[270px] ml-auto bg-white text-black text-center">
                 <div className="bg-white text-black flex flex-col">
                     <p className="mr-4 bg-white text-black ">
                         선택 상품 합계 {orderTotalPrice()} 원
