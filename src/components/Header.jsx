@@ -69,7 +69,7 @@ function Header() {
     function links() {
         return (
             <div className="flex justify-center text-lg text-center w-[400px]  ">
-                <button className="" onClick={() => goToPage('/')}>
+                <button className=" w-[80px]" onClick={() => goToPage('/')}>
                     홈
                 </button>
 
@@ -78,32 +78,32 @@ function Header() {
                     onMouseEnter={showDropdown}
                     onMouseLeave={hideDropdown}
                 >
-                    <button  onClick={() => goToPage('productslist/ALL')} className=" pl-4">
+                    <button  onClick={() => goToPage('productslist/ALL')} className=" pl-4 ">
                         작품관
                     </button>
                     {dropdownVisibility && (
                         <Dropdown>
-                            <ul className="flex text-center text-sm border w-[250px] absolute p-2">
+                            <ul className="flex text-center text-sm border w-[250px] absolute p-2 ">
                                 <li
-                                    className="flex-1  "
+                                    className="flex-1 pl-2  cursor-pointer"
                                     onClick={() => goToPage('productslist/ALL')}
                                 >
                                     전체보기
                                 </li>
                                 <li
-                                    className="flex-1  "
+                                    className="flex-1   cursor-pointer"
                                     onClick={() => goToPage('productslist/PAINT')}
                                 >
                                     그림
                                 </li>
                                 <li
-                                    className="flex-1  "
+                                    className="flex-1  cursor-pointer "
                                     onClick={() => goToPage('productslist/CERAMIC')}
                                 >
                                     도자기
                                 </li>
                                 <li
-                                    className="flex-1  "
+                                    className="flex-1   cursor-pointer"
                                     onClick={() => goToPage('productslist/ETC')}
                                 >
                                     etc.

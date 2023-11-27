@@ -79,7 +79,7 @@ function SlideMain() {
                         <img
                             src={image.productRepresentativeImage}
                             alt={`ProductId ${image.productId}`}
-                            className=" object-fit h-[230px] w-[180px] pr-2 rounded-3xl"
+                            className=" object-fit h-[230px] w-[180px] pr-2 rounded-3xl cursor-pointer"
                             onClick={() => goToProductDetail(image.productId)}
                         />
                         {image.title}

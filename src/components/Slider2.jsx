@@ -70,7 +70,7 @@ const Slider2 = () => {
                             <img
                                 src={item.productRepresentativeImage}
                                 alt={`ProductId ${item.productId}`}
-                                className=" object-fit h-[120px] w-[90px] rounded-2xl  "
+                                className=" object-fit h-[120px] w-[90px] rounded-2xl  cursor-pointer "
                                 onClick={() => goToProductDetail(item.productId)}
                             />
                         </div>
@@ -87,7 +87,7 @@ const Slider2 = () => {
                             <img
                                 src={item.productRepresentativeImage}
                                 alt={`ProductId ${item.productId}`}
-                                className=" object-fit h-[120px] w-[90px]  rounded-2xl "
+                                className=" object-fit h-[120px] w-[90px]  rounded-2xl  cursor-pointer"
                                 onClick={() => goToProductDetail(item.productId)}
                             />
                         </div>

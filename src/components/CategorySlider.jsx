@@ -47,7 +47,7 @@ function CategorySlider() {
                     <div>
                         <img
                             src={getImageUrl(item.productCategory)}
-                            className="object-cover h-[250px] w-[250px] rounded-sm "
+                            className="object-cover h-[250px] w-[250px] rounded-sm   cursor-pointer"
                             alt=""
                             onClick={() => goToCategory(item.productCategory)}
                         />
