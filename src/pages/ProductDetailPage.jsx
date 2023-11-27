@@ -167,7 +167,7 @@ function ProductDetailPage() {
             });
     };
     return (
-        <div className="flex w-full  max-w-[1500px] border justify-center itexs-center ">
+        <div className="flex w-full  max-w-[1500px]  justify-center itexs-center ">
             {/* 이미지 슬라이더 */}
             <div className="flex   w-full h-full " >
                 <div className="p-10  mr-[100px]">
