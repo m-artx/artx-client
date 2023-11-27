@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,    } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import axiosInstance from '../../instance/axiosInstance';
 import { useDispatch } from 'react-redux';
@@ -90,6 +90,7 @@ function MyPage() {
                 </button>
                 {isSignOutModalOpen && <SignOutModal isOpen={openSignOutModal} onClose={() => closeSignOutModal(false)} />}
             </div>
+            
         </div>
     );
 }
