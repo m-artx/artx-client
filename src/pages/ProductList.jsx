@@ -103,7 +103,7 @@ function ProductList() {
                                 <img
                                     src={item.productRepresentativeImage}
                                     alt={`Product ${item.productName}`}
-                                    className=" rounded-md object-cover [200px] h-[300px] "
+                                    className=" rounded-md object-cover [200px] h-[300px]  cursor-pointer"
                                     onClick={() => goToProductDetail(item.productId)}
                                 />
                                 <div className="flex justify-around border-b border-gray-700 py-2 mx-1">

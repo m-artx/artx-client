@@ -16,8 +16,7 @@
 body {
     display: flex;
     justify-content: center;
-    padding-bottom: 30vh;
-
+    padding-bottom: 30px;
 }
 
 /* 헤더 버튼용 css */

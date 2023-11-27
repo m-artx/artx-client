@@ -167,7 +167,7 @@ function ProductDetailPage() {
             });
     };
     return (
-        <div className="flex w-full max-w-[1500px]">
+        <div className="flex w-full  max-w-[1500px] border justify-center itexs-center ">
             {/* 이미지 슬라이더 */}
             <div className="flex   w-full h-full " >
                 <div className="p-10  mr-[100px]">
@@ -206,7 +206,7 @@ function ProductDetailPage() {
                                         Cart
                                     </button>
                                     <button
-                                        className="py-2.5 px-5 m-2  mb-0 text-sm text-gray-900 bg-yellow-400 rounded-lg  dark:bg-yellow-400 dark:text-black-400 dark:border-gray-600 dark:hover:bg-gray-700 "
+                                        className="py-2.5 px-5 m-2  mb-0 text-sm text-gray-900 bg-yellow-300 rounded-lg  dark:bg-yellow-300 dark:text-black-400 dark:border-gray-600 dark:hover:bg-gray-700 "
                                         onClick={handlePay}
                                     >
                                         Kakao Pay

@@ -103,7 +103,7 @@ function CustomerCenter() {
         <div className="border w-[1300px] h-[1800px] p-4 bg-white flex items-center flex-col text-black text-sm">
             {/* Notices Section */}
             <div className="w-[700px] bg-white shadow-lg rounded-lg mb-10">
-                <h2 className="text-lg  bg-white font-bold mb-3 p-4 ">중요공지</h2>
+                <h2 className="text-lg  bg-white font-bold mb-3 p-4 text-center">중요공지</h2>
                 <ul className="p-6  bg-white h-[400px] border border-gray-400 overflow-auto">
                     {array1.map((notice, idx) => (
                         <li key={idx} className="mb-4  bg-white last:mb-0 ">
@@ -122,7 +122,7 @@ function CustomerCenter() {
 
             {/* FAQ Section */}
             <div className="w-[500px] bg-white shadow-lg rounded-lg">
-                <h2 className="text-lg font-bold mb-3 p-4 bg-white ">자주 묻는 질문</h2>
+                <h2 className="text-lg font-bold mb-3 p-4 bg-white text-center  ">자주 묻는 질문</h2>
                 <ul className="space-y-3 p-4 bg-white ">
                     {array2.map((faq, idx) => (
                         <li key={idx} className="bg-pink-100 rounded-md p-3  ">

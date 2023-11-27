@@ -60,7 +60,7 @@ function MyPage() {
     };
 
     return (
-        <div className="bg-white text-black shadow-lg w-[1300px] pb-20 flex flex-col">
+    <div className="bg-white text-black shadow-lg w-[1300px] pb-20 flex flex-col">
             <h1 className="text-center border text-3xl bg-white text-black">마이페이지</h1>
             <div className="bg-white text-black text-center">{`'${localUsername} 님'`}</div>
             <div className="mb-4 bg-white w-[300px] text-black flex flex-col justify-center mx-auto">

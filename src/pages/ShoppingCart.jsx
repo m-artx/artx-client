@@ -23,11 +23,9 @@ function ShoppingCart() {
     const dispatch = useDispatch();
 
     const { isLogin } = useSelector((state) => state.user);
-    if (!isLogin){
-        alert('회원 전용 서비스 입니다.')
+    if (!isLogin) {
+        alert('회원 전용 서비스 입니다.');
     }
-
-
 
     //배열에 안담아진다..
     useEffect(() => {
@@ -161,9 +159,13 @@ function ShoppingCart() {
 
     return (
         <div className=" bg-white text-black p-4 w-[1300px]">
-            <h1 className="text-4xl font-bold mb-4 flex justify-center bg-white text-black ">장바구니</h1>
+            <h1 className="text-4xl font-bold mb-4 flex justify-center bg-white text-black ">
+                장바구니
+            </h1>
             <div className="flex flex-col bg-white">
-                <span className="flex justify-center bg-white text-black">장바구니-주문서 작성 및 결제-주문 확인</span>
+                <span className="flex justify-center bg-white text-black">
+                    장바구니-주문서 작성 및 결제-주문 확인
+                </span>
                 <button
                     onClick={removeFromSelected}
                     className="px-4 py-2 mt-4 mb-4  border border-solid border-black w-40 ml-3"
@@ -171,16 +173,24 @@ function ShoppingCart() {
                     삭제하기
                 </button>
             </div>
-            <ul className="border-solid border-t border-b border-black ml-3 bg-white text-black">
+            <ul className=" border-solid border-t border-b border-black ml-3 bg-white text-black ">
                 <li className="flex items-center mb-2 bg-white text-black">
-                    <input type="checkbox" checked={selectAll} onChange={handleToggleSelectAll} className="mr-2 ml-0" />
+                    <input
+                        type="checkbox"
+                        checked={selectAll}
+                        onChange={handleToggleSelectAll}
+                        className="mr-2 ml-0"
+                    />
                     <span onClick={handleToggleSelectAll} className="bg-white text-black">
                         전체 선택
                     </span>
                 </li>
                 {Array.isArray(cartProductDetails.content) &&
                     cartProductDetails.content.map((item) => (
-                        <li key={item.productId} className="flex items-center mb-2 bg-white text-black">
+                        <li
+                            key={item.productId}
+                            className="flex items-center mb-2 bg-white text-black"
+                        >
                             <input
                                 type="checkbox"
                                 checked={selectedItems.includes(item.productId)}
@@ -196,17 +206,23 @@ function ShoppingCart() {
                                 height="100"
                             />
                             <div className="ml-4 bg-white text-black">
-                                <p className="text-lg font-semibold bg-white text-black">{item.productTitle}</p>
-                                <p className="text-gray-400 bg-white text-black">가격: {item.productPrice}원</p>
+                                <p className="text-lg font-semibold bg-white text-black">
+                                    {item.productTitle}
+                                </p>
+                                <p className="text-gray-400 bg-white text-black">
+                                    가격: {item.productPrice}원
+                                </p>
                                 {item.productQuantity === 0 ? (
-                                    <p className="text-red-500 font-bold bg-white text-black">품절</p>
+                                    <p className="text-red-500 font-bold bg-white text-black">
+                                        품절
+                                    </p>
                                 ) : (
                                     <>
                                         <p className="text-gray-400 bg-white text-black">
                                             수량: {item.cartProductQuantity}
                                         </p>
                                         <button
-                                            className='mr-4'
+                                            className="mr-4"
                                             onClick={() => increaseQuantity(item.productId)}
                                             disabled={item.productQuantity === 0} // 품절인 경우 비활성화
                                         >
@@ -224,27 +240,34 @@ function ShoppingCart() {
                         </li>
                     ))}
             </ul>
-            <div className=" items-center mt-4  p-4 flex justify-end flex-col border border-solid border-black w-60 ml-auto bg-white text-black">
-                <div className="bg-white text-black">
-                    <p className="mr-4 bg-white text-black ">선택된 상품 합계+{orderTotalPrice()} 원</p>
-                    <p className="bg-white text-black">배송비 + 3000원</p>
+            {/* 배송비박스 */}
+            <div className=" items-center mt-4  p-4 flex justify-end flex-col border border-solid border-black w-60 ml-auto bg-white text-black text-center">
+                <div className="bg-white text-black flex flex-col">
+                    <p className="mr-4 bg-white text-black ">
+                        선택 상품 합계 {orderTotalPrice()} 원
+                    </p>
+                    <p className="bg-white text-black">(배송비 3000원)</p>
                 </div>
-                <p className="mr-4 font-bold bg-white text-black">결제 예정 금액= {orderTotalPrice() + 3000}원</p>
+                <p className="mr-4 py-2 font-bold bg-white text-black">
+                    결제 예정 금액 : {(orderTotalPrice()+3000).toLocaleString()} 원
+                </p>
 
                 <button
                     onClick={() => {
                         const isAnyCheckboxChecked =
                             Array.isArray(cartProductDetails.content) &&
-                            cartProductDetails.content.some((item) => selectedItems.includes(item.productId));
+                            cartProductDetails.content.some((item) =>
+                                selectedItems.includes(item.productId)
+                            );
                         if (isAnyCheckboxChecked) {
                             orderSelectedItems();
                         } else {
                             alert('주문할 상품을 선택해주세요.');
                         }
                     }}
-                    className="bg-black text-white px-4 py-2"
+                    className="bg-black  px-8 py-2 bg-yellow-300 rounded-lg text-lg"
                 >
-                    주문하기
+                결제하기 <div className="bg-yellow-300 text-xs">with kakao</div>
                 </button>
             </div>
             <Link to="art" className="bg-white text-black">
